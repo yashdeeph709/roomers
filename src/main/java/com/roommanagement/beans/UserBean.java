@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection="users")
 public class UserBean {
 	@Id
-	private String Id;
+	private String id;
 	private String name;
 	private String email;
 	private String password;
@@ -22,13 +22,13 @@ public class UserBean {
 	}
 	@Override
 	public String toString() {
-		return "UserBean [Id=" + Id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+		return "UserBean [Id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
 	}
 	public String getId() {
-		return Id;
+		return id;
 	}
 	public void setId(String id) {
-		Id = id;
+		id = id;
 	}
 	public String getName() {
 		return name;
