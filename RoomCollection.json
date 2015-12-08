@@ -1,0 +1,137 @@
+[
+{
+	"roomName":"Bahar",	
+	
+	"roomCity":"Pune",
+	"roomLocation":"Baner",
+	"roomBlock":"Banergaon",
+	"roomAddress":"5th floor, Amar Paradigm",
+	"roomCapacity":"6",
+	"roomTable":"2",
+	"roomMachines":"6",
+	"roomScreen":"2",
+	"roomBoard":"1",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"disabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Malhar",	
+	"roomCity":"Pune",
+	"roomLocation":"Baner",
+	"roomBlock":"Banergaon",
+	"roomAddress":"5th floor, Amar Paradigm",
+	"roomCapacity":"6",
+	"roomTable":"2",
+	"roomMachines":"6",
+	"roomScreen":"2",
+	"roomBoard":"1",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"enabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Bahar",	
+	"roomCity":"Mumbai",
+	"roomLocation":"Powai",
+	"roomBlock":"Hiranandani Business Park",
+	"roomAddress":"4th Floor,Nomura,Winchester Building",
+	"roomCapacity":"6",
+	"roomTable":"2",
+	"roomMachines":"6",
+	"roomScreen":"2",
+	"roomBoard":"1",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"disabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Bahar",	
+	"roomCity":"Mumbai",
+	"roomLocation":"Powai",
+	"roomBlock":"Hiranandani Business Park",
+	"roomAddress":"4th Floor,Nomura,Winchester Building",
+	"roomCapacity":"6",
+	"roomCapacity":"6",
+	"roomTable":"2",
+	"roomMachines":"6",
+	"roomScreen":"2",
+	"roomBoard":"1",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"disabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Bahar",	
+	"roomCity":"Gurgaon",
+	"roomLocation":"Infocity",
+	"roomBlock":"Sector 34",
+	"roomAddress":"A/27 3rd floor, Sigma Center",
+	"roomCapacity":"6",
+	"roomTable":"2",
+	"roomMachines":"6",
+	"roomScreen":"2",
+	"roomBoard":"1",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"disabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Bahar",	
+	"roomCity":"Gurgaon",
+	"roomLocation":"Infocity",
+	"roomBlock":"Sector 34",
+	"roomAddress":"A/27 3rd floor, Sigma Center",
+	"roomCapacity":"16",
+	"roomTable":"4",
+	"roomMachines":"16",
+	"roomScreen":"2",
+	"roomBoard":"2",
+	"roomChart":"2",
+	"roomProjector":"2",
+	"roomInternet":"disabled",
+	"roomStatus":"booked"
+
+
+}
+,
+{
+	"roomName":"Malhar",	
+	"roomCity":"Gurgaon",
+	"roomLocation":"Infocity",
+	"roomBlock":"Sector 34",
+	"roomAddress":"A/27 3rd floor, Sigma Center",
+	"roomCapacity":"4",
+	"roomTable":"1",
+	"roomMachines":"4",
+	"roomScreen":"1",
+	"roomBoard":"1",
+	"roomChart":"1",
+	"roomProjector":"1",
+	"roomInternet":"enabled",
+	"roomStatus":"booked"
+
+
+}
+
+]
