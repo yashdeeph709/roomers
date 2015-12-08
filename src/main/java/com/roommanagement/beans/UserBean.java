@@ -22,7 +22,7 @@ public class UserBean {
 		return id;
 	}
 	public void setId(String id) {
-		id = id;
+		this.id = id;
 	}
 	public String getName() {
 		return name;
