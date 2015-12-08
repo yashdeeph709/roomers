@@ -36,7 +36,7 @@ public class CreateUserTest {
 	}
 
 	@Test
-	public void testUserFetchesSuccess() throws JSONException, URISyntaxException {
+	public void testCreateUser() throws JSONException, URISyntaxException {
 		Client client = Client.create();
 		WebResource webResource = client.resource("http://localhost:8080/register");
 		String input = "{\"name\":\"Palakh\",\"email_id\":\"palakh@gmail.com\",\"password\":\"Palakh\",\"rights\":\"1\"}";
