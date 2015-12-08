@@ -2,8 +2,8 @@ package com.roommanagement.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.roommanagement.beans.UserBean;
+import com.roommanagement.collections.UserCollection;
 
-public interface UsersRepository extends MongoRepository<UserBean, String> {
+public interface UsersRepository extends MongoRepository<UserCollection, String> {
 	
 }

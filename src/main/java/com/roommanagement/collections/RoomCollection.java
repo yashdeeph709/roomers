@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="rooms")
-public class RoomDetails {
+public class RoomCollection {
 	
 	@Id
 	private String id;
@@ -108,7 +108,7 @@ public class RoomDetails {
 				+ ", roomChart=" + roomChart + ", roomScreen=" + roomScreen + ", roomProjector=" + roomProjector
 				+ ", roomInternet=" + roomInternet + "]";
 	}
-	public RoomDetails(String roomName, String roomCity, String roomLocation, String roomBlock, String roomAddress,
+	public RoomCollection(String roomName, String roomCity, String roomLocation, String roomBlock, String roomAddress,
 			String roomCapacity, String roomTables, String roomMachines, String roomBoard, String roomChart,
 			String roomScreen, String roomProjector, String roomInternet) {
 		this.roomName = roomName;
@@ -126,7 +126,7 @@ public class RoomDetails {
 		this.roomInternet = roomInternet;
 	}
 	
-	public RoomDetails() {}
+	public RoomCollection() {}
 
 
 
