@@ -37,7 +37,7 @@ public class UsersController {
 
 	@RequestMapping(value="/register", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody com.roommanagement.beans.UserBean registerUser(@RequestBody UserCollection user) {
-		service.save(new UserCollection(user.getName(), user.getEmail(), 
+		service.insert(new UserCollection(user.getName(), user.getEmail(), 
 													user.getPassword(),user.getRights()));
 		return new com.roommanagement.beans.UserBean(user.getId(),user.getName(),user.getEmail());
 	}
