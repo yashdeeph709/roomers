@@ -26,10 +26,9 @@ public class RoomTests {
 
 		ClientResponse response = webResource.type("application/json")
 		   .post(ClientResponse.class,roomCollection);
-
 		
 		String output = response.getEntity(String.class);
-		assertEquals("{\"status\":\"success\",\"message\":\"room created sucessfully\"}",output);
+		assertEquals("{\"status\":\"success\",\"message\":\"Room Created Sucessfully\"}",output);
 	}
 
 }
