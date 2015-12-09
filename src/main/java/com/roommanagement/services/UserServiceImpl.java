@@ -36,8 +36,9 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public void insert(UserCollection userBean) {
-		repository.insert(userBean);
+	public UserCollection insert(UserCollection userBean) {
+		
+		return repository.insert(userBean);
 	}
 
 }
