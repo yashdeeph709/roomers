@@ -48,24 +48,49 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public boolean checkUser(String id) {	
-		KeyGenerator kg;
-		try {
-			kg = KeyGenerator.getInstance("DES");
-			 Cipher c = Cipher.getInstance("DES/CBC/PKCS5Padding"); 
-				Key key = kg.generateKey();
-				c.init(Cipher.ENCRYPT_MODE, key);
-				byte input[] = "Stand and unfold yourself".getBytes();
-				byte encrypted[] = c.doFinal(input);
-				byte iv[] = c.getIV();
-				IvParameterSpec dps = new IvParameterSpec(iv);
-				c.init(Cipher.DECRYPT_MODE, key, dps);
-				byte output[] = c.doFinal(encrypted);
-				System.out.println(new String(output));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		return repository.findOne(id)==null?false:false;
+	public boolean checkAdmin(String id) {
+		UserCollection user=repository.findOne(id);
+		if(user.getRights().equals("0.0")){
+			return false;
+		}
+		return true;
+	}
+	public boolean checkSubAdmin(String id) {
+		UserCollection user=repository.findOne(id);
+		if(user.getRights().equals("1.0")){
+			return false;
+		}
+		return true;
+	}
+
+	public boolean checkUser(String id) {
+		UserCollection user=repository.findOne(id);
+		if(user.getRights().equals("2.0")){
+			return false;
+		}
+		return true;
+	}
+
+
+	public String getUser() {
+		BasicQuery basicQuery= new BasicQuery("{ rights : 2 }");
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		return userTest.getId();
+	}
+
+
+	public String getAdmin() {
+		BasicQuery basicQuery= new BasicQuery("{ rights : 0 }");
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		System.out.println(userTest);
+		return userTest.getId();
+	}
+
+
+	public String getSubAdmin() {
+		BasicQuery basicQuery= new BasicQuery("{ rights : 1 }");
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		return userTest.getId();
 	}
 
 }

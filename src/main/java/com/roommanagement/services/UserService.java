@@ -9,4 +9,9 @@ public interface UserService {
 	List<UserCollection> getUsers();
 	UserCollection insert(UserCollection userBean);
 	boolean checkUser(String id);
+	boolean checkAdmin(String id);
+	boolean checkSubAdmin(String id);
+	String getUser();
+	String getAdmin();
+	String getSubAdmin();
 }
