@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		return repository.findOne(id)==null?true:true;
+		}		return repository.findOne(id)==null?false:false;
 	}
 
 }

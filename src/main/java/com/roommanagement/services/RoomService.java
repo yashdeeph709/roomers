@@ -13,4 +13,7 @@ public interface RoomService {
 	
 	/***********RoomService.java***************/
 	List<RoomCollection> getRooms();
+	
+	void updateRoom(RoomCollection room); 
+	//void save(RoomCollection room);
 }
