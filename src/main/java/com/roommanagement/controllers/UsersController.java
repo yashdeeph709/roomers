@@ -34,10 +34,11 @@ public class UsersController {
 	}
 
 	@RequestMapping(value="/register", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody UserCollection registerUser(@RequestBody UserCollection user) {
+	public @ResponseBody Status registerUser(@RequestBody UserCollection user) {
 
-		return service.insert(new UserCollection(user.getName(), user.getEmail(), 
+	UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
 													user.getPassword(),user.getRights()));
 
+	 return  new Status("true","Created User name ="+createUserReturnValue.getName());
 	}
 }
