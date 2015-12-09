@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Status;
@@ -20,11 +21,15 @@ import com.roommanagement.services.UserService;
 @RequestMapping("/RoomManagement")
 public class UsersController {
 
+	
 	@Autowired
 	private UserService service;
 	
 	@RequestMapping("/getUsers")
-	public List<UserCollection> getUsers() {
+	public List<UserCollection> getUsers(@RequestParam String id) {
+		if(service.findUser(id)==null){
+			return null;
+		}
 		return service.getUsers();
 	}
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)

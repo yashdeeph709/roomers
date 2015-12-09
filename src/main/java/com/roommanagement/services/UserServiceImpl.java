@@ -22,30 +22,27 @@ public class UserServiceImpl implements UserService{
 
 
 	public List<UserCollection> getUsers() {
-		
 		return repository.findAll();
 	}
 
 
 	public UserCollection insert(UserCollection user) {
 	BasicQuery basicQuery= new BasicQuery("{ name : \""+user.getEmail()+"\" }");
-		
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
-		
-	
 		if(userTest!=null)
 		{
-			
 			System.out.println("User already exists "+userTest.getName());
-			
 		}
 		else
 		{
 			return repository.insert(user);
 		}
 		return user;
-		
-		
+	}
+
+
+	public UserCollection findUser(String id) {		
+		return repository.findOne(id);
 	}
 
 }
