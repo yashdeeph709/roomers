@@ -12,7 +12,5 @@ public interface RoomService {
 	Boolean checkRoomNameAvailablility(String roomName);
 	
 	/***********RoomService.java***************/
-	
-	
-	List<Room> getRooms();
+	List<RoomCollection> getRooms();
 }

@@ -1,9 +1,8 @@
 package com.roommanagement.controllers;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,25 +24,29 @@ public class UsersController {
 	@Autowired
 	private UserService service;
 	
-	@RequestMapping("/getUsers")
-	public List<UserCollection> getUsers(@RequestParam String id) {
-		if(service.findUser(id)==null){
-			return null;
+	@RequestMapping("/getUsers/{id}")
+	public Status<UserCollection> getUsers(@PathVariable String id) {
+		if(service.checkUser(id)){
+			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
 		}
-		return service.getUsers();
+		return new Status<UserCollection>("success","got data",service.getUsers());
 	}
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status deletUser(@PathVariable("id") String id) {
+	public @ResponseBody Status<UserCollection> deletUser(@PathVariable("id") String id) {
+		if(service.checkUser(id)){
+			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
+		}
 		service.delete(id);
-		return new Status("success","User Deleted Successfully!");
+		return new Status<UserCollection>("success","User Deleted Successfully!");
 	}
 
-	@RequestMapping(value="/register", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status registerUser(@RequestBody UserCollection user) {
-
+	@RequestMapping(value="/register/{id}", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status<UserCollection> registerUser(@RequestBody UserCollection user,@PathVariable("id") String id) {
 	UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
 													user.getPassword(),user.getRights()));
-
-	 return  new Status("true","Created User name ="+createUserReturnValue.getName());
-	}
+		if(service.checkUser(id)){
+			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
+		}
+		return  new Status<UserCollection>("true","Created User name ="+createUserReturnValue.getName());
+		}
 }

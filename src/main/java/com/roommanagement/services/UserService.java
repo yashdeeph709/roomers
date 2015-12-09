@@ -8,5 +8,5 @@ public interface UserService {
 	void delete( String id ) ;
 	List<UserCollection> getUsers();
 	UserCollection insert(UserCollection userBean);
-	UserCollection findUser(String id);
+	boolean checkUser(String id);
 }

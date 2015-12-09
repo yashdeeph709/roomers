@@ -24,15 +24,8 @@ public class RoomServiceImpl implements RoomService {
 	/*******************RoomServiceImpl.java*******************/
 	
 
-	public List<Room> getRooms() {
-		List<Room> rooms=new ArrayList<Room>();
-		List<RoomCollection> dbrooms=roomRepository.findAll();
-		Iterator<RoomCollection> roomIterator=dbrooms.iterator();
-		while(roomIterator.hasNext()){
-			RoomCollection room=roomIterator.next();
-			rooms.add(new Room(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomBoard(),room.getRoomChart(),room.getRoomScreen(),room.getRoomProjector(),room.getRoomInternet()));
-		}
-		return rooms;
+	public List<RoomCollection> getRooms() {
+		return roomRepository.findAll();
 	}
 
 	public Boolean checkRoomNameAvailablility(String roomName) {

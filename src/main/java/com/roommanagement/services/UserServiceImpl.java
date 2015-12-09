@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public UserCollection findUser(String id) {		
-		return repository.findOne(id);
+	public boolean checkUser(String id) {				
+		return repository.findOne(id)==null?true:false;
 	}
 
 }
