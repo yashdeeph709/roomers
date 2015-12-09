@@ -2,28 +2,28 @@
 {
    
     "name" : "Shruti",
-    "email_id" : "shrutiu.7@gmail.com",
+    "email" : "shrutiu.7@gmail.com",
     "password" : "password",
     "rights" : 0
 }
 {
    
     "name" : "Harshal",
-    "email_id" : "harshal@gmail.com",
+    "email" : "harshal@gmail.com",
     "password" : "password212",
     "rights" : 1
 }
 {
    
     "name" : "Nihit",
-    "email_id" : "nihit@gmail.com",
+    "email" : "nihit@gmail.com",
     "password" : "password123",
     "rights" : 2
 }
 {
    
     "name" : "Yashdeep",
-    "email_id" : "yashdeep@gmail.com",
+    "email" : "yashdeep@gmail.com",
     "password" : "password21",
     "rights" : 2
 }
@@ -31,7 +31,7 @@
 {
    
     "name" : "Palakh",
-    "email_id" : "palakh@gmail.com",
+    "email" : "palakh@gmail.com",
     "password" : "password222",
     "rights" : 2
 }
@@ -39,7 +39,7 @@
 {
    
     "name" : "Amit",
-    "email_id" : "amit@gmail.com",
+    "email" : "amit@gmail.com",
     "password" : "password22",
     "rights" :2
 }

@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService{
 		Iterator<com.roommanagement.collections.UserCollection> it=dbusers.iterator();
 		while(it.hasNext()){
 			UserCollection user=it.next();
+			System.out.println(user);
 			users.add(new com.roommanagement.beans.UserBean(user.getId(),user.getName(),user.getEmail()));
 		}
 		return users;
