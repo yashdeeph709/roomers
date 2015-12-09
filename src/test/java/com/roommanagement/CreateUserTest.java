@@ -18,12 +18,12 @@ public class CreateUserTest {
 
 	Client client ;
 	WebResource webResource;
-	
+	String baseURI = "http://localhost:8080/RoomManagement";
 	@Before
 	public void setup()
 	{
 		client = Client.create();
-		webResource = client.resource("http://localhost:8080/register");
+		webResource = client.resource(baseURI+"/register");
 	}
 	
 	@Test
