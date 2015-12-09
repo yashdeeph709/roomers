@@ -1,6 +1,7 @@
 package com.roommanagement.beans;
 
 public class UserBean {
+	
 	private String id;
 	private String name;
 	private String email;
