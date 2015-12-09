@@ -6,6 +6,6 @@ import com.roommanagement.collections.UserCollection;
 
 public interface UserService {
 	void delete( String id ) ;
-	List<com.roommanagement.beans.UserBean> getUsers();
+	List<UserCollection> getUsers();
 	UserCollection insert(UserCollection userBean);
 }

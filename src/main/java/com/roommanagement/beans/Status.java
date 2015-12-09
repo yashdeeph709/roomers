@@ -2,8 +2,8 @@ package com.roommanagement.beans;
 
 public class Status {
 	
-	String status;
-	String message;
+	private String status;
+	private String message;
 	public String getStatus() {
 		return status;
 	}

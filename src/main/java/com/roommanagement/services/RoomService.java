@@ -7,7 +7,7 @@ import com.roommanagement.collections.RoomCollection;
 
 public interface RoomService {
 
-	void insert(RoomCollection roomDetails);
+	RoomCollection insert(RoomCollection roomDetails);
 	
 	Boolean checkRoomNameAvailablility(String roomName);
 	

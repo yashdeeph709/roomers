@@ -16,13 +16,16 @@ import com.sun.jersey.api.client.WebResource;
 
 public class RestTest {
 
+	Client client;
+	
 	@Before
 	public void setup(){
+		client = Client.create();
 	}
 	
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, IOException {
-		Client client = Client.create();
+		
 		WebResource webResource = client.resource("http://localhost:8080/getUsers");
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
 		if (response.getStatus() != 200) {

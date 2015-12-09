@@ -17,13 +17,14 @@ import com.roommanagement.services.UserService;
 
 @CrossOrigin
 @RestController
+@RequestMapping("/RoomManagement")
 public class UsersController {
 
 	@Autowired
 	private UserService service;
 	
 	@RequestMapping("/getUsers")
-	public List<com.roommanagement.beans.UserBean> getUsers() {
+	public List<UserCollection> getUsers() {
 		return service.getUsers();
 	}
 	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
