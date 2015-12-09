@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.UserBean;
@@ -17,6 +19,8 @@ public class UserServiceImpl implements UserService{
 
 	@Autowired
 	private UsersRepository repository;
+	@Autowired
+	private MongoOperations mongoOperations;
 
 	public void delete(String id) {
 		repository.delete(id);
@@ -36,9 +40,25 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public UserCollection insert(UserCollection userBean) {
+	public UserCollection insert(UserCollection user) {
+	BasicQuery basicQuery= new BasicQuery("{ name : \""+user.getEmail()+"\" }");
 		
-		return repository.insert(userBean);
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		
+	
+		if(userTest!=null)
+		{
+			
+			System.out.println("User already exists "+userTest.getName());
+			
+		}
+		else
+		{
+			return repository.insert(user);
+		}
+		return user;
+		
+		
 	}
 
 }
