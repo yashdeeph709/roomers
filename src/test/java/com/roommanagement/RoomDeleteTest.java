@@ -33,7 +33,6 @@ public class RoomDeleteTest {
 
 	@Test
 	public void testdeleteRoom() {
-
 		client = Client.create();
 		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage())
