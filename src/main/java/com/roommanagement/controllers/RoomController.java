@@ -77,7 +77,7 @@ public class RoomController{
 	@RequestMapping(value="/deleteRoom/{name}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Status deletRoom(@PathVariable("name") String name) {
 		roomservice.delete(name);
-		return new Status<RoomCollection>("success","Room Deleted Successfully!");
+		return new Status<RoomCollection>("true","Room Deleted Successfully!");
 	}
 	
 	
