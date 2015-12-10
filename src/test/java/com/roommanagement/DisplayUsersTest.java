@@ -37,9 +37,7 @@ public class DisplayUsersTest {
 	public void test() throws JsonParseException, JsonMappingException, IOException {
 		Client client = Client.create();		
 		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/getUsers");
-		webResource.header("authToken",status.getMessage().trim());
 		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
-		System.out.println(response);
 		String output = response.getEntity(String.class);
 		ObjectMapper mapper=new ObjectMapper();
 		Status s=mapper.readValue(output,Status.class);
