@@ -44,27 +44,27 @@ public class RoomServiceImpl implements RoomService {
 				return true;
 	}
 
+	/***********************Update Room************************/
 	public void updateRoom(RoomCollection room) {
-	BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\" }");
-		
-		RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
-		if(roomTest!=null)
-		{
+		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\" }");
 			
-			System.out.println("Room already exists ");
-			
-		}
-		else
-		{
-						
-			roomRepository.save(room);
-			System.out.println("Room modified successfully");
+			RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
+			if(roomTest==null)
+			{
+				
+				System.out.println("Room does not exists ");
+				
+			}
+			else
+			{
+				room.setId(roomTest.getId());
+							
+				roomRepository.save(room);
+				
+				System.out.println("Room modified successfully");
 
+			}
 		}
-	}
 
-//	public void save(RoomCollection room) {
-//			roomRepository.save(room);
-//		
-//	}
+
 }
