@@ -92,4 +92,10 @@ public class RoomController{
 		else
 			return  new Status<RoomCollection>("false","Room of this name is already there");
 	}
+	
+	@RequestMapping("/getRoomsCount")
+	public Status getRoomsCount() {
+		
+		return roomservice.getRoomCount();
+	}
 }

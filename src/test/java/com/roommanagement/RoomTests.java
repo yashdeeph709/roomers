@@ -36,7 +36,7 @@ public class RoomTests {
 		ObjectMapper mapper=new ObjectMapper();
 		try {
 			status=mapper.readValue(output,Status.class);
-			System.out.println(status);
+			System.out.println("Initial "+status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -7,7 +7,6 @@ public class UserBean {
 	private String email;
 	public UserBean() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	public UserBean(String id, String name, String email) {
 		super();

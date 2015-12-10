@@ -1,17 +1,12 @@
 package com.roommanagement.services;
 
-import java.security.Key;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.spec.IvParameterSpec;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
+
+import com.roommanagement.beans.Status;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.UsersRepository;
 
@@ -122,4 +117,9 @@ public class UserServiceImpl implements UserService{
 				UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 				return userTest;
 			}
+
+
+	public Status<Long> getUsersCount() {
+		return new Status<Long>("success","Got Users Count",repository.count());
+	}
 }

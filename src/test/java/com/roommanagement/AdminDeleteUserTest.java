@@ -18,7 +18,7 @@ public class AdminDeleteUserTest {
 	UserService userService;
 	JSONObject obj = new JSONObject();
 	Client client ;
-	WebResource webResource;
+	WebResource webResource; 
 	String baseURI;
 	
 	@Before

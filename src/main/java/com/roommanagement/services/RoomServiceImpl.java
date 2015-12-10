@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
+import com.roommanagement.beans.Status;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.RoomRepository;
@@ -79,6 +80,11 @@ public class RoomServiceImpl implements RoomService {
 
 			}
 		}
+
+	public Status<Long> getRoomCount() {
+		
+		return new Status<Long>("success","Got Room Count",roomRepository.count());
+	}
 
 
 }
