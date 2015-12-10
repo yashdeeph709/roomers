@@ -26,42 +26,39 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class RoomDeleteTest {
-	Client client ;
+	Client client;
 	WebResource webResource;
 	String baseURI = "http://localhost:8080/RoomManagement";
 	ClientResponse response;
-	Status status=null;
+	Status status = null;
+
 	@Before
-	public void setup(){
+	public void setup() {
 		client = Client.create();
 		webResource = client.resource("http://localhost:8080/RoomManagement/getAdmin");
 		response = webResource.accept("application/json").get(ClientResponse.class);
 		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
 		try {
-			status=mapper.readValue(output,Status.class);
+			status = mapper.readValue(output, Status.class);
 			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	@Test
-	public void testdeleteRoom() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
-		
-		client = Client.create();		
-		 webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
-		 ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
-		
-		String output=response.getEntity(String.class);
-		String expected="{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
+	public void testdeleteRoom() throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
+
+		client = Client.create();
+		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
+		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage())
+				.get(ClientResponse.class);
+		String output = response.getEntity(String.class);
+		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
 		System.out.println(output);
-		assertEquals(output,expected);
-		
-			
-		}	
-	
-	
+		assertEquals(output, expected);
+
+	}
+
 }
