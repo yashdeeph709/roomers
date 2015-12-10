@@ -32,7 +32,8 @@ public class UserCollection {
 	}
 	@Override
 	public String toString() {
-		return "UserBean [Id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + "]";
+		return "UserCollection [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", rights=" + rights + "]";
 	}
 	public String getId() {
 		return id;

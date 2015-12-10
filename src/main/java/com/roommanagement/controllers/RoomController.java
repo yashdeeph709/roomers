@@ -51,9 +51,8 @@ public class RoomController{
 	
 	/***********************Update Room************************/
 	@RequestMapping(value="/updateRoom", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Status<RoomCollection> updateRoom(@RequestBody Room room,@PathVariable String id) {
-		if(service.checkUser(id)){
-			
+	public Status<RoomCollection> updateRoom(@RequestBody Room room,@RequestHeader String authToken) {
+		if(service.checkAdmin(authToken)){
 			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
 		}
 			RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
