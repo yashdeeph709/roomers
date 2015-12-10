@@ -16,6 +16,9 @@ public class Room {
 	private String roomProjector;
 	private String roomInternet;
 	
+	
+	
+	
 	public String getRoomName() {
 		return roomName;
 	}

@@ -49,15 +49,18 @@ public class RoomController{
 		return new Status<RoomCollection>("success","successfull",roomservice.getRooms());
 	}
 	
-	@RequestMapping(value="/updateRoom", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Status<RoomCollection> updateRoom(@RequestBody Room room,@RequestHeader String authToken) {
-		if(service.checkAdmin(authToken)){
+	/***********************Update Room************************/
+	@RequestMapping(value="/updateRoom/{id}", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	public Status<RoomCollection> updateRoom(@RequestBody Room room,@PathVariable String id) {
+		if(service.checkUser(id)){
+			
 			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
 		}
 			RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
 			roomservice.updateRoom(roomDetails);
 			return  new Status<RoomCollection>("true",roomDetails.getRoomName());
 	}
+	
 	
 	@RequestMapping(value="/availRoomName/{roomName}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public Status<RoomCollection> checkRoom(@PathVariable("roomName") String roomName,@RequestHeader String authToken) {

@@ -15,5 +15,5 @@ public interface RoomService {
 	List<RoomCollection> getRooms();
 	
 	void updateRoom(RoomCollection room); 
-	//void save(RoomCollection room);
+	
 }

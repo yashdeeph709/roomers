@@ -22,6 +22,13 @@ public class RoomCollection {
 	private String roomProjector;
 	private String roomInternet;
 	
+	
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getRoomName() {
 		return roomName;
 	}
