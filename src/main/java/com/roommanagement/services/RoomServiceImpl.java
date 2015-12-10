@@ -1,14 +1,12 @@
 package com.roommanagement.services;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
-import com.roommanagement.beans.Room;
+
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.repository.RoomRepository;
 
@@ -29,7 +27,11 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	/*******************RoomServiceImpl.java*******************/
-	
+	public void delete(String name) {
+		System.out.println("*********Hello****************"+name);
+		roomRepository.deleteByRoomName(name);
+	}
+
 
 	public List<RoomCollection> getRooms() {
 		return roomRepository.findAll();
