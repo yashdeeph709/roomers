@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Room;
 import com.roommanagement.beans.Status;
@@ -59,6 +60,13 @@ public class RoomController{
 			RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
 			roomservice.updateRoom(roomDetails);
 			return  new Status<RoomCollection>("true",roomDetails.getRoomName());
+	}
+					/***********Delete RoomController************/
+	
+	@RequestMapping(value="/deleteRoom/{name}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status deletRoom(@PathVariable("name") String name) {
+		roomservice.delete(name);
+		return new Status<RoomCollection>("success","Room Deleted Successfully!");
 	}
 	
 	
