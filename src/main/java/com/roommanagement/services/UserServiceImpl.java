@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService{
 	public String getAdmin() {
 		BasicQuery basicQuery= new BasicQuery("{ rights : 0 }");
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		System.out.println(userTest);
 		return userTest.getId();
 	}
 
