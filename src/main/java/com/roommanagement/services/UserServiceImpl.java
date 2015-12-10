@@ -36,11 +36,7 @@ public class UserServiceImpl implements UserService{
 	public UserCollection insert(UserCollection user) {
 	BasicQuery basicQuery= new BasicQuery("{ name : \""+user.getEmail()+"\" }");
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
-		if(userTest!=null)
-		{
-			System.out.println("User already exists "+userTest.getName());
-		}
-		else
+		if(userTest==null)
 		{
 			return repository.insert(user);
 		}
@@ -50,6 +46,9 @@ public class UserServiceImpl implements UserService{
 
 	public boolean checkAdmin(String id) {
 		UserCollection user=repository.findOne(id);
+		if(user==null){
+			return true;
+		}
 		if(user.getRights().equals("0")){
 			return false;
 		}
@@ -57,6 +56,9 @@ public class UserServiceImpl implements UserService{
 	}
 	public boolean checkSubAdmin(String id) {
 		UserCollection user=repository.findOne(id);
+		if(user==null){
+			return true;
+		}
 		if(user.getRights().equals("1")){
 			return false;
 		}
@@ -65,6 +67,9 @@ public class UserServiceImpl implements UserService{
 
 	public boolean checkUser(String id) {
 		UserCollection user=repository.findOne(id);
+		if(user==null){
+			return true;
+		}
 		if(user.getRights().equals("2")){
 			return false;
 		}
@@ -82,7 +87,6 @@ public class UserServiceImpl implements UserService{
 	public String getAdmin() {
 		BasicQuery basicQuery= new BasicQuery("{ rights : 0 }");
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
-		System.out.println(userTest);
 		return userTest.getId();
 	}
 

@@ -33,7 +33,7 @@ public class UsersController {
 		return new Status<UserCollection>("success","got data",service.getUsers());
 	}
 	
-	@RequestMapping(value="/delete", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Status<UserCollection> deletUser(@RequestHeader String authToken,@PathVariable("id") String id) {
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");

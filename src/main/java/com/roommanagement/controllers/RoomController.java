@@ -51,7 +51,7 @@ public class RoomController{
 	}
 	
 	/***********************Update Room************************/
-	@RequestMapping(value="/updateRoom/{id}", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/updateRoom", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Status<RoomCollection> updateRoom(@RequestBody Room room,@PathVariable String id) {
 		if(service.checkUser(id)){
 			
