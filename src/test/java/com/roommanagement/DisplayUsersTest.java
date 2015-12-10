@@ -27,6 +27,7 @@ public class DisplayUsersTest {
 		ObjectMapper mapper=new ObjectMapper();
 		try {
 			status=mapper.readValue(output,Status.class);
+			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,14 +36,13 @@ public class DisplayUsersTest {
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, IOException {
 		Client client = Client.create();		
-		WebResource webResource = client.resource("http://localhost:8080/getUsers");
-		webResource.header("authToken",status.getMessage());
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-		if (response.getStatus() != 200) {
-			throw new RuntimeException("Failed Test : HTTP error code : " + response.getStatus());
-		}
-		ObjectMapper mapper=new ObjectMapper();
+		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/getUsers");
+		webResource.header("authToken",status.getMessage().trim());
+		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
+		System.out.println(response);
 		String output = response.getEntity(String.class);
-		System.out.println(output);
+		ObjectMapper mapper=new ObjectMapper();
+		Status s=mapper.readValue(output,Status.class);
+		assertNotEquals(s.getData().size(),0);
 	}
 }
