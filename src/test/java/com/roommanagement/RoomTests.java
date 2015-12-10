@@ -59,7 +59,7 @@ public class RoomTests {
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
 		System.out.println("***********"+s.getData());
-		assertEquals(null ,s.getData());
+		assertEquals("Bahar" ,s.getMessage());
 	}
 	
 	@Test
@@ -77,7 +77,7 @@ public class RoomTests {
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
 		System.out.println("*******%%%%%%%%%****"+s.getData());
-		assertEquals(null,s.getData());
+		assertEquals(null,s.getMessage());
 	}
 
 }

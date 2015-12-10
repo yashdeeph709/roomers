@@ -16,5 +16,6 @@ public interface RoomService {
 	
 	void updateRoom(RoomCollection room); 
 	void delete(String name);
+	RoomCollection getRequiredRoom(String id);
 	
 }

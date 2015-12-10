@@ -3,11 +3,13 @@ package com.roommanagement.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.collections.RoomCollection;
+import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.RoomRepository;
 
 
@@ -35,6 +37,16 @@ public class RoomServiceImpl implements RoomService {
 
 	public List<RoomCollection> getRooms() {
 		return roomRepository.findAll();
+	}
+	
+	public RoomCollection getRequiredRoom(String id) {
+		
+		//String ids="566853cfb399e2db4beac18f";
+		//BasicQuery basicQuery= new BasicQuery("{ _id : ObjectId(\"566853cfb399e2db4beac18f\")}");
+		//System.out.println(mongoOperations.findOne(basicQuery,RoomCollection.class));
+		
+		RoomCollection room=roomRepository.findOne(id);
+		return room;
 	}
 
 	public Boolean checkRoomNameAvailablility(String roomName) {

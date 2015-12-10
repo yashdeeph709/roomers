@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService{
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 		if(userTest==null)
 		{
+			user.setRights("2.0");
 			return repository.insert(user);
 		}
 		return user;
@@ -46,8 +47,15 @@ public class UserServiceImpl implements UserService{
 
 	public boolean checkAdmin(String id) {
 		UserCollection user=repository.findOne(id);
+		System.out.println("checkAdmin");
+		System.out.println(user);
 		System.out.println(user);
 		System.out.println("INside getAdmin");
+		if(user.getRights().equals("0.0")){
+		if(user==null){
+			return true;
+		}
+		System.out.println(user.getRights());		
 		if(user.getRights().equals("0.0")){
 			return false;
 		}
@@ -57,6 +65,10 @@ public class UserServiceImpl implements UserService{
 		UserCollection user=repository.findOne(id);
 		System.out.println("INside getsub");
 		if(user.getRights().equals("1.0")){
+		if(user==null){
+			return true;
+		}
+		if(user.getRights().equals("1.0")){
 			return false;
 		}
 		return true;
@@ -65,6 +77,10 @@ public class UserServiceImpl implements UserService{
 	public boolean checkUser(String id) {
 		UserCollection user=repository.findOne(id);
 		System.out.println("INside getuser");
+		if(user.getRights().equals("2.0")){
+		if(user==null){
+			return true;
+		}
 		if(user.getRights().equals("2.0")){
 			return false;
 		}
