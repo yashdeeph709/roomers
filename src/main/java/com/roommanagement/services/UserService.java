@@ -12,6 +12,8 @@ public interface UserService {
 	boolean checkAdmin(String id);
 	boolean checkSubAdmin(String id);
 	String getUser();
+	UserCollection getUser(String email);
 	String getAdmin();
 	String getSubAdmin();
+	boolean validate(String username, String password);
 }

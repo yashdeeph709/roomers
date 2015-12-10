@@ -82,6 +82,11 @@ public class UserServiceImpl implements UserService{
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 		return userTest.getId();
 	}
+	public UserCollection getUser(String id) {
+		BasicQuery basicQuery= new BasicQuery("{ email : \""+id+"\" }");
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		return userTest;
+	}
 
 
 	public String getAdmin() {
@@ -96,6 +101,18 @@ public class UserServiceImpl implements UserService{
 		BasicQuery basicQuery= new BasicQuery("{ rights : 1 }");
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 		return userTest.getId();
+	}
+
+
+	public boolean validate(String username, String password) {
+		BasicQuery basicQuery= new BasicQuery("{ \"email\" : \""+username+"\",\"password\":\""+password+"\" }");
+		System.out.println("{ \"email\" : \""+username+"\",\"password\":\""+password+"\" }");
+		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		System.out.println(userTest);
+		if(userTest==null){
+			return false;
+		}
+		return true;
 	}
 
 }

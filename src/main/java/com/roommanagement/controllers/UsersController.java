@@ -52,6 +52,18 @@ public class UsersController {
 		return  new Status<UserCollection>("true","Created User name ="+createUserReturnValue.getName());
 	}
 
+	@RequestMapping(value="/login", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status<UserCollection> login(@RequestBody UserCollection user) {
+		if(service.validate(user.getEmail(),user.getPassword())){
+			UserCollection userobject=service.getUser(user.getEmail());
+			userobject.setPassword(null);
+			return new Status<UserCollection>("Success","User loggedIn successfully",userobject);
+		}else{
+			return new Status<UserCollection>("failed","User Doesn't exist");
+		}
+	}
+
+	
 	/*
 	 * Note:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 	 * the are services below are introduced for testing purposes please don't consider them for code review
