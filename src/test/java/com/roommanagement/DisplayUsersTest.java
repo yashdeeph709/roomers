@@ -27,7 +27,6 @@ public class DisplayUsersTest {
 		ObjectMapper mapper=new ObjectMapper();
 		try {
 			status=mapper.readValue(output,Status.class);
-			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

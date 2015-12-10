@@ -34,7 +34,6 @@ public class RoomTests {
 		
 		String output = response.getEntity(String.class);
 		ObjectMapper mapper=new ObjectMapper();
-		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 		try {
 			status=mapper.readValue(output,Status.class);
 			System.out.println(status);
@@ -52,7 +51,7 @@ public class RoomTests {
 		webResource=client.resource(baseURI+"/createRoom");
 		
 		String roomCollection ="{\"roomName\":\"Bahar\",\"roomCity\":\"Pune\",\"roomLocation\":\"Baner Gaon\",\"roomBlock\":\"Baner\",\"roomAddress\":\"5th Floor Amar Paradigm\",\"roomCapacity\":16,\"roomTables\":4,\"roomMachines\":16,\"roomScreen\":1,\"roomBoard\":4,\"roomChart\":1,\"roomProjector\":1,\"roomInternet\":\"false\"}";
-		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
 		
 		String output = response.getEntity(String.class);
 		System.out.println("output "+output);
@@ -60,7 +59,7 @@ public class RoomTests {
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
 		System.out.println("***********"+s.getData());
-		assertEquals(s.getData(),output);
+		assertEquals(null ,s.getData());
 	}
 	
 	@Test
@@ -70,7 +69,7 @@ public class RoomTests {
 		
 		String roomCollection = "{\"roomName\":null,\"roomCity\":null,\"roomLocation\":null,\"roomBlock\":null,\"roomAddress\":null,\"roomCapacity\":null,\"roomTables\":null,\"roomMachines\":null,\"roomScreen\":null,\"roomBoard\":null,\"roomChart\":null,\"roomProjector\":null,\"roomInternet\":null}";
 
-		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
 		
 		String output = response.getEntity(String.class);
 		System.out.println(output);
@@ -78,7 +77,7 @@ public class RoomTests {
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
 		System.out.println("*******%%%%%%%%%****"+s.getData());
-		assertEquals(s.getData(),output);
+		assertEquals(null,s.getData());
 	}
 
 }
