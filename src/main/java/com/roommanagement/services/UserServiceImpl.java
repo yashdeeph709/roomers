@@ -51,7 +51,6 @@ public class UserServiceImpl implements UserService{
 		System.out.println(user);
 		System.out.println(user);
 		System.out.println("INside getAdmin");
-		if(user.getRights().equals("0.0")){
 		if(user==null){
 			return true;
 		}
@@ -64,7 +63,6 @@ public class UserServiceImpl implements UserService{
 	public boolean checkSubAdmin(String id) {
 		UserCollection user=repository.findOne(id);
 		System.out.println("INside getsub");
-		if(user.getRights().equals("1.0")){
 		if(user==null){
 			return true;
 		}
@@ -77,7 +75,6 @@ public class UserServiceImpl implements UserService{
 	public boolean checkUser(String id) {
 		UserCollection user=repository.findOne(id);
 		System.out.println("INside getuser");
-		if(user.getRights().equals("2.0")){
 		if(user==null){
 			return true;
 		}
@@ -86,7 +83,16 @@ public class UserServiceImpl implements UserService{
 		}
 		return true;
 	}
-
+	public boolean validate(String username, String password) {
+				BasicQuery basicQuery= new BasicQuery("{ \"email\" : \""+username+"\",\"password\":\""+password+"\" }");
+				System.out.println("{ \"email\" : \""+username+"\",\"password\":\""+password+"\" }");
+				UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+				System.out.println(userTest);
+				if(userTest==null){
+					return false;
+				}
+				return true;
+			}
 
 	public String getUser() {
 		BasicQuery basicQuery= new BasicQuery("{ rights : 2 }");
@@ -110,4 +116,10 @@ public class UserServiceImpl implements UserService{
 		return userTest.getId();
 	}
 
+
+	public UserCollection getUser(String id) {
+				BasicQuery basicQuery= new BasicQuery("{ email : \""+id+"\" }");
+				UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+				return userTest;
+			}
 }
