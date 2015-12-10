@@ -46,10 +46,13 @@ public class UserServiceImpl implements UserService{
 
 	public boolean checkAdmin(String id) {
 		UserCollection user=repository.findOne(id);
+		System.out.println("checkAdmin");
+		System.out.println(user);
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("0")){
+		System.out.println(user.getRights());		
+		if(user.getRights().equals("0.0")){
 			return false;
 		}
 		return true;
@@ -59,7 +62,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("1")){
+		if(user.getRights().equals("1.0")){
 			return false;
 		}
 		return true;
@@ -70,7 +73,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("2")){
+		if(user.getRights().equals("2.0")){
 			return false;
 		}
 		return true;
