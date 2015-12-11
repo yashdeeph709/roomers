@@ -49,7 +49,4 @@ public class UpdateRoomTest {
 		String output=response.getEntity(String.class);
 		assertEquals(output,"{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\"}");
 		}	
-	
-	
-
 }

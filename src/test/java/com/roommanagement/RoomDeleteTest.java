@@ -55,7 +55,6 @@ public class RoomDeleteTest {
 		String actual = response.getEntity(String.class);
 		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
 		assertEquals(expected,actual);
-
 	}
 
 }
