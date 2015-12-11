@@ -46,16 +46,18 @@ public class AdminDeleteUserTest {
 		
 		webResource = client.resource(baseURI+"/delete/56685de116697f79e253431f");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
-		String output=response.getEntity(String.class);
-		assertEquals("{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"dataOne\":null,\"data\":null}",output);
+		String expected="{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
 		}	
 	
 	@Test
 	public void deleteUserWithoutIdTest(){
 		webResource = client.resource(baseURI+"/delete");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
-		String output=response.getEntity(String.class);
-		assertEquals("{\"status\":\"failed\",\"message\":\"User Deleted Successfully!\",\"dataOne\":null,\"data\":null}",output);
+		String expected="{\"status\":\"failed\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
 			
 		}
     }

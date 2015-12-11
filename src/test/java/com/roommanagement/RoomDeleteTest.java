@@ -52,8 +52,8 @@ public class RoomDeleteTest {
 		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage())
 				.get(ClientResponse.class);
+		String expected = "{\"status\":\"true\",\"message\":\"Room Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
 		String actual = response.getEntity(String.class);
-		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
 		assertEquals(expected,actual);
 	}
 

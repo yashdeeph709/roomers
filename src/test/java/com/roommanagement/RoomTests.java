@@ -56,7 +56,9 @@ public class RoomTests {
 		ObjectMapper mapper=new ObjectMapper();
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
-		assertEquals("Bahar" ,s.getMessage());
+		String expected="Bahar";
+		String actual=s.getMessage();
+		assertEquals(expected,actual);
 	}
 	
 	@Test
@@ -72,7 +74,9 @@ public class RoomTests {
 		ObjectMapper mapper=new ObjectMapper();
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
-		assertEquals(null,s.getMessage());
+		String expected=null;
+		String actual=s.getMessage();
+		assertEquals(expected,actual);
 	}
 	
 	@Test
@@ -89,8 +93,8 @@ public class RoomTests {
 		String output2 = response2.getEntity(String.class);
 		ObjectMapper mapper2=new ObjectMapper();
 		Status<RoomCollection> status2=mapper2.readValue(output2,Status.class);
-		
-		assertEquals(status1.getData().size(), status2.getDataOne());	
+		int expected=status1.getData().size();
+		assertEquals(expected,status2.getDataOne() );	
 
 		
 	}

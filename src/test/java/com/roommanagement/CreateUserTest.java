@@ -47,24 +47,26 @@ public class CreateUserTest {
 		
 		client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/RoomManagement/register");
-		String expected = "{\"name\":\"Palakh\",\"email\":\"palakh@gmail.com\",\"password\":\"Palakh\",\"rights\":\"1\"}";
+		String data = "{\"name\":\"Palakh\",\"email\":\"palakh@gmail.com\",\"password\":\"Palakh\",\"rights\":\"1\"}";
 
-		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, expected);
-		 String actual=response.getEntity(String.class);
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		String expected="{\"status\":\"false\",\"message\":\"User already exists\",\"data\":null,\"dataOne\":null}"; 
+		String actual=response.getEntity(String.class);
 		System.out.println(actual);
-		assertEquals(actual, "{\"status\":\"NotAuthenticated\",\"message\":\"User not Authenticated\",\"dataOne\":null,\"data\":null}");
+		assertEquals(expected,actual );
 	}
 	
 	@Test
 	public void testCreateUserWithNullValues() throws URISyntaxException {
 		
-		String expected = "{\"name\":null,\"email\":null,\"password\":null,\"rights\":null}";
+		String data = "{\"name\":null,\"email\":null,\"password\":null,\"rights\":null}";
 		client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/RoomManagement/register");
-		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, expected);
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		String expected="{\"status\":\"true\",\"message\":\"Created User name null\",\"data\":null,\"dataOne\":null}";
 		 String actual=response.getEntity(String.class);
 		System.out.println(actual);
-		assertEquals(actual, "{\"status\":\"true\",\"message\":\"Created User name =null\"}");
+		assertEquals(expected, actual);
 	}
 
 }
