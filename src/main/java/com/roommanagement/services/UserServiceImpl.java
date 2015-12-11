@@ -29,14 +29,14 @@ public class UserServiceImpl implements UserService{
 
 
 	public UserCollection insert(UserCollection user) {
-	BasicQuery basicQuery= new BasicQuery("{ name : \""+user.getEmail()+"\" }");
+	BasicQuery basicQuery= new BasicQuery("{ email : \""+user.getEmail()+"\" }");
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 		if(userTest==null)
 		{
 			user.setRights("2.0");
 			return repository.insert(user);
 		}
-		return user;
+		return null;
 	}
 
 

@@ -1,12 +1,13 @@
 package com.roommanagement;
 
-
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,18 +40,13 @@ public class UpdateRoomTest {
 	
 	
 	@Test
-	public void testUpdateRoom() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
+	public void testCreateUser() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
 		
 		client = Client.create();		
-		webResource = client.resource("http://localhost:8080/RoomManagement/updateRoom");
-		String expected = "{\"roomName\" : \"Bahar\", \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomTables\" : \"6\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
-		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,expected);
+		 webResource = client.resource("http://localhost:8080/RoomManagement/updateRoom");
+		String expected = "{\"roomName\" : \"Bahar\", \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
+		ClientResponse response = webResource.type("application/json").post(ClientResponse.class,expected);
 		String output=response.getEntity(String.class);
-		System.out.println(output);
 		assertEquals(output,"{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\"}");
-			
 		}	
-	
-	
-
 }

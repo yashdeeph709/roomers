@@ -51,7 +51,7 @@ public class RoomController{
 	}
 	
 	/**********************Get Required Room******************/
-	@RequestMapping(value="/getRequiredRoom/{id}")//, method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/room/{id}")//, method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public Status<RoomCollection> getRequiredRoom(@RequestHeader String authToken,@PathVariable("id") String id) 
 	{
 		if(service.checkAdmin(authToken)){
@@ -62,7 +62,7 @@ public class RoomController{
 		//return roomservice.getRequiredRoom("shruti");
 	}
 	/***********************Update Room************************/
-	@RequestMapping(value="/updateRoom", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/room", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	public Status<RoomCollection> updateRoom(@RequestBody Room room,@RequestHeader String authToken) {
 		if(service.checkAdmin(authToken)){
 			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
@@ -74,9 +74,9 @@ public class RoomController{
 					
 	/***********DeleteRoom Controller************/
 	
-	@RequestMapping(value="/deleteRoom/{name}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status deletRoom(@PathVariable("name") String name) {
-		roomservice.delete(name);
+	@RequestMapping(value="/deleteRoom/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status deletRoom(@PathVariable("id") String id) {
+		roomservice.delete(id);
 		return new Status<RoomCollection>("true","Room Deleted Successfully!");
 	}
 	
