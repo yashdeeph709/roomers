@@ -31,7 +31,7 @@ public class RoomServiceImpl implements RoomService {
 
 	/*******************RoomServiceImpl.java*******************/
 	public void delete(String id) {
-		roomRepository.deleteByRoomId(id);
+		roomRepository.deleteById(id);
 	}
 
 

@@ -9,5 +9,5 @@ import com.roommanagement.collections.RoomCollection;
 
 public interface RoomRepository extends MongoRepository<RoomCollection, String> {
 	List<RoomCollection> findByRoomName(String roomName);
-	void deleteByRoomId(String Id);
+	void deleteById(String Id);
 }
