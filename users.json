@@ -1,0 +1,3 @@
+{"_id":{"$oid":"56685db316697f79e253431d"},"name":"Shruti","email":"shrutiu.7@gmail.com","password":"password","rights":0.0}
+{"_id":{"$oid":"56685dd016697f79e253431e"},"name":"Harshal","email":"harshal@gmail.com","password":"password212","rights":1.0}
+{"_id":{"$oid":"56685de116697f79e253431f"},"name":"Nihit","email":"nihit@gmail.com","password":"password123","rights":2.0}
