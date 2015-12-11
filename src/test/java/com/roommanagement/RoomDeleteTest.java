@@ -1,12 +1,24 @@
 package com.roommanagement;
 
 import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import org.junit.Before;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Test;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roommanagement.beans.Status;
 import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.WebResource;
 
 public class RoomDeleteTest {
@@ -25,19 +37,22 @@ public class RoomDeleteTest {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			status = mapper.readValue(output, Status.class);
+			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void testdeleteRoom() {
+	public void testdeleteRoom() throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
+
 		client = Client.create();
 		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage())
 				.get(ClientResponse.class);
 		String output = response.getEntity(String.class);
-		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
+		String expected = "{\"status\":\"true\",\"message\":\"Room Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
+		System.out.println(output);
 		assertEquals(output, expected);
 
 	}
