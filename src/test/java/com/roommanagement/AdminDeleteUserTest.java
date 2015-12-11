@@ -35,12 +35,9 @@ public class AdminDeleteUserTest {
 		ObjectMapper mapper=new ObjectMapper();
 		try {
 			status=mapper.readValue(output,Status.class);
-			System.out.println("Initial "+status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		 
-		
 	}
 	
 	
@@ -50,9 +47,7 @@ public class AdminDeleteUserTest {
 		webResource = client.resource(baseURI+"/delete/56685de116697f79e253431f");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
 		String output=response.getEntity(String.class);
-		System.out.println(output);
 		assertEquals("{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"dataOne\":null,\"data\":null}",output);
-			
 		}	
 	
 	@Test

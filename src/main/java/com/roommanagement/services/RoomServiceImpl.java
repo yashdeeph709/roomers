@@ -31,7 +31,6 @@ public class RoomServiceImpl implements RoomService {
 
 	/*******************RoomServiceImpl.java*******************/
 	public void delete(String name) {
-		System.out.println("*********Hello****************"+name);
 		roomRepository.deleteByRoomName(name);
 	}
 
@@ -62,22 +61,11 @@ public class RoomServiceImpl implements RoomService {
 	/***********************Update Room************************/
 	public void updateRoom(RoomCollection room) {
 		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\" }");
-			
 			RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
-			if(roomTest==null)
-			{
-				
-				System.out.println("Room does not exists ");
-				
-			}
-			else
-			{
+			if(roomTest!=null)
+			{				
 				room.setId(roomTest.getId());
-							
 				roomRepository.save(room);
-				
-				System.out.println("Room modified successfully");
-
 			}
 		}
 

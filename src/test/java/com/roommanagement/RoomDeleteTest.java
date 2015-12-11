@@ -25,7 +25,6 @@ public class RoomDeleteTest {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			status = mapper.readValue(output, Status.class);
-			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -39,7 +38,6 @@ public class RoomDeleteTest {
 				.get(ClientResponse.class);
 		String output = response.getEntity(String.class);
 		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
-		System.out.println(output);
 		assertEquals(output, expected);
 
 	}

@@ -36,7 +36,6 @@ public class RoomTests {
 		ObjectMapper mapper=new ObjectMapper();
 		try {
 			status=mapper.readValue(output,Status.class);
-			System.out.println("Initial "+status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -54,11 +53,9 @@ public class RoomTests {
 		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
 		
 		String output = response.getEntity(String.class);
-		System.out.println("output "+output);
 		ObjectMapper mapper=new ObjectMapper();
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
-		System.out.println("***********"+s.getData());
 		assertEquals("Bahar" ,s.getMessage());
 	}
 	
@@ -72,11 +69,9 @@ public class RoomTests {
 		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class,roomCollection);
 		
 		String output = response.getEntity(String.class);
-		System.out.println(output);
 		ObjectMapper mapper=new ObjectMapper();
 		
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
-		System.out.println("*******%%%%%%%%%****"+s.getData());
 		assertEquals(null,s.getMessage());
 	}
 
