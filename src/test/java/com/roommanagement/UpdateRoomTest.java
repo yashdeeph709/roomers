@@ -40,13 +40,61 @@ public class UpdateRoomTest {
 	
 	
 	@Test
-	public void testCreateUser() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
-		
+	public void testUpdateRoom() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
 		client = Client.create();		
-		 webResource = client.resource("http://localhost:8080/RoomManagement/updateRoom");
-		String expected = "{\"roomName\" : \"Bahar\", \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
-		ClientResponse response = webResource.type("application/json").post(ClientResponse.class,expected);
-		String output=response.getEntity(String.class);
-		assertEquals(output,"{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\"}");
+		 webResource = client.resource("http://localhost:8080/RoomManagement/room");
+		 String data = "{\"roomName\" : \"Bahar\", \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		
+		String expected="{\"status\":\"true\",\"message\":\"Bahar\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
+		}	
+	@Test
+	public void testUpdateWithNulllValues() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
+		client = Client.create();		
+		 webResource = client.resource("http://localhost:8080/RoomManagement/room");
+		 String data = "{ }";
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		
+		String expected="{\"status\":\"false\",\"message\":\"required fields should not be empty\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
+		}	
+	
+	@Test
+	public void testUpdateWithoutRoomName() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
+		client = Client.create();		
+		 webResource = client.resource("http://localhost:8080/RoomManagement/room");
+		 String data = "{ \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		
+		String expected="{\"status\":\"false\",\"message\":\"required fields should not be empty\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
+		}	
+	
+	@Test
+	public void testUpdateWithoutRoomBlock() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
+		client = Client.create();		
+		 webResource = client.resource("http://localhost:8080/RoomManagement/room");
+		 String data = "{ \"roomName\" : \"Bahar\",\"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		
+		String expected="{\"status\":\"false\",\"message\":\"required fields should not be empty\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
+		}	
+	
+	@Test
+	public void testUpdateWithoutRoomLocation() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
+		client = Client.create();		
+		 webResource = client.resource("http://localhost:8080/RoomManagement/room");
+		 String data = "{ \"roomName\" : \"Bahar\",\"roomCity\" : \"Mumbai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
+		
+		String expected="{\"status\":\"false\",\"message\":\"required fields should not be empty\",\"data\":null,\"dataOne\":null}";
+		String actual=response.getEntity(String.class);
+		assertEquals(expected,actual);
 		}	
 }

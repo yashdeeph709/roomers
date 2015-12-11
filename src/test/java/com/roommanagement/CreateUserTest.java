@@ -61,10 +61,7 @@ public class CreateUserTest {
 		String expected = "{\"name\":null,\"email\":null,\"password\":null,\"rights\":null}";
 		client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/RoomManagement/register");
-		
-
 		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, expected);
-		
 		 String actual=response.getEntity(String.class);
 		System.out.println(actual);
 		assertEquals(actual, "{\"status\":\"true\",\"message\":\"Created User name =null\"}");

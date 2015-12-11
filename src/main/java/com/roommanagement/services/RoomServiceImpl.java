@@ -40,11 +40,6 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	public RoomCollection getRequiredRoom(String id) {
-		
-		//String ids="566853cfb399e2db4beac18f";
-		//BasicQuery basicQuery= new BasicQuery("{ _id : ObjectId(\"566853cfb399e2db4beac18f\")}");
-		//System.out.println(mongoOperations.findOne(basicQuery,RoomCollection.class));
-		
 		RoomCollection room=roomRepository.findOne(id);
 		return room;
 	}
@@ -60,7 +55,7 @@ public class RoomServiceImpl implements RoomService {
 
 	/***********************Update Room************************/
 	public void updateRoom(RoomCollection room) {
-		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\" }");
+		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",roomBlock : \""+room.getRoomBlock()+"\",roomLocation:\""+room.getRoomLocation()+"\" }");
 			RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
 			if(roomTest!=null)
 			{				

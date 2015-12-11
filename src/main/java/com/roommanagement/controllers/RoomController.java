@@ -67,9 +67,16 @@ public class RoomController{
 		if(service.checkAdmin(authToken)){
 			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
 		}
+		else if(room.getRoomName()==null||room.getRoomBlock()==null||room.getRoomLocation()==null)
+		{
+			return  new Status<RoomCollection>("false","required fields should not be empty");
+		}
+		else
+		{
 			RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
 			roomservice.updateRoom(roomDetails);
 			return  new Status<RoomCollection>("true",roomDetails.getRoomName());
+		}
 	}
 					
 	/***********DeleteRoom Controller************/

@@ -50,16 +50,16 @@ public class UsersController {
 		}
 		else
 		{
-			System.out.println("*************** Before creattion");
+			
 			UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
 					user.getPassword(),user.getRights()));
 			if(createUserReturnValue==null)
 			{
-				System.out.println("***************"+createUserReturnValue);
+			
 				return  new Status<UserCollection>("false","User already exists");
 			}
 			
-			return  new Status<UserCollection>("true","Created User name ="+createUserReturnValue.getName());
+			return  new Status<UserCollection>("true","Created User name "+createUserReturnValue.getName());
 		}
 		
 	}
