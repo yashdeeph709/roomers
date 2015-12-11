@@ -47,9 +47,7 @@ public class UpdateRoomTest {
 		String expected = "{\"roomName\" : \"Bahar\", \"roomCity\" : \"Mumbai\", \"roomLocation\" : \"Powai\", \"roomBlock\" : \"Hiranandani Business Park\",\"roomAddress\" : \"4th Floor,Nomura,Winchester Building\",\"roomCapacity\" : \"123\",\"roomMachines\" : \"6123\",\"roomBoard\" : \"2\",\"roomChart\" : \"122\", \"roomScreen\" : \"000\",\"roomProjector\" : \"2\",\"roomInternet\" : \"disabled\"}";
 		ClientResponse response = webResource.type("application/json").post(ClientResponse.class,expected);
 		String output=response.getEntity(String.class);
-		System.out.println(output);
-		//assertEquals(output,"{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\"}");
-			
+		assertEquals(output,"{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\"}");
 		}	
 	
 	

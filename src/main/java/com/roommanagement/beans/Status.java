@@ -6,14 +6,14 @@ public class Status<T> {
 	
 	private String status;
 	private String message;
-	private List<T> Data;
+	private List<T> data;
 	private T dataOne;
 	
 	public Status(String status, String message, List<T> data, T dataOne) {
 		super();
 		this.status = status;
 		this.message = message;
-		Data = data;
+		this.data = data;
 		this.dataOne = dataOne;
 	}
 	public Status(String status, String message, T dataOne) {
@@ -31,7 +31,7 @@ public class Status<T> {
 	public Status(String status2, String message2, List<T> rooms) {
 		this.status = status2;
 		this.message = message2;
-		this.Data = rooms;
+		this.data = rooms;
 	}
 	public String getStatus() {
 		return status;
@@ -46,10 +46,10 @@ public class Status<T> {
 		this.message = message;
 	}
 	public List<T> getData() {
-		return Data;
+		return this.data;
 	}
 	public void setData(List<T> data) {
-		Data = data;
+		this.data = data;
 	}
 	public T getDataOne() {
 		return dataOne;
@@ -59,7 +59,7 @@ public class Status<T> {
 	}
 	@Override
 	public String toString() {
-		return "Status [status=" + status + ", message=" + message + ", Data=" + Data + ", dataOne=" + dataOne + "]";
+		return "Status [status=" + status + ", message=" + message + ", Data=" + data + ", dataOne=" + dataOne + "]";
 	}
 	
 }

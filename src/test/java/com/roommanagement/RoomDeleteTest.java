@@ -41,22 +41,19 @@ public class RoomDeleteTest {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			status = mapper.readValue(output, Status.class);
-			System.out.println(status);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Test
-	public void testdeleteRoom() throws URISyntaxException, JsonParseException, JsonMappingException, IOException {
-
+	public void testdeleteRoom() {
 		client = Client.create();
 		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage())
 				.get(ClientResponse.class);
 		String actual = response.getEntity(String.class);
 		String expected = "{\"status\":\"success\",\"message\":\"Room Deleted Successfully!\",\"dataOne\":null,\"data\":null}";
-		System.out.println(actual);
 		assertEquals(expected,actual);
 
 	}

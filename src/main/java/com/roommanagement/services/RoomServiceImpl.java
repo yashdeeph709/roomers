@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
+import com.roommanagement.beans.Status;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.RoomRepository;
@@ -30,7 +31,6 @@ public class RoomServiceImpl implements RoomService {
 
 	/*******************RoomServiceImpl.java*******************/
 	public void delete(String name) {
-		System.out.println("*********Hello****************"+name);
 		roomRepository.deleteByRoomName(name);
 	}
 
@@ -61,24 +61,18 @@ public class RoomServiceImpl implements RoomService {
 	/***********************Update Room************************/
 	public void updateRoom(RoomCollection room) {
 		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\" }");
-			
 			RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
-			if(roomTest==null)
-			{
-				
-				System.out.println("Room does not exists ");
-				
-			}
-			else
-			{
+			if(roomTest!=null)
+			{				
 				room.setId(roomTest.getId());
-							
 				roomRepository.save(room);
-				
-				System.out.println("Room modified successfully");
-
 			}
 		}
+
+	public Status<Long> getRoomCount() {
+		
+		return new Status<Long>("success","Got Room Count",roomRepository.count());
+	}
 
 
 }

@@ -77,7 +77,7 @@ public class RoomController{
 	@RequestMapping(value="/deleteRoom/{name}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Status deletRoom(@PathVariable("name") String name) {
 		roomservice.delete(name);
-		return new Status<RoomCollection>("success","Room Deleted Successfully!");
+		return new Status<RoomCollection>("true","Room Deleted Successfully!");
 	}
 	
 	
@@ -91,5 +91,11 @@ public class RoomController{
 			return  new Status<RoomCollection>("true","Room of this name is not there");
 		else
 			return  new Status<RoomCollection>("false","Room of this name is already there");
+	}
+	
+	@RequestMapping("/getRoomsCount")
+	public Status getRoomsCount() {
+		
+		return roomservice.getRoomCount();
 	}
 }
