@@ -61,7 +61,7 @@ public class CreateUserTest {
 		
 		String data = "{\"name\":null,\"email\":null,\"password\":null,\"rights\":null}";
 		client = Client.create();		
-		 webResource = client.resource("http://localhost:8080/RoomManagement/register");
+		webResource = client.resource("http://localhost:8080/RoomManagement/register");
 		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
 		String expected="{\"status\":\"true\",\"message\":\"Created User name null\",\"data\":null,\"dataOne\":null}";
 		 String actual=response.getEntity(String.class);
