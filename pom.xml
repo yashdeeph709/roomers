@@ -75,8 +75,7 @@
 	<artifactId>jersey-bundle</artifactId>
 	<version>1.10-b01</version>
 </dependency>
-
-  </dependencies>
+</dependencies>
 
     
 </project>

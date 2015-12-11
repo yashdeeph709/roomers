@@ -44,12 +44,24 @@ public class UsersController {
 		
 	@RequestMapping(value="/register", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody Status<UserCollection> registerUser(@RequestBody UserCollection user,@RequestHeader String authToken) {
-	UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
-													user.getPassword(),user.getRights()));
+
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
 		}
-		return  new Status<UserCollection>("true","Created User name ="+createUserReturnValue.getName());
+		else
+		{
+			System.out.println("*************** Before creattion");
+			UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
+					user.getPassword(),user.getRights()));
+			if(createUserReturnValue==null)
+			{
+				System.out.println("***************"+createUserReturnValue);
+				return  new Status<UserCollection>("false","User already exists");
+			}
+			
+			return  new Status<UserCollection>("true","Created User name ="+createUserReturnValue.getName());
+		}
+		
 	}
 
 	@RequestMapping(value="/login", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
