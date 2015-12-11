@@ -74,5 +74,25 @@ public class RoomTests {
 		Status<RoomCollection> s=mapper.readValue(output,Status.class);
 		assertEquals(null,s.getMessage());
 	}
+	
+	@Test
+	public void viewRoomsTest() throws JsonParseException, JsonMappingException, IOException{
+		
+		webResource=client.resource(baseURI+"/getRooms");
+		ClientResponse response1 = webResource.type("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
+		String output1 = response1.getEntity(String.class);
+		ObjectMapper mapper1=new ObjectMapper();
+		Status<RoomCollection> status1=mapper1.readValue(output1,Status.class);
+		
+		webResource=client.resource(baseURI+"/getRoomsCount");
+		ClientResponse response2 = webResource.type("application/json").get(ClientResponse.class);
+		String output2 = response2.getEntity(String.class);
+		ObjectMapper mapper2=new ObjectMapper();
+		Status<RoomCollection> status2=mapper2.readValue(output2,Status.class);
+		
+		assertEquals(status1.getData().size(), status2.getDataOne());	
+
+		
+	}
 
 }
