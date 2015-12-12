@@ -2,7 +2,10 @@ package com.roommanagement.controllers;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.roommanagement.beans.Room;
 import com.roommanagement.beans.Status;
 import com.roommanagement.collections.RoomCollection;
@@ -21,7 +26,7 @@ import com.roommanagement.services.UserService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/RoomManagement")
+@RequestMapping("/roommanagement")
 public class RoomController{
 
 	@Autowired
@@ -30,64 +35,111 @@ public class RoomController{
 	UserService service;
 	
 	
-	@RequestMapping(value="/createRoom", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Status<RoomCollection> registerRoom(@RequestBody Room room,@RequestHeader String authToken) {
-		if(service.checkAdmin(authToken)){
-			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
-		}
-		RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
-			RoomCollection roomCollectionReturned = roomservice.insert(roomDetails);
-			
-		return  new Status<RoomCollection>("true",roomCollectionReturned.getRoomName());
-	}
-	
-	@RequestMapping("/getRooms")
-	public Status<RoomCollection> getRooms(@RequestHeader String authToken) {
+	@RequestMapping(value = "/rooms", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Room> addRooms(@RequestBody Room room,@RequestHeader String authToken) {
+		
 		if(service.checkAdmin(authToken)){
 			
-			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
+			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
+			
 		}
-		return new Status<RoomCollection>("success","successfull",roomservice.getRooms());
+		
+		HttpStatus httpStatus = null;
+		
+		Room roomReturned =roomservice.insert(room);
+		
+		if(roomReturned==null){
+			httpStatus = HttpStatus.BAD_REQUEST; 				//If room is not inserted
+		}
+		else{
+			httpStatus = HttpStatus.CREATED;					//If room is created
+		}
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		return new ResponseEntity<Room>(roomReturned, httpHeaders, httpStatus);
+			
 	}
 	
-	/**********************Get Required Room******************/
-	@RequestMapping(value="/room/{id}")//, method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public Status<RoomCollection> getRequiredRoom(@RequestHeader String authToken,@PathVariable("id") String id) 
+	
+	@RequestMapping(value = "/rooms", method = RequestMethod.GET)
+	public ResponseEntity<List<Room>> getRooms(@RequestHeader String authToken) {
+		if(service.checkAdmin(authToken)){
+			
+			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
+		}
+		
+		HttpStatus httpStatus = null;
+		
+		List<Room> roomList = roomservice.getRooms();
+		
+		
+		if(roomList==null){
+			httpStatus = HttpStatus.NO_CONTENT; 				//If no rooms are there in the db 
+		}
+		else{
+			httpStatus = HttpStatus.FOUND;					//If room are there
+		}
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		
+		return new ResponseEntity<List<Room>>(roomList, httpHeaders, httpStatus);
+	}	
+	
+	
+	@RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Room> getRoom(@RequestHeader String authToken,@PathVariable("id") String id) 
 	{
 		if(service.checkAdmin(authToken)){
 			
-			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
+			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
 		}
-		return new Status<RoomCollection>("success","successfull",roomservice.getRequiredRoom(id));
-		//return roomservice.getRequiredRoom("shruti");
+		
+		HttpStatus httpStatus = null;
+		
+		Room requiredRoom = roomservice.getRoom(id);
+		
+		if(requiredRoom==null){
+			httpStatus = HttpStatus.NOT_FOUND; 				//If no rooms are there in the db 
+		}
+		else{
+			httpStatus = HttpStatus.FOUND;					//If room are there
+		}
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+
+		return new ResponseEntity<Room>(requiredRoom, httpHeaders, httpStatus);
+			
 	}
-	/***********************Update Room************************/
-	@RequestMapping(value="/room", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
-	public Status<RoomCollection> updateRoom(@RequestBody Room room,@RequestHeader String authToken) {
+	
+	@RequestMapping(value = "/rooms", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> updateRoom(@RequestBody Room room,@RequestHeader String authToken) {
+		
+		HttpHeaders httpHeaders = new HttpHeaders();
+		
 		if(service.checkAdmin(authToken)){
-			return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
+			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
 		}
-		else if(room.getRoomName()==null||room.getRoomBlock()==null||room.getRoomLocation()==null)
-		{
-			return  new Status<RoomCollection>("false","required fields should not be empty");
+		if(room.getRoomName()==null||room.getRoomBlock()==null||room.getRoomLocation()==null){
+			
+			return  new ResponseEntity<String>("Required fields could not be empty", httpHeaders, HttpStatus.PRECONDITION_REQUIRED);
 		}
-		else
-		{
-			RoomCollection roomDetails = new RoomCollection(room.getRoomName(),room.getRoomCity(),room.getRoomLocation(),room.getRoomBlock(),room.getRoomAddress(),room.getRoomCapacity(),room.getRoomTables(),room.getRoomMachines(),room.getRoomScreen(),room.getRoomBoard(),room.getRoomChart(),room.getRoomProjector(),room.getRoomInternet());
-			roomservice.updateRoom(roomDetails);
-			return  new Status<RoomCollection>("true",roomDetails.getRoomName());
+		else{
+		
+			roomservice.updateRoom(room);
+			return  new ResponseEntity<String>("Room details updated successfully", httpHeaders, HttpStatus.ACCEPTED);
 		}
 	}
 					
-	/***********DeleteRoom Controller************/
 	
-	@RequestMapping(value="/deleteRoom/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status deletRoom(@PathVariable("id") String id) {
+	@RequestMapping(value="/rooms/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> deletRoom(@PathVariable("id") String id) {
 		roomservice.delete(id);
-		return new Status<RoomCollection>("true","Room Deleted Successfully!");
+		HttpHeaders httpHeaders = new HttpHeaders();
+		return  new ResponseEntity<String>("Room details updated successfully", httpHeaders, HttpStatus.ACCEPTED);
 	}
 	
-	
+	/*
 	@RequestMapping(value="/availRoomName/{roomName}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public Status<RoomCollection> checkRoom(@PathVariable("roomName") String roomName,@RequestHeader String authToken) {
 		if(service.checkAdmin(authToken)){
@@ -99,7 +151,7 @@ public class RoomController{
 		else
 			return  new Status<RoomCollection>("false","Room of this name is already there");
 	}
-	
+	*/
 	@RequestMapping("/getRoomsCount")
 	public Status getRoomsCount() {
 		

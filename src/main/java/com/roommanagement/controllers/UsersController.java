@@ -1,7 +1,10 @@
 package com.roommanagement.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Status;
+import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.services.UserService;
 
@@ -21,29 +25,55 @@ import com.roommanagement.services.UserService;
 @RequestMapping("/roommanagement")
 public class UsersController {
 
-	
+	HttpStatus httpstatus=null;
+	HttpHeaders responseHeaders = new HttpHeaders();
 	@Autowired
 	private UserService service;
 	
+//	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+//	public Status<UserCollection> getUsers(@RequestHeader String authToken) {
+//		if(service.checkAdmin(authToken)){
+//			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
+//		}
+//		return new Status<UserCollection>("success","got data",service.getUsers());
+//	}
+	//*************************Response Entity**********************	
 	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public Status<UserCollection> getUsers(@RequestHeader String authToken) {
+	public ResponseEntity<String> getUsers(@RequestHeader String authToken) {
 		if(service.checkAdmin(authToken)){
-			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
+			httpstatus=HttpStatus.UNAUTHORIZED;
 		}
-		return new Status<UserCollection>("success","got data",service.getUsers());
+		else
+		{
+			service.getUsers();
+			httpstatus=HttpStatus.ACCEPTED;
+		}
+		return new ResponseEntity<String>(responseHeaders,httpstatus);
+	}
+	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
+		
+		String status="";
+		
+		if(service.checkAdmin(authToken))
+		{
+			httpstatus=HttpStatus.UNAUTHORIZED;
+	
+		}
+		else
+		{
+		service.delete(id);
+		httpstatus=HttpStatus.ACCEPTED;
+		}
+		System.out.println(status);
+		ResponseEntity<String> responseEntity=new ResponseEntity<String>(responseHeaders,httpstatus);
+		System.out.println(responseEntity);
+		return new ResponseEntity<String>(responseHeaders,httpstatus);
 	}
 	
-	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
-		if(service.checkAdmin(authToken)){
-			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
-		}
-		service.delete(id);
-		return new Status<UserCollection>("success","User Deleted Successfully!");
-	}
 		
 	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> createUser(@RequestBody UserCollection user,@RequestHeader String authToken) {
+	public @ResponseBody Status<UserCollection> createUser(@RequestBody User user,@RequestHeader String authToken) {
 
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
@@ -51,8 +81,7 @@ public class UsersController {
 		else
 		{
 			
-			UserCollection createUserReturnValue= service.insert(new UserCollection(user.getName(), user.getEmail(), 
-					user.getPassword(),user.getRights()));
+			UserCollection createUserReturnValue= service.insert(new UserCollection(user));
 			if(createUserReturnValue==null)
 			{
 			
@@ -64,16 +93,6 @@ public class UsersController {
 		
 	}
 
-	@RequestMapping(value="/login", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> login(@RequestBody UserCollection user) {
-		if(service.validate(user.getEmail(),user.getPassword())){
-			UserCollection userobject=service.getUser(user.getEmail());
-			userobject.setPassword(null);
-			return new Status<UserCollection>("Success","User loggedIn successfully",userobject);
-		}else{
-			return new Status<UserCollection>("failed","User Doesn't exist");
-		}
-	}
 
 	
 	/*

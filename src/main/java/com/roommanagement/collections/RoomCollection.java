@@ -3,6 +3,8 @@ package com.roommanagement.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.roommanagement.beans.Room;
+
 @Document(collection="rooms")
 public class RoomCollection {
 	
@@ -13,128 +15,189 @@ public class RoomCollection {
 	private String roomLocation;
 	private String roomBlock;
 	private String roomAddress;
-	private String roomCapacity;
-	private String roomTables;
-	private String roomMachines;
-	private String roomBoard;
-	private String roomChart;
-	private String roomScreen;
-	private String roomProjector;
-	private String roomInternet;
+	private int roomCapacity;
+	private int roomTables;
+	private int roomMachines;
+	private int roomBoard;
+	private int roomChart;
+	private int roomScreen;
+	private int roomProjector;
+	private boolean roomInternet;
 	
 	
-	public String getId() {
+		public String getId() {
 		return id;
 	}
+
+
 	public void setId(String id) {
 		this.id = id;
 	}
+
+
 	public String getRoomName() {
 		return roomName;
 	}
+
+
 	public void setRoomName(String roomName) {
 		this.roomName = roomName;
 	}
+
+
 	public String getRoomCity() {
 		return roomCity;
 	}
+
+
 	public void setRoomCity(String roomCity) {
 		this.roomCity = roomCity;
 	}
+
+
 	public String getRoomLocation() {
 		return roomLocation;
 	}
+
+
 	public void setRoomLocation(String roomLocation) {
 		this.roomLocation = roomLocation;
 	}
+
+
 	public String getRoomBlock() {
 		return roomBlock;
 	}
+
+
 	public void setRoomBlock(String roomBlock) {
 		this.roomBlock = roomBlock;
 	}
+
+
 	public String getRoomAddress() {
 		return roomAddress;
 	}
+
+
 	public void setRoomAddress(String roomAddress) {
 		this.roomAddress = roomAddress;
 	}
-	public String getRoomCapacity() {
+
+
+	public int getRoomCapacity() {
 		return roomCapacity;
 	}
-	public void setRoomCapacity(String roomCapacity) {
+
+
+	public void setRoomCapacity(int roomCapacity) {
 		this.roomCapacity = roomCapacity;
 	}
-	public String getRoomTables() {
+
+
+	public int getRoomTables() {
 		return roomTables;
 	}
-	public void setRoomTables(String roomTables) {
+
+
+	public void setRoomTables(int roomTables) {
 		this.roomTables = roomTables;
 	}
-	public String getRoomMachines() {
+
+
+	public int getRoomMachines() {
 		return roomMachines;
 	}
-	public void setRoomMachines(String roomMachines) {
+
+
+	public void setRoomMachines(int roomMachines) {
 		this.roomMachines = roomMachines;
 	}
-	public String getRoomBoard() {
+
+
+	public int getRoomBoard() {
 		return roomBoard;
 	}
-	public void setRoomBoard(String roomBoard) {
+
+
+	public void setRoomBoard(int roomBoard) {
 		this.roomBoard = roomBoard;
 	}
-	public String getRoomChart() {
+
+
+	public int getRoomChart() {
 		return roomChart;
 	}
-	public void setRoomChart(String roomChart) {
+
+
+	public void setRoomChart(int roomChart) {
 		this.roomChart = roomChart;
 	}
-	public String getRoomScreen() {
+
+
+	public int getRoomScreen() {
 		return roomScreen;
 	}
-	public void setRoomScreen(String roomScreen) {
+
+
+	public void setRoomScreen(int roomScreen) {
 		this.roomScreen = roomScreen;
 	}
-	public String getRoomProjector() {
+
+
+	public int getRoomProjector() {
 		return roomProjector;
 	}
-	public void setRoomProjector(String roomProjector) {
+
+
+	public void setRoomProjector(int roomProjector) {
 		this.roomProjector = roomProjector;
 	}
-	public String getRoomInternet() {
+
+
+	public boolean getRoomInternet() {
 		return roomInternet;
 	}
-	public void setRoomInternet(String roomInternet) {
+
+
+	public void setRoomInternet(boolean roomInternet) {
 		this.roomInternet = roomInternet;
 	}
+
+
+	public RoomCollection() {
+		
+	}
+
+
+	public RoomCollection(Room room) {
+		super();
+		
+		this.roomName = room.getRoomName();
+		this.roomCity = room.getRoomCity();
+		this.roomLocation = room.getRoomLocation();
+		this.roomBlock = room.getRoomBlock();
+		this.roomAddress = room.getRoomAddress();
+		this.roomCapacity = room.getRoomCapacity();
+		this.roomTables = room.getRoomTables();
+		this.roomMachines = room.getRoomMachines();
+		this.roomBoard = room.getRoomBoard();
+		this.roomChart = room.getRoomChart();
+		this.roomScreen = room.getRoomScreen();
+		this.roomProjector = room.getRoomProjector();
+		this.roomInternet = room.getRoomInternet();
+	}
+
+
 	@Override
 	public String toString() {
-		return "RoomDetails [roomName=" + roomName + ", roomCity=" + roomCity + ", roomLocation=" + roomLocation
-				+ ", roomBlock=" + roomBlock + ", roomAddress=" + roomAddress + ", roomCapacity=" + roomCapacity
-				+ ", roomTables=" + roomTables + ", roomMachines=" + roomMachines + ", roomBoard=" + roomBoard
-				+ ", roomChart=" + roomChart + ", roomScreen=" + roomScreen + ", roomProjector=" + roomProjector
-				+ ", roomInternet=" + roomInternet + "]";
+		return "RoomCollection [id=" + id + ", roomName=" + roomName + ", roomCity=" + roomCity + ", roomLocation="
+				+ roomLocation + ", roomBlock=" + roomBlock + ", roomAddress=" + roomAddress + ", roomCapacity="
+				+ roomCapacity + ", roomTables=" + roomTables + ", roomMachines=" + roomMachines + ", roomBoard="
+				+ roomBoard + ", roomChart=" + roomChart + ", roomScreen=" + roomScreen + ", roomProjector="
+				+ roomProjector + ", roomInternet=" + roomInternet + "]";
 	}
-	public RoomCollection(String roomName, String roomCity, String roomLocation, String roomBlock, String roomAddress,
-			String roomCapacity, String roomTables, String roomMachines, String roomBoard, String roomChart,
-			String roomScreen, String roomProjector, String roomInternet) {
-		this.roomName = roomName;
-		this.roomCity = roomCity;
-		this.roomLocation = roomLocation;
-		this.roomBlock = roomBlock;
-		this.roomAddress = roomAddress;
-		this.roomCapacity = roomCapacity;
-		this.roomTables = roomTables;
-		this.roomMachines = roomMachines;
-		this.roomBoard = roomBoard;
-		this.roomChart = roomChart;
-		this.roomScreen = roomScreen;
-		this.roomProjector = roomProjector;
-		this.roomInternet = roomInternet;
-	}
+
 	
-	public RoomCollection() {}
-
-
 
 }

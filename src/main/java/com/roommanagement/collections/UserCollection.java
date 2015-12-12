@@ -3,6 +3,8 @@ package com.roommanagement.collections;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.roommanagement.beans.User;
+
 @Document(collection="users")
 public class UserCollection {
 	@Id
@@ -19,6 +21,13 @@ public class UserCollection {
 		this.email = email;
 		this.password = password;
 		this.rights = rights;
+	}
+	public UserCollection(User user) {
+		super();
+		this.name = user.getName();
+		this.email = user.getEmail();
+		this.password = user.getPassword();
+		this.rights = user.getRights();
 	}
 	public int getRights() {
 		return rights;

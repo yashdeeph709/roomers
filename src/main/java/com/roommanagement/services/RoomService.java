@@ -2,22 +2,38 @@ package com.roommanagement.services;
 
 import java.util.List;
 
+import com.roommanagement.beans.Room;
 import com.roommanagement.beans.Status;
-import com.roommanagement.collections.RoomCollection;
+
 
 public interface RoomService {
 
-	RoomCollection insert(RoomCollection roomDetails);
+	Room insert(Room room);
+	
+	List<Room> getRooms();
+	
+	Room getRoom(String id);
+	
+	void updateRoom(Room room);
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	Boolean checkRoomNameAvailablility(String roomName);
 	
-	List<RoomCollection> getRooms();
 	
-	void updateRoom(RoomCollection room); 
+	
+	 
 	
 	void delete(String name);
 	
-	RoomCollection getRequiredRoom(String id);
+	
 	
 	Status<Long> getRoomCount();
 }
