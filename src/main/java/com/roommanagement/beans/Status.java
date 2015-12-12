@@ -9,7 +9,7 @@ public class Status<T> {
 	private List<T> data;
 	private T dataOne;
 	
-	public Status(String status, String message, List<T> data, T dataOne) {
+	  public Status(String status, String message, List<T> data, T dataOne) {
 		super();
 		this.status = status;
 		this.message = message;
