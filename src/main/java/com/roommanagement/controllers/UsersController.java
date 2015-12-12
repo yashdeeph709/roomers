@@ -88,7 +88,7 @@ public class UsersController {
 				httpstatus=HttpStatus.ALREADY_REPORTED;
 				return new ResponseEntity<UserCollection>(null,responseHeaders,httpstatus);
 			}
-			httpstatus=HttpStatus.ACCEPTED;
+			httpstatus=HttpStatus.CREATED;
 			return new ResponseEntity<UserCollection>(createUserReturnValue,responseHeaders,httpstatus);
 		}
 		
