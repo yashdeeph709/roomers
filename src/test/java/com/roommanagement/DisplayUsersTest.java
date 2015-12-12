@@ -10,7 +10,7 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roommanagement.beans.Status;
-import com.roommanagement.beans.UserBean;
+import com.roommanagement.beans.User;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -35,7 +35,7 @@ public class DisplayUsersTest {
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, IOException {
 		Client client = Client.create();		
-		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/getUsers");
+		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/users");
 		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
 		String output = response.getEntity(String.class);
 		ObjectMapper mapper=new ObjectMapper();

@@ -10,20 +10,20 @@ public class UserCollection {
 	private String name;
 	private String email;
 	private String password;
-	private String rights;
+	private int rights;
 	
 	public UserCollection(String name, String email, String password,
-			String rights) {
+			int rights) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.rights = rights;
 	}
-	public String getRights() {
+	public int getRights() {
 		return rights;
 	}
-	public void setRights(String rights) {
+	public void setRights(int rights) {
 		this.rights = rights;
 	}
 	public UserCollection() {

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roommanagement.beans.Status;
-import com.roommanagement.beans.UserBean;
+import com.roommanagement.beans.User;
 import com.roommanagement.services.UserService;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -16,7 +16,7 @@ import com.sun.jersey.api.client.WebResource;
 
 
 public class AdminDeleteUserTest {
-	UserBean userBean;
+	User userBean;
 	UserService userService;
 	JSONObject obj = new JSONObject();
 	Client client ;
@@ -44,7 +44,7 @@ public class AdminDeleteUserTest {
 	@Test
 	public void deleteUserTest(){
 		
-		webResource = client.resource(baseURI+"/delete/56685de116697f79e253431f");
+		webResource = client.resource(baseURI+"/users/56685dd016697f79e253431e");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
 		String expected="{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
 		String actual=response.getEntity(String.class);
@@ -53,7 +53,7 @@ public class AdminDeleteUserTest {
 	
 	@Test
 	public void deleteUserWithoutIdTest(){
-		webResource = client.resource(baseURI+"/delete");
+		webResource = client.resource(baseURI+"/users");
 		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
 		String expected="{\"status\":\"failed\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
 		String actual=response.getEntity(String.class);

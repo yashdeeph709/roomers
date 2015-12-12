@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService{
 		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 		if(userTest==null)
 		{
-			user.setRights("2.0");
+			user.setRights(2);
 			return repository.insert(user);
 		}
 		return null;
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("0.0")){
+		if(user.getRights()==0){
 			return false;
 		}
 		return true;
@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("1.0")){
+		if(user.getRights()==1){
 			return false;
 		}
 		return true;
@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService{
 		if(user==null){
 			return true;
 		}
-		if(user.getRights().equals("2.0")){
+		if(user.getRights()==2){
 			return false;
 		}
 		return true;
@@ -102,8 +102,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public UserCollection getUser(String id) {
-				BasicQuery basicQuery= new BasicQuery("{ email : \""+id+"\" }");
+	public UserCollection getUser(String email) {
+				BasicQuery basicQuery= new BasicQuery("{ email : \""+email+"\" }");
 				UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
 				return userTest;
 			}

@@ -18,14 +18,14 @@ import com.roommanagement.services.UserService;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/RoomManagement")
+@RequestMapping("/roommanagement")
 public class UsersController {
 
 	
 	@Autowired
 	private UserService service;
 	
-	@RequestMapping(value="/getUsers", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public Status<UserCollection> getUsers(@RequestHeader String authToken) {
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
@@ -33,8 +33,8 @@ public class UsersController {
 		return new Status<UserCollection>("success","got data",service.getUsers());
 	}
 	
-	@RequestMapping(value="/delete/{id}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> deletUser(@RequestHeader String authToken,@PathVariable("id") String id) {
+	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status<UserCollection> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
 		}
@@ -42,8 +42,8 @@ public class UsersController {
 		return new Status<UserCollection>("success","User Deleted Successfully!");
 	}
 		
-	@RequestMapping(value="/register", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> registerUser(@RequestBody UserCollection user,@RequestHeader String authToken) {
+	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody Status<UserCollection> createUser(@RequestBody UserCollection user,@RequestHeader String authToken) {
 
 		if(service.checkAdmin(authToken)){
 			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
