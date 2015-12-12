@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService{
 			return true;
 		}
 		if(user.getRights()==0){
-			return false;
+			return true;
 		}
 		return true;
 	}
