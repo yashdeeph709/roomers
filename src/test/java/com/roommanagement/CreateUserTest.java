@@ -31,18 +31,8 @@ public class CreateUserTest {
 	public void setup(){
 		client = Client.create();
 		webResource = client.resource("http://localhost:8080/roommanagement/login");
-/*		String data="{\"email\":\"shrutiu.7@gmail.com\",\"password\":\"password\"}";
-		response = webResource.accept("application/json").post(ClientResponse.class,data);
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		try {
-			//status="Done";//mapper.readValue(output,Status.class);
-			System.out.println(output);
-			httpHeader=new HttpHeaders();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-*/	}
+		response = webResource.accept("application/json").get(ClientResponse.class);
+	}
 	
 	
 	
@@ -51,10 +41,10 @@ public class CreateUserTest {
 		
 		client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/roommanagement/users");
-		String data = "{\"name\":\"lily\",\"email\":\"lily@gmail.com\",\"password\":\"Palakh\",\"rights\":1}";
+		String data = "{\"name\":\"George\",\"email\":\"george@gmail.com\",\"password\":\"Palakh\",\"rights\":1}";
 
 		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class, data);
-		int expected=401; 
+		int expected=201; 
 		int actual=response.getStatus();
 		assertEquals(expected,actual );
 	}
@@ -69,7 +59,7 @@ public class CreateUserTest {
 		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class, data);
 		String expected="{\"status\":\"true\",\"message\":\"Created User name null\",\"data\":null,\"dataOne\":null}";
 		String actual=response.getEntity(String.class);
-		assertEquals(401,response.getStatus());
+		assertEquals(208,response.getStatus());
 	}
 
 }

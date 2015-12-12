@@ -16,30 +16,22 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class DisplayUsersTest {
-	Status status=null;
+
 	
 	@Before
 	public void setup(){
 		Client client = Client.create();
-		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/getAdmin");
+		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/login");
 		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		try {
-			status=mapper.readValue(output,Status.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 	}
 	
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, IOException {
 		Client client = Client.create();		
 		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/users");
-		ClientResponse response = webResource.accept("application/json").header("authToken",status.getMessage()).get(ClientResponse.class);
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		Status s=mapper.readValue(output,Status.class);
-		assertNotEquals(s.getData().size(),0);
+		ClientResponse response = webResource.accept("application/json").header("authToken","56685db316697f79e253431d").get(ClientResponse.class);
+		int output = response.getStatus();
+		assertNotEquals(202,output);
 	}
 }

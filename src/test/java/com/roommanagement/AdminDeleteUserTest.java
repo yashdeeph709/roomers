@@ -21,43 +21,37 @@ public class AdminDeleteUserTest {
 	JSONObject obj = new JSONObject();
 	Client client ;
 	WebResource webResource; 
-	String baseURI = "http://localhost:8080/RoomManagement"; 
+	String baseURI = "http://localhost:8080/roommanagement"; 
 	ClientResponse response;
 	Status status=null;
 	@Before
 	public void setup()
 	{
 		client = Client.create();
-		webResource = client.resource(baseURI+"/getAdmin");
+		webResource = client.resource(baseURI+"/login");
 		response = webResource.accept("application/json").get(ClientResponse.class);
-		
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		try {
-			status=mapper.readValue(output,Status.class);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+
 	}
 	
 	
 	@Test
 	public void deleteUserTest(){
 		
-		webResource = client.resource(baseURI+"/users/56685dd016697f79e253431e");
-		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
+		webResource = client.resource(baseURI+"/users/566be63c6db73210abd6239b");
+		ClientResponse response = webResource.accept("application/json").header("authToken", "56685db316697f79e253431d").delete(ClientResponse.class);
 		String expected="{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
-		String actual=response.getEntity(String.class);
-		assertEquals(expected,actual);
+		int actual=response.getStatus();
+		assertEquals(202,actual);
 		}	
 	
-	@Test
+	@Test(expected=NullPointerException.class)
 	public void deleteUserWithoutIdTest(){
+		
 		webResource = client.resource(baseURI+"/users");
-		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).get(ClientResponse.class);
-		String expected="{\"status\":\"failed\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
-		String actual=response.getEntity(String.class);
-		assertEquals(expected,actual);
+		ClientResponse response = webResource.accept("application/json").header("authToken", status.getMessage()).delete(ClientResponse.class);
+		
+		int actual=response.getStatus();
+		assertEquals(201,actual);
 			
 		}
     }

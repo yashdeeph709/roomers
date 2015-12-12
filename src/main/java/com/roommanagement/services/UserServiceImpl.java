@@ -1,5 +1,6 @@
 package com.roommanagement.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -7,6 +8,7 @@ import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Status;
+import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.UsersRepository;
 
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService{
 			return true;
 		}
 		if(user.getRights()==0){
-			return true;
+			return false;
 		}
 		return true;
 	}
@@ -112,4 +114,21 @@ public class UserServiceImpl implements UserService{
 	public Status<Long> getUsersCount() {
 		return new Status<Long>("success","Got Users Count",repository.count());
 	}
+	//***********************Pagination
+	public List<User> userRange(int start, int end) {
+
+		BasicQuery basicQuery= new BasicQuery("{}");
+		basicQuery.skip(start);
+		basicQuery.limit(end);
+
+		List<UserCollection> userCollectionList = mongoOperations.find(basicQuery, UserCollection.class);
+		List<User> userBeanList = new ArrayList<User>();
+
+		for(UserCollection userCollection : userCollectionList){
+		userBeanList.add(new User(userCollectionList));
+		}
+
+		return userBeanList; 
+		}
+
 }

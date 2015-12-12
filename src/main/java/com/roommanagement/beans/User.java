@@ -1,5 +1,7 @@
 package com.roommanagement.beans;
 
+import java.util.List;
+
 import com.roommanagement.collections.UserCollection;
 
 public class User {
@@ -35,6 +37,7 @@ public class User {
 		this.password = userCollection.getPassword();
 		this.rights = userCollection.getRights();
 	}
+	
 	public String getId() {
 		return id;
 	}
