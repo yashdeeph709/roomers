@@ -136,8 +136,9 @@ public class RoomController{
 	public ResponseEntity<String> deletRoom(@PathVariable("id") String id) {
 		roomservice.delete(id);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return  new ResponseEntity<String>("Room details updated successfully", httpHeaders, HttpStatus.ACCEPTED);
+		return  new ResponseEntity<String>(httpHeaders, HttpStatus.ACCEPTED);
 	}
+	
 	
 	/*
 	@RequestMapping(value="/availRoomName/{roomName}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
@@ -152,9 +153,6 @@ public class RoomController{
 			return  new Status<RoomCollection>("false","Room of this name is already there");
 	}
 	*/
-	@RequestMapping("/getRoomsCount")
-	public Status getRoomsCount() {
-		
-		return roomservice.getRoomCount();
+	
+	
 	}
-}

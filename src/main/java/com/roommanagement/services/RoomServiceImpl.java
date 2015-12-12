@@ -54,24 +54,30 @@ public class RoomServiceImpl implements RoomService {
 	
 	
 	public void updateRoom(Room room) {
-		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",roomBlock : \""+room.getRoomBlock()+"\",roomLocation:\""+room.getRoomLocation()+"\" }");
-		RoomCollection roomTest=mongoOperations.findOne(basicQuery,RoomCollection.class);
-		if(roomTest!=null)
-		{				
-			roomRepository.save(roomTest);
+		
+		/*BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",roomBlock : \""+room.getRoomBlock()+"\",roomLocation:\""+room.getRoomLocation()+"\" }");*/
+		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+room.getId()+"\" }");
+		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
+		if(roomCollection!=null)
+		{	roomCollection.setId(room.getId());			
+			roomCollection.setRoomCapacity(room.getRoomCapacity());
+			roomCollection.setRoomTables(room.getRoomTables());
+			roomCollection.setRoomMachines(room.getRoomMachines());
+			roomCollection.setRoomBoard(room.getRoomBoard());
+			roomCollection.setRoomChart(room.getRoomChart());
+			roomCollection.setRoomScreen(room.getRoomScreen());
+			roomCollection.setRoomProjector(room.getRoomProjector());
+			roomCollection.setRoomInternet(room.getRoomInternet());
+			System.out.println(roomCollection);
+			roomRepository.save(roomCollection);
 		}
 	}
 	
 	public void delete(String id) {
-		roomRepository.deleteById(id);
+		roomRepository.delete(id);//.delete(id);
 	}
 
-
-	
-	
-	
-
-	public Boolean checkRoomNameAvailablility(String roomName) {
+/*	public Boolean checkRoomNameAvailablility(String roomName) {
 			List<RoomCollection> roomCollection = roomRepository.findByRoomName(roomName);
 			
 			if(roomCollection.size()!=0)
@@ -80,12 +86,9 @@ public class RoomServiceImpl implements RoomService {
 				return true;
 	}
 
-	
+	*/
 
-	public Status<Long> getRoomCount() {
-		
-		return new Status<Long>("success","Got Room Count",roomRepository.count());
-	}
+	
 
 
 }

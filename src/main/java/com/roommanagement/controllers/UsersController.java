@@ -69,12 +69,14 @@ public class UsersController {
 		return new ResponseEntity<String>(responseHeaders,httpstatus);
 	}
 	
-		
+
+	
 	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody Status<UserCollection> createUser(@RequestBody User user,@RequestHeader String authToken) {
+	public @ResponseBody ResponseEntity<UserCollection> createUser(@RequestBody User user,@RequestHeader String authToken) {
 
 		if(service.checkAdmin(authToken)){
-			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
+			httpstatus=HttpStatus.UNAUTHORIZED;
+			return new ResponseEntity<UserCollection>(null,responseHeaders,httpstatus);
 		}
 		else
 		{
@@ -83,15 +85,14 @@ public class UsersController {
 			if(createUserReturnValue==null)
 			{
 			
-				return  new Status<UserCollection>("false","User already exists");
+				httpstatus=HttpStatus.ALREADY_REPORTED;
+				return new ResponseEntity<UserCollection>(null,responseHeaders,httpstatus);
 			}
-			
-			return  new Status<UserCollection>("true","Created User name "+createUserReturnValue.getName());
+			httpstatus=HttpStatus.ACCEPTED;
+			return new ResponseEntity<UserCollection>(createUserReturnValue,responseHeaders,httpstatus);
 		}
 		
 	}
-
-
 	
 	/*
 	 * Note:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;

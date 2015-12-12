@@ -16,24 +16,23 @@ public interface RoomService {
 	
 	void updateRoom(Room room);
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	Boolean checkRoomNameAvailablility(String roomName);
-	
-	
-	
-	 
-	
 	void delete(String name);
 	
 	
 	
-	Status<Long> getRoomCount();
+	
+	
+	
+	/*
+	Boolean checkRoomNameAvailablility(String roomName);
+	*/
+	
+	
+	 
+	
+	
+	
+	
+	
+	
 }

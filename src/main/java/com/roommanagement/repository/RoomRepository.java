@@ -11,5 +11,5 @@ public interface RoomRepository extends MongoRepository<RoomCollection, String> 
 	
 	List<RoomCollection> findByRoomName(String roomName);
 	
-	void deleteById(String Id);
+//	void deleteById(String Id);
 }

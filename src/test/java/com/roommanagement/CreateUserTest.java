@@ -47,7 +47,7 @@ public class CreateUserTest {
 		
 		client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/RoomManagement/users");
-		String data = "{\"name\":\"Palakh\",\"email\":\"palakh@gmail.com\",\"password\":\"Palakh\",\"rights\":\"1\"}";
+		String data = "{\"name\":\"Palakh\",\"email\":\"palakh@gmail.com\",\"password\":\"Palakh\",\"rights\":1}";
 
 		ClientResponse response = webResource.type("application/json").header("authToken",status.getMessage()).post(ClientResponse.class, data);
 		String expected="{\"status\":\"false\",\"message\":\"User already exists\",\"data\":null,\"dataOne\":null}"; 
