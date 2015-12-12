@@ -103,7 +103,7 @@ public class RoomController{
 			httpStatus = HttpStatus.NOT_FOUND; 				//If no rooms are there in the db 
 		}
 		else{
-			httpStatus = HttpStatus.FOUND;					//If room are there
+			httpStatus = HttpStatus.ACCEPTED;					//If room are there
 		}
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
