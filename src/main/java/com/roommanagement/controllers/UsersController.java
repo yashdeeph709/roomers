@@ -1,5 +1,7 @@
 package com.roommanagement.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -30,25 +32,21 @@ public class UsersController {
 	@Autowired
 	private UserService service;
 	
-//	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-//	public Status<UserCollection> getUsers(@RequestHeader String authToken) {
-//		if(service.checkAdmin(authToken)){
-//			return new Status<UserCollection>("NotAuthenticated","User not Authenticated");
-//		}
-//		return new Status<UserCollection>("success","got data",service.getUsers());
-//	}
-	//*************************Response Entity**********************	
+
+	
 	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getUsers(@RequestHeader String authToken) {
+	public ResponseEntity<List<UserCollection>> getUsers(@RequestHeader String authToken) {
 		if(service.checkAdmin(authToken)){
 			httpstatus=HttpStatus.UNAUTHORIZED;
+			return new ResponseEntity<List<UserCollection>>(responseHeaders,httpstatus);
 		}
 		else
 		{
-			service.getUsers();
+	
 			httpstatus=HttpStatus.ACCEPTED;
+			return new ResponseEntity<List<UserCollection>>(service.getUsers(),responseHeaders,httpstatus);
 		}
-		return new ResponseEntity<String>(responseHeaders,httpstatus);
+		
 	}
 	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
