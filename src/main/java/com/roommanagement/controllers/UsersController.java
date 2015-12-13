@@ -7,17 +7,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import com.roommanagement.beans.Status;
 import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.services.UserService;
@@ -60,24 +57,5 @@ public class UsersController {
 			}
 			httpstatus=HttpStatus.CREATED;
 			return new ResponseEntity<UserCollection>(createUserReturnValue,responseHeaders,httpstatus);
-	}
-	/*
-	 * Note:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
-	 * the are services below are introduced for testing purposes please don't consider them for code review
-	 */
-	@RequestMapping("/getAdmin")
-	public @ResponseBody Status<UserCollection> getAdmin() {
-		String id=service.getAdmin();
-		return new Status<UserCollection>("id",id);
-	}
-	@RequestMapping("/getUser")
-	public @ResponseBody Status<UserCollection> getUser() {
-		String id=service.getUser();
-		return new Status<UserCollection>("id",id);
-	}
-	@RequestMapping("/getSubAdmin")
-	public @ResponseBody Status<UserCollection> getSubAdmin() {
-		String id=service.getSubAdmin();
-		return new Status<UserCollection>("id",id);
 	}
 }
