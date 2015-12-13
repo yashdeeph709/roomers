@@ -2,14 +2,25 @@ package com.roommanagement.beans;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
+import com.roommanagement.collections.BookingsCollection;
+import com.roommanagement.collections.RoomCollection;
+
 
 public class Bookings {
 	
 	private String id;
 	private Room room;
+	private RoomCollection room1;
+	@DateTimeFormat(iso=ISO.DATE_TIME)
 	private Date startTime;
+	@DateTimeFormat(iso=ISO.DATE_TIME)
 	private Date endTime;
+	@DateTimeFormat(iso=ISO.DATE_TIME)
 	private Date startDate;
+	@DateTimeFormat(iso=ISO.DATE_TIME)
 	private Date endDate;
 	private Status status;
 	private User requestee;
@@ -32,6 +43,19 @@ public class Bookings {
 		this.requestee = requestee;
 		this.subject = subject;
 		this.category = category;
+	}
+
+	public Bookings(BookingsCollection bookingsCollection) {
+		this.id = bookingsCollection.getId();
+		this.room = bookingsCollection.getRoom();
+		this.startTime = bookingsCollection.getStartTime();
+		this.endTime = bookingsCollection.getEndTime();
+		this.startDate = bookingsCollection.getStartDate();
+		this.endDate = bookingsCollection.getEndDate();
+		this.status = bookingsCollection.getStatus();
+		this.requestee = bookingsCollection.getRequestee();
+		this.subject = bookingsCollection.getSubject();
+		this.category = bookingsCollection.getCategory();
 	}
 
 	public String getId() {
@@ -96,11 +120,23 @@ public class Bookings {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
+
+
 	@Override
 	public String toString() {
-		return "Bookings [room=" + room + ", startTime=" + startTime + ", endTime=" + endTime + ", startDate="
-				+ startDate + ", endDate=" + endDate + ", status=" + status + ", requestee=" + requestee + ", subject="
-				+ subject + ", category=" + category + "]";
+		return "Bookings [id=" + id + ", room=" + room + ", room1=" + room1 + ", startTime=" + startTime + ", endTime="
+				+ endTime + ", startDate=" + startDate + ", endDate=" + endDate + ", status=" + status + ", requestee="
+				+ requestee + ", subject=" + subject + ", category=" + category + "]";
+	}
+
+	public void setRoomCollection(RoomCollection roomCollection) {
+		
+		room1=roomCollection;
+	}
+	
+	public RoomCollection getRoomCollection()
+	{
+		return this.room1;
 	}
 	
 	

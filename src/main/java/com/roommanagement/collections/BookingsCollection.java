@@ -5,6 +5,7 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Category;
 import com.roommanagement.beans.Room;
 import com.roommanagement.beans.Status;
@@ -42,6 +43,18 @@ public class BookingsCollection {
 		this.category = category;
 	}
 
+	public BookingsCollection(Bookings booking) {
+		this.id = booking.getId();
+		this.room = booking.getRoom();
+		this.startTime = booking.getStartTime();
+		this.endTime = booking.getEndTime();
+		this.startDate = booking.getStartDate();
+		this.endDate = booking.getEndDate();
+		this.status = booking.getStatus();
+		this.requestee = booking.getRequestee();
+		this.subject = booking.getSubject();
+		this.category = booking.getCategory();
+	}
 	public String getId() {
 		return id;
 	}

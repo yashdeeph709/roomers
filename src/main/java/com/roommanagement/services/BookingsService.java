@@ -7,7 +7,7 @@ import com.roommanagement.collections.BookingsCollection;
 
 public interface BookingsService {
 
-	BookingsCollection insert(Bookings booking);
+	Bookings insert(Bookings booking);
 	
 	List<Bookings> getRooms();
 	
