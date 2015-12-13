@@ -26,8 +26,10 @@ class UserAspect{
 		String id=pjp.getArgs()[0].toString();
 		if(registerService.checkUser(id, 0)){
 			Object obj=pjp.proceed();
+			System.out.println("**********auth called");
 			return obj;
 		}else{
+			System.out.println("*******************auth called but unauthorised");
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	

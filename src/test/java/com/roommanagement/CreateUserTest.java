@@ -22,14 +22,12 @@ public class CreateUserTest {
 
 	Client client ;
 	WebResource webResource;
-	String baseURI = "http://localhost:8080/RoomManagement";
+	String baseURI = "http://localhost:8080/roommanagement";
 	ClientResponse response;
 	HttpHeaders httpHeader;
 	@Before
 	public void setup(){
 		client = Client.create();
-		webResource = client.resource("http://localhost:8080/roommanagement/login");
-		response = webResource.accept("application/json").get(ClientResponse.class);
 	}
 	
 	
@@ -37,9 +35,9 @@ public class CreateUserTest {
 	@Test
 	public void testCreateUser() throws URISyntaxException,JsonParseException, JsonMappingException, IOException  {
 		
-		client = Client.create();		
+		//client = Client.create();		
 		 webResource = client.resource("http://localhost:8080/roommanagement/users");
-		String data = "{\"name\":\"George\",\"email\":\"george@gmail.com\",\"password\":\"Palakh\",\"rights\":1}";
+		String data = "{\"name\":\"Pooja\",\"email\":\"pooja@gmail.com\",\"password\":\"Pooja123\",\"rights\":2}";
 
 		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class, data);
 		int expected=201; 

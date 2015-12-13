@@ -19,8 +19,7 @@ public class DisplayUsersTest {
 	@Before
 	public void setup(){
 		Client client = Client.create();
-		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/login");
-		ClientResponse response = webResource.accept("application/json").get(ClientResponse.class);
+
 	}
 	
 	@Test
