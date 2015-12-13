@@ -2,20 +2,13 @@ package com.roommanagement.services;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.FindAndModifyOptions;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
-
 import com.roommanagement.beans.Room;
-import com.roommanagement.beans.Status;
 import com.roommanagement.collections.RoomCollection;
-import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.RoomRepository;
-
-
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -28,9 +21,14 @@ public class RoomServiceImpl implements RoomService {
 
 	public Room insert(Room room) {
 		
-		RoomCollection roomCollection = new RoomCollection(room);
+		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",\"roomLocation: \""+room.getRoomLocation()+"\" }");
+		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
+		if(roomCollection==null){
 		
-		return new Room(roomRepository.insert(roomCollection));	
+			return new Room(roomRepository.insert(roomCollection));
+		}
+		else
+			return new Room(null);
 	}
 
 	
@@ -55,7 +53,6 @@ public class RoomServiceImpl implements RoomService {
 	
 	public void updateRoom(Room room) {
 		
-		/*BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",roomBlock : \""+room.getRoomBlock()+"\",roomLocation:\""+room.getRoomLocation()+"\" }");*/
 		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+room.getId()+"\" }");
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
 		if(roomCollection!=null)
@@ -74,21 +71,23 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	public void delete(String id) {
-		roomRepository.delete(id);//.delete(id);
+		roomRepository.deleteById(id);
 	}
 
-/*	public Boolean checkRoomNameAvailablility(String roomName) {
-			List<RoomCollection> roomCollection = roomRepository.findByRoomName(roomName);
-			
-			if(roomCollection.size()!=0)
-				return false;
-			else
-				return true;
+
+	public List<Room> roomRange(int start, int end) {
+
+		BasicQuery basicQuery= new BasicQuery("{}");
+		basicQuery.skip(start);
+		basicQuery.limit(end);
+		
+		List<RoomCollection> roomCollectionList = mongoOperations.find(basicQuery, RoomCollection.class);
+		List<Room> roomList = new ArrayList<Room>();
+		
+		for(RoomCollection roomCollection : roomCollectionList){
+			roomList.add(new Room(roomCollection));
+		}
+		
+		return roomList; 
 	}
-
-	*/
-
-	
-
-
 }

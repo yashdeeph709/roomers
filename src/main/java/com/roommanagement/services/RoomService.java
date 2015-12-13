@@ -3,7 +3,6 @@ package com.roommanagement.services;
 import java.util.List;
 
 import com.roommanagement.beans.Room;
-import com.roommanagement.beans.Status;
 
 
 public interface RoomService {
@@ -17,4 +16,7 @@ public interface RoomService {
 	void updateRoom(Room room);
 	
 	void delete(String name);
+	
+	List<Room> roomRange(int start,int end);
+	
 }
