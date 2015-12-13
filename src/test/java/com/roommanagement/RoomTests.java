@@ -2,12 +2,9 @@ package com.roommanagement;
 
 
 import static org.junit.Assert.*;
-
 import java.io.IOException;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -20,7 +17,7 @@ import com.sun.jersey.api.client.WebResource;
 public class RoomTests {
 
 	Client client;
-	String baseURI = "http://localhost:8080/RoomManagement";
+	String baseURI = "http://localhost:8080/roommanagement";
 	WebResource webResource;
 	ClientResponse response;
 	
@@ -28,67 +25,38 @@ public class RoomTests {
 	public void setUp() throws Exception {
 		
 		client=Client.create();
-		webResource = client.resource(baseURI+"/getAdmin");
-		response = webResource.accept("application/json").get(ClientResponse.class);
-		
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		try {
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		
 	}
-
+	/*
 	@Test
-	public void testRoomCreation() throws JsonParseException, JsonMappingException, IOException {
+	public void testRoomCreation() throws JsonParseException, JsonMappingException, IOException {		
 
-		client = Client.create();		
-
-		webResource=client.resource(baseURI+"/createRoom");
-		
-		String roomCollection ="{\"roomName\":\"Bahar\",\"roomCity\":\"Pune\",\"roomLocation\":\"Baner Gaon\",\"roomBlock\":\"Baner\",\"roomAddress\":\"5th Floor Amar Paradigm\",\"roomCapacity\":16,\"roomTables\":4,\"roomMachines\":16,\"roomScreen\":1,\"roomBoard\":4,\"roomChart\":1,\"roomProjector\":1,\"roomInternet\":\"false\"}";
+		webResource=client.resource(baseURI+"/rooms");
+		String roomCollection ="{\"roomName\":\"Bahar2\",\"roomCity\":\"Pune\",\"roomLocation\":\"Baner Gaon\",\"roomBlock\":\"Baner\",\"roomAddress\":\"5th Floor Amar Paradigm\",\"roomCapacity\":16,\"roomTables\":4,\"roomMachines\":16,\"roomScreen\":1,\"roomBoard\":4,\"roomChart\":1,\"roomProjector\":1,\"roomInternet\":\"false\"}";
 		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class,roomCollection);
-		
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		
-		String expected="Bahar";
-		String actual="";
-		assertEquals(expected,actual);
+		assertEquals(201,response.getStatus());
 	}
+	
 	
 	@Test
 	public void testRoomDaoWithNullValues() throws JsonParseException, JsonMappingException, IOException {
 		
-		webResource=client.resource(baseURI+"/createRoom");
-		
+		webResource=client.resource(baseURI+"/rooms");
 		String roomCollection = "{\"roomName\":null,\"roomCity\":null,\"roomLocation\":null,\"roomBlock\":null,\"roomAddress\":null,\"roomCapacity\":null,\"roomTables\":null,\"roomMachines\":null,\"roomScreen\":null,\"roomBoard\":null,\"roomChart\":null,\"roomProjector\":null,\"roomInternet\":null}";
-
-		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class,roomCollection);
-		
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper=new ObjectMapper();
-		
-		String expected=null;
-		String actual="56685db316697f79e253431d";
-		assertEquals(expected,actual);
+		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class,roomCollection);	
+		assertEquals(400,response.getStatus());
 	}
 	
+	/*
 	@Test
-	public void viewRoomsTest() throws JsonParseException, JsonMappingException, IOException{
+	public void testdeleteRoom() {
 		
-		webResource=client.resource(baseURI+"/getRooms");
-		ClientResponse response1 = webResource.type("application/json").header("authToken","56685db316697f79e253431d").get(ClientResponse.class);
-		String output1 = response1.getEntity(String.class);
-		ObjectMapper mapper1=new ObjectMapper();
-		
-		webResource=client.resource(baseURI+"/getRoomsCount");
-		ClientResponse response2 = webResource.type("application/json").get(ClientResponse.class);
-		String output2 = response2.getEntity(String.class);
-		ObjectMapper mapper2=new ObjectMapper();
-
+		webResource = client.resource(baseURI+"/rooms/566c198e0f9dadffad29c06f");
+		ClientResponse response = webResource.accept("application/json").header("authToken","56685db316697f79e253431d").delete(ClientResponse.class);
+		assertEquals(202,response.getStatus());
 		
 	}
-
+	
+	*/
+	
 }
