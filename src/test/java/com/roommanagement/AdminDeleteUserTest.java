@@ -26,8 +26,7 @@ public class AdminDeleteUserTest {
 	public void setup()
 	{
 		client = Client.create();
-		webResource = client.resource(baseURI+"/login");
-		response = webResource.accept("application/json").get(ClientResponse.class);
+	
 
 	}
 	
@@ -35,7 +34,7 @@ public class AdminDeleteUserTest {
 	@Test
 	public void deleteUserTest(){
 		
-		webResource = client.resource(baseURI+"/users/566be63c6db73210abd6239b");
+		webResource = client.resource(baseURI+"/users/566be6b16db73210abd6239d");
 		ClientResponse response = webResource.accept("application/json").header("authToken", "56685db316697f79e253431d").delete(ClientResponse.class);
 		String expected="{\"status\":\"success\",\"message\":\"User Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
 		int actual=response.getStatus();

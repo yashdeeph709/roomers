@@ -25,7 +25,7 @@ public class DisplayUsersTest {
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, IOException {
 		Client client = Client.create();		
-		WebResource webResource = client.resource("http://localhost:8080/RoomManagement/users");
+		WebResource webResource = client.resource("http://localhost:8080/roommanagement/users");
 		ClientResponse response = webResource.accept("application/json").header("authToken","56685db316697f79e253431d").get(ClientResponse.class);
 		int output = response.getStatus();
 		assertNotEquals(202,output);
