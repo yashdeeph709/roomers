@@ -45,5 +45,15 @@ class UserAspect{
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	
-
+	
+	@Around("execution(* com.roommanagement.controllers.RoomController.*(..))")
+	public Object logAdvice(ProceedingJoinPoint pjp) throws Throwable
+	{
+		Object[] args=pjp.getArgs();
+		for(Object obj:args){
+			System.out.println("AspectJ Logger:"+obj);
+		}
+		Object obj=pjp.proceed();
+		return obj;
+	}
 }

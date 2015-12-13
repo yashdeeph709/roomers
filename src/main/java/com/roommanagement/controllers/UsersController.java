@@ -34,15 +34,14 @@ public class UsersController {
 	public ResponseEntity<List<UserCollection>> getUsers(@RequestHeader String authToken) {
 			httpstatus=HttpStatus.ACCEPTED;
 			List<UserCollection> users=service.getUsers();
-			System.out.println(users);
 			return new ResponseEntity<List<UserCollection>>(users,responseHeaders,httpstatus);
 	}
+
 	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
 		service.delete(id);
 		httpstatus=HttpStatus.ACCEPTED;
-		ResponseEntity<String> responseEntity=new ResponseEntity<String>(responseHeaders,httpstatus);
-		return new ResponseEntity<String>(responseHeaders,httpstatus);
+		return new ResponseEntity<String>(responseHeaders,httpstatus);		
 	}
 	
 
