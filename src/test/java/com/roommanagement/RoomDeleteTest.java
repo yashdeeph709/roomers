@@ -1,4 +1,4 @@
-package com.roommanagement;
+/*package com.roommanagement;
 
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -12,16 +12,13 @@ import com.sun.jersey.api.client.WebResource;
 public class RoomDeleteTest {
 	Client client;
 	WebResource webResource;
-	String baseURI = "http://localhost:8080/RoomManagement";
+	String baseURI = "http://localhost:8080/roommanagement";
 	ClientResponse response;
 
 	@Before
 	public void setup() {
 		client = Client.create();
-		webResource = client.resource("http://localhost:8080/RoomManagement/getAdmin");
-		response = webResource.accept("application/json").get(ClientResponse.class);
-		String output = response.getEntity(String.class);
-		ObjectMapper mapper = new ObjectMapper();
+		
 	}
 
 	@Test
@@ -35,4 +32,4 @@ public class RoomDeleteTest {
 		assertEquals(expected,actual);
 	}
 
-}
+}*/
