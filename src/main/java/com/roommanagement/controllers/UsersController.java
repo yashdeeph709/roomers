@@ -48,7 +48,7 @@ public class UsersController {
 
 	
 	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<UserCollection> createUser(@RequestBody User user,@RequestHeader String authToken) {
+	public @ResponseBody ResponseEntity<UserCollection> createUser(@RequestHeader String authToken,@RequestBody User user) {
 			UserCollection createUserReturnValue= service.insert(new UserCollection(user));
 			if(createUserReturnValue==null)
 			{
