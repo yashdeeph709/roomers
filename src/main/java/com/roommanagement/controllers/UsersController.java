@@ -38,7 +38,7 @@ public class UsersController {
 			return new ResponseEntity<List<UserCollection>>(users,responseHeaders,httpstatus);
 	}
 	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<String> deletUser(@PathVariable("MongoId") String id,@RequestHeader String authToken) {
+	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
 		service.delete(id);
 		httpstatus=HttpStatus.ACCEPTED;
 		ResponseEntity<String> responseEntity=new ResponseEntity<String>(responseHeaders,httpstatus);
