@@ -33,39 +33,18 @@ public class UsersController {
 	private UserService service;
 	
 
-	
 	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserCollection>> getUsers(@RequestHeader String authToken) {
-		if(service.checkAdmin(authToken)){
-			httpstatus=HttpStatus.UNAUTHORIZED;
-			return new ResponseEntity<List<UserCollection>>(responseHeaders,httpstatus);
-		}
-		else
-		{
-	
 			httpstatus=HttpStatus.ACCEPTED;
-			return new ResponseEntity<List<UserCollection>>(service.getUsers(),responseHeaders,httpstatus);
-		}
-		
+			List<UserCollection> users=service.getUsers();
+			System.out.println(users);
+			return new ResponseEntity<List<UserCollection>>(users,responseHeaders,httpstatus);
 	}
 	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
-		
-		String status="";
-		
-		if(service.checkAdmin(authToken))
-		{
-			httpstatus=HttpStatus.UNAUTHORIZED;
-	
-		}
-		else
-		{
+	public @ResponseBody ResponseEntity<String> deletUser(@PathVariable("MongoId") String id,@RequestHeader String authToken) {
 		service.delete(id);
 		httpstatus=HttpStatus.ACCEPTED;
-		}
-		System.out.println(status);
 		ResponseEntity<String> responseEntity=new ResponseEntity<String>(responseHeaders,httpstatus);
-		System.out.println(responseEntity);
 		return new ResponseEntity<String>(responseHeaders,httpstatus);
 	}
 	
@@ -73,27 +52,15 @@ public class UsersController {
 	
 	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<UserCollection> createUser(@RequestBody User user,@RequestHeader String authToken) {
-
-		if(service.checkAdmin(authToken)){
-			httpstatus=HttpStatus.UNAUTHORIZED;
-			return new ResponseEntity<UserCollection>(null,responseHeaders,httpstatus);
-		}
-		else
-		{
-			
 			UserCollection createUserReturnValue= service.insert(new UserCollection(user));
 			if(createUserReturnValue==null)
 			{
-			
 				httpstatus=HttpStatus.ALREADY_REPORTED;
 				return new ResponseEntity<UserCollection>(null,responseHeaders,httpstatus);
 			}
 			httpstatus=HttpStatus.CREATED;
 			return new ResponseEntity<UserCollection>(createUserReturnValue,responseHeaders,httpstatus);
-		}
-		
 	}
-	
 	/*
 	 * Note:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
 	 * the are services below are introduced for testing purposes please don't consider them for code review
@@ -113,5 +80,4 @@ public class UsersController {
 		String id=service.getSubAdmin();
 		return new Status<UserCollection>("id",id);
 	}
-
 }

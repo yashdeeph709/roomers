@@ -1,9 +1,13 @@
 package com.roommanagement.aspect;
 
+import java.util.List;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.roommanagement.services.AuthenticationService;
@@ -15,41 +19,29 @@ class UserAspect{
 	@Autowired
 	private AuthenticationService registerService;
 	
-	@Around("execution(* com.roommanagement.controllers.UsersController.getUsers(..))")
-	public Object authenticateAdmin(ProceedingJoinPoint pjp) throws Throwable
+	@Around("execution(* com.roommanagement.controllers.UsersController.*(..))")
+	public Object authenticateUserAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
-		String requestId=pjp.getArgs()[0].toString();
-		if(registerService.checkUser(requestId, 0)){
-			System.out.println("Request Authentication");
+		Object[] args=pjp.getArgs();
+		String id=pjp.getArgs()[0].toString();
+		if(registerService.checkUser(id, 0)){
 			Object obj=pjp.proceed();
 			return obj;
 		}else{
-			System.out.println("Request Not Authentication");
-			return null;
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
-	}
-/*	@Around("execution(* com.roommanagement.controllers.UsersController.*(..))")
-	public Object authenticateSubAdmin(ProceedingJoinPoint pjp) throws Throwable
+	}	
+	@Around("execution(* com.roommanagement.controllers.RoomController.*(..))")
+	public Object authenticateRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
-		String requestId=pjp.getArgs()[1].toString();
-		if(registerService.checkUser(requestId, 0)){
+		Object[] args=pjp.getArgs();
+		String id=pjp.getArgs()[0].toString();
+		if(registerService.checkUser(id, 0)){
 			Object obj=pjp.proceed();
 			return obj;
 		}else{
-			return null;
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
-	}
-*/
-/*@Around("execution(* com.roommanagement.controllers.UsersController.*(..))")
-	public Object authenticateAdmin(ProceedingJoinPoint pjp) throws Throwable
-	{
-		String requestId=pjp.getArgs()[1].toString();
-		if(registerService.checkUser(requestId, 0)){
-			Object obj=pjp.proceed();
-			return obj;
-		}else{
-			return null;
-		}
-}*/
-	
+	}	
+
 }
