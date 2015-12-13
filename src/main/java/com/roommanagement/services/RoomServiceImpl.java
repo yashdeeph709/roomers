@@ -21,11 +21,11 @@ public class RoomServiceImpl implements RoomService {
 
 	public Room insert(Room room) {
 		
-		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",\"roomLocation: \""+room.getRoomLocation()+"\" }");
+		BasicQuery basicQuery= new BasicQuery("{ roomName : \""+room.getRoomName()+"\",\"roomLocation\": \""+room.getRoomLocation()+"\" }");
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
 		if(roomCollection==null){
 		
-			return new Room(roomRepository.insert(roomCollection));
+			return new Room(roomRepository.insert(new RoomCollection(room)));
 		}
 		else
 			return new Room(null);
