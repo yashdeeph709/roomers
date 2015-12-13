@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.roommanagement.beans.Status;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -25,7 +24,6 @@ public class CreateUserTest {
 	WebResource webResource;
 	String baseURI = "http://localhost:8080/RoomManagement";
 	ClientResponse response;
-	Status status=null;
 	HttpHeaders httpHeader;
 	@Before
 	public void setup(){

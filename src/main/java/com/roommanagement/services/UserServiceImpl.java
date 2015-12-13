@@ -7,7 +7,6 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.stereotype.Service;
 
-import com.roommanagement.beans.Status;
 import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.UsersRepository;
@@ -111,8 +110,8 @@ public class UserServiceImpl implements UserService{
 			}
 
 
-	public Status<Long> getUsersCount() {
-		return new Status<Long>("success","Got Users Count",repository.count());
+	public Long getUsersCount() {
+		return repository.count();
 	}
 	//***********************Pagination
 	public List<User> userRange(int start, int end) {

@@ -2,7 +2,6 @@ package com.roommanagement.services;
 
 import java.util.List;
 
-import com.roommanagement.beans.Status;
 import com.roommanagement.collections.UserCollection;
 
 
@@ -30,5 +29,5 @@ public interface UserService {
 	
 	boolean validate(String username, String password);
 	
-	Status<Long> getUsersCount();
+	Long getUsersCount();
 }
