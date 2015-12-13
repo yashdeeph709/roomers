@@ -17,22 +17,4 @@ public interface RoomService {
 	void updateRoom(Room room);
 	
 	void delete(String name);
-	
-	
-	
-	
-	
-	
-	/*
-	Boolean checkRoomNameAvailablility(String roomName);
-	*/
-	
-	
-	 
-	
-	
-	
-	
-	
-	
 }

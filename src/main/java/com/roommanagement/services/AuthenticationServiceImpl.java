@@ -29,4 +29,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		User user=new User(userCollection);
 		return user;
 	}
+
+	public boolean checkUser(String authToken,int rights) {
+		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+authToken+"\",rights:"+rights+" }");
+		UserCollection userCollection=mongoOperations.findOne(basicQuery,UserCollection.class);
+		if(userCollection!=null){
+			return false;
+		}
+		return true;
+	}
 }

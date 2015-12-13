@@ -125,10 +125,8 @@ public class UserServiceImpl implements UserService{
 		List<User> userBeanList = new ArrayList<User>();
 
 		for(UserCollection userCollection : userCollectionList){
-		userBeanList.add(new User(userCollectionList));
+			userBeanList.add(new User(userCollection));
 		}
-
 		return userBeanList; 
 		}
-
 }
