@@ -30,7 +30,9 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	public List<Bookings> getBookingsOfDate(String date){
 		
 		/*db.mycollection.find({ "dt" : { "$gte" : { "$date" : "2013-10-01T00:00:00.000Z"}}})*/
-		BasicQuery basicQuery= new BasicQuery("{ \"startDate\" : { \"$gte\" : { \"$date\" : \""+date+"\"}}},{ \"endDate\" : { \"$lte\" : { \"$date\" : \""+date+"\"}}}");
+		/*db.bookings.find({"startDate":{"$gte":ISODate("2015-10-15T00:00:00.00Z")}});*/
+		System.out.println("***************"+date);
+		BasicQuery basicQuery= new BasicQuery("{ \"startDate\" : { \"$gte\" : ISODate(\""+date+"\")}}");
 		List<BookingsCollection> allBookings = mongoOperations.find(basicQuery,BookingsCollection.class);
 		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
 		for(BookingsCollection bookingCollection : allBookings){
