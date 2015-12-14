@@ -122,11 +122,15 @@ public class RoomController{
 					
 	
 	@RequestMapping(value="/room/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> deletRoom(@RequestHeader String authToken,@PathVariable("id") String id) {
+	public ResponseEntity<String> deleteRoom(@RequestHeader String authToken,@PathVariable("id") String id) {
+
+		HttpStatus httpStatus = null;
+		Room requiredRoom = roomservice.getRoom(id);
 		roomservice.delete(id);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return  new ResponseEntity<String>(httpHeaders, HttpStatus.ACCEPTED);
 	}
+
 	
 	@RequestMapping(value="/room/{start}/{end}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Room>> roomRange(@RequestHeader String authToken,@PathVariable("start") int start,@PathVariable("end") int end) {
