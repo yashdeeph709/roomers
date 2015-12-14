@@ -33,26 +33,6 @@ public class BookingsServiceImpl implements BookingsService {
 	}
 
 
-	public BookingsCollection getRoom(String id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
-	public void updateRoom(Bookings booking) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	public List<Bookings> getRooms() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	public List<Bookings> roomRange(int start, int end) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

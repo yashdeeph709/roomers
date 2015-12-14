@@ -18,6 +18,7 @@ public class RoomServiceImpl implements RoomService {
 	
 	@Autowired
 	private MongoOperations mongoOperations;
+	private RoomCollection roomUpdated;
 
 	public Room insert(Room room) {
 		
@@ -51,7 +52,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	
-	public void updateRoom(Room room) {
+	public RoomCollection updateRoom(Room room) {
 		
 		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+room.getId()+"\" }");
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
@@ -66,8 +67,10 @@ public class RoomServiceImpl implements RoomService {
 			roomCollection.setRoomProjector(room.getRoomProjector());
 			roomCollection.setRoomInternet(room.getRoomInternet());
 			System.out.println(roomCollection);
-			roomRepository.save(roomCollection);
+			roomUpdated=(RoomCollection) roomRepository.save(roomCollection);
+			return roomUpdated;
 		}
+		return null;
 	}
 	
 	public void delete(String id) {

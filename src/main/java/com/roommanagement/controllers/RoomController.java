@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Room;
+import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.services.RoomService;
 import com.roommanagement.services.UserService;
 
@@ -107,16 +108,18 @@ public class RoomController{
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
-		if(service.checkAdmin(authToken)){
-			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
-		}
+	
 		if(room.getRoomName()==null||room.getRoomBlock()==null||room.getRoomLocation()==null){
 			
-			return  new ResponseEntity<String>("Required fields could not be empty", httpHeaders, HttpStatus.PRECONDITION_REQUIRED);
+			return  new ResponseEntity<String>("Required fields could not be empty", httpHeaders, HttpStatus.BAD_REQUEST);
 		}
 		else{
 		
-			roomservice.updateRoom(room);
+			RoomCollection roomUpdated=roomservice.updateRoom(room);
+			if(roomUpdated==null)
+			{
+				return  new ResponseEntity<String>("Room details updated successfully", httpHeaders, HttpStatus.BAD_REQUEST);
+			}
 			return  new ResponseEntity<String>("Room details updated successfully", httpHeaders, HttpStatus.ACCEPTED);
 		}
 	}

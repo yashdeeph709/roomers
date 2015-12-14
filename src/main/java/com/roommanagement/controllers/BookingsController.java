@@ -21,9 +21,12 @@ import com.roommanagement.beans.Room;
 import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.beans.Bookings;
+import com.roommanagement.services.AvailabilityServiceImpl;
 import com.roommanagement.services.BookingsService;
 import com.roommanagement.services.RoomService;
 import com.roommanagement.services.UserService;
+
+import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 @CrossOrigin
@@ -37,6 +40,8 @@ public class BookingsController{
 	@Autowired
 	private MongoOperations mongoOperations;
 	
+	BasicQuery basicQuery;
+	List<Bookings> bookedRooms;
 	@RequestMapping(value = "/bookings/{roomId}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken,@RequestBody Bookings booking,@PathVariable("roomId") String roomId) {
 		
@@ -49,22 +54,26 @@ public class BookingsController{
 			httpStatus = HttpStatus.BAD_REQUEST; 				//If Bookings is not inserted
 		}
 		else{
-		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
-		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
-		Room room=new Room(roomCollection);
-		booking.setRoom(room);
 
-		bookingReturned =bookingservice.insert(booking);
+				bookedRooms=new AvailabilityServiceImpl().getBookingsOfDate(booking.getStartDate().toString());
+				basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
+				RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
+				Room room=new Room(roomCollection);
+				booking.setRoom(room);
 
-			if(bookingReturned == null){
-				httpStatus = HttpStatus.ALREADY_REPORTED;
-			}else{
-				httpStatus = HttpStatus.CREATED;					//If Bookings is created
-			}
+				bookingReturned =bookingservice.insert(booking);
+
+				if(bookingReturned == null){
+					httpStatus = HttpStatus.BAD_REQUEST;
+				}
+				else{
+					httpStatus = HttpStatus.CREATED;					//If Bookings is created
+				}
+
 		}
 
 		HttpHeaders httpHeaders = new HttpHeaders();
-		System.out.println("**************"+httpStatus);
+		
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
 			
 	}

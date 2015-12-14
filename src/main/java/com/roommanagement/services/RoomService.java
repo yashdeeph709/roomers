@@ -3,6 +3,7 @@ package com.roommanagement.services;
 import java.util.List;
 
 import com.roommanagement.beans.Room;
+import com.roommanagement.collections.RoomCollection;
 
 
 public interface RoomService {
@@ -13,7 +14,7 @@ public interface RoomService {
 	
 	Room getRoom(String id);
 	
-	void updateRoom(Room room);
+	RoomCollection updateRoom(Room room);
 	
 	void delete(String name);
 	
