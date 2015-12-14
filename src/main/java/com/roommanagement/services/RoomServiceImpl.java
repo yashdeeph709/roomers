@@ -74,7 +74,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	public void delete(String id) {
-		roomRepository.deleteById(id);
+		roomRepository.delete(id);
 	}
 
 

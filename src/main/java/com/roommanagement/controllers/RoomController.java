@@ -128,7 +128,7 @@ public class RoomController{
 		Room requiredRoom = roomservice.getRoom(id);
 		roomservice.delete(id);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return  new ResponseEntity<String>(httpHeaders, HttpStatus.ACCEPTED);
+		return  new ResponseEntity<String>("Room details delete successfully",httpHeaders, HttpStatus.ACCEPTED);
 	}
 
 	
