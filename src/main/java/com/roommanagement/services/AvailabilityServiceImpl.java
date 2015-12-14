@@ -1,5 +1,6 @@
 package com.roommanagement.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,6 +37,10 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		
 		BasicQuery basicQuery= new BasicQuery("{\"startDate\": lte:{"+date+"},{\"endDate\": gte:{"+date+"}}");
 		List<BookingsCollection> allBookings = mongoOperations.find(basicQuery,BookingsCollection.class);
+		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
+		for(BookingsCollection bookingCollection : allBookings){
+			requiredBookingList.add(new Bookings(bookingCollection));
+		}
 		/*List<BookingsCollection> allBookings = bookingsRepository.findAll();
 		List<Bookings> selectedBookings = new ArrayList<Bookings>();
 		for(BookingsCollection bc: allBookings){
@@ -45,11 +50,13 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			}
 		}
 		return selectedBookings;*/
-		return null;
+		return requiredBookingList;
 	}
 	
 	
 	public List<Bookings> bookingsOfRange(Date fromDate,Date toDate){
+		
+		
 		
 		return null;
 	}
