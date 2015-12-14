@@ -42,7 +42,7 @@ public class BookingsController{
 	
 	BasicQuery basicQuery;
 	List<Bookings> bookedRooms;
-	@RequestMapping(value = "/bookings/{roomId}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken,@RequestBody Bookings booking,@PathVariable("roomId") String roomId) {
 		
 		Bookings bookingReturned = null;
@@ -76,6 +76,27 @@ public class BookingsController{
 		
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
 			
+	}
+	
+	
+	
+/******** show User Booking**********/
+	
+	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Bookings>> showUserBooking(@RequestHeader String authToken) {
+
+		List<Bookings> bookings = bookingservice.getMyBookings(authToken);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
+	}
+                                   
+	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Bookings>> showUserBookingRange(@RequestHeader String authToken,
+			@PathVariable("start") int start, @PathVariable("end") int end) {
+
+		List<Bookings> bookings = bookingservice.getMyBookingsRange(authToken, start, end);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
 	}
 	
 	

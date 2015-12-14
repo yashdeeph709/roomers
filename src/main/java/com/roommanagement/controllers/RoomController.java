@@ -30,8 +30,8 @@ public class RoomController{
 	UserService service;
 	
 	
-	@RequestMapping(value = "/rooms", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Room> addRooms(@RequestHeader String authToken,@RequestBody Room room) {
+	@RequestMapping(value = "/room", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Room> addRoom(@RequestHeader String authToken,@RequestBody Room room) {
 		
 		Room roomReturned = null;
 		
@@ -58,7 +58,7 @@ public class RoomController{
 	}
 	
 	
-	@RequestMapping(value = "/rooms", method = RequestMethod.GET)
+	@RequestMapping(value = "/room", method = RequestMethod.GET)
 	public ResponseEntity<List<Room>> getRooms(@RequestHeader String authToken) {
 		
 		
@@ -75,12 +75,12 @@ public class RoomController{
 		}
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
-		
+		 
 		return new ResponseEntity<List<Room>>(roomList, httpHeaders, httpStatus);
 	}	
 	
 	
-	@RequestMapping(value = "/rooms/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/room/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Room> getRoom(@RequestHeader String authToken,@PathVariable("id") String id) 
 	{
 		HttpStatus httpStatus = null;
@@ -100,7 +100,7 @@ public class RoomController{
 			
 	}
 	
-	@RequestMapping(value = "/rooms", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/room", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> updateRoom(@RequestHeader String authToken,@RequestBody Room room) {
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -121,14 +121,14 @@ public class RoomController{
 	}
 					
 	
-	@RequestMapping(value="/rooms/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/room/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> deletRoom(@RequestHeader String authToken,@PathVariable("id") String id) {
 		roomservice.delete(id);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return  new ResponseEntity<String>(httpHeaders, HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(value="/rooms/{start}/{end}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/room/{start}/{end}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Room>> roomRange(@RequestHeader String authToken,@PathVariable("start") int start,@PathVariable("end") int end) {
 		
 		HttpHeaders httpHeaders = new HttpHeaders();

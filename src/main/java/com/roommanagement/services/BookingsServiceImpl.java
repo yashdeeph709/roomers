@@ -33,6 +33,29 @@ public class BookingsServiceImpl implements BookingsService {
 	}
 
 
+	public List<Bookings> getMyBookings(String authToken) {
+		BasicQuery basicQuery = new BasicQuery("{ requestee : \"" + authToken + "\"}");
+		List<BookingsCollection> bookingsCollectionList = mongoOperations.find(basicQuery, BookingsCollection.class);
+		List<Bookings> requiredBookings = new ArrayList<Bookings>();
+		for (BookingsCollection bookingCollection : bookingsCollectionList) {
+			requiredBookings.add(new Bookings(bookingCollection));
+		}
+		return requiredBookings;
+	}
+
+	public List<Bookings> getMyBookingsRange(String authToken, int start, int end) {
+
+		BasicQuery basicQuery = new BasicQuery("{ requestee : \"" + authToken +" \"}");
+		basicQuery.skip(start);
+		basicQuery.limit(end);
+		List<BookingsCollection> bookingsCollectionList = mongoOperations.find(basicQuery, BookingsCollection.class);
+		List<Bookings> requiredBookings = new ArrayList<Bookings>();
+		for (BookingsCollection bookingCollection : bookingsCollectionList) {
+			requiredBookings.add(new Bookings(bookingCollection));
+		}
+		return requiredBookings;
+	}
+
 
 
 }

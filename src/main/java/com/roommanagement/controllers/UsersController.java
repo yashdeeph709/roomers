@@ -30,14 +30,14 @@ public class UsersController {
 	private UserService service;
 	
 
-	@RequestMapping(value="/users", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/user", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserCollection>> getUsers(@RequestHeader String authToken) {
 			httpstatus=HttpStatus.ACCEPTED;
 			List<UserCollection> users=service.getUsers();
 			return new ResponseEntity<List<UserCollection>>(users,responseHeaders,httpstatus);
 	}
 
-	@RequestMapping(value="/users/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/user/{MongoId}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> deletUser(@RequestHeader String authToken,@PathVariable("MongoId") String id) {
 		service.delete(id);
 		httpstatus=HttpStatus.ACCEPTED;
@@ -46,7 +46,7 @@ public class UsersController {
 	
 
 	
-	@RequestMapping(value="/users", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="/user", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<UserCollection> createUser(@RequestHeader String authToken,@RequestBody User user) {
 			UserCollection createUserReturnValue= service.insert(new UserCollection(user));
 			if(createUserReturnValue==null)
