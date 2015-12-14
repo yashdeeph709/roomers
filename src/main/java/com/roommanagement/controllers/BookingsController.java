@@ -1,6 +1,7 @@
 package com.roommanagement.controllers;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -18,15 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Room;
-import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.collections.RoomCollection;
-import com.roommanagement.beans.Bookings;
 import com.roommanagement.services.AvailabilityServiceImpl;
 import com.roommanagement.services.BookingsService;
-import com.roommanagement.services.RoomService;
-import com.roommanagement.services.UserService;
-
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 @CrossOrigin
