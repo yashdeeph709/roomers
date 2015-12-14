@@ -53,16 +53,16 @@ public class BookingsController{
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
 		Room room=new Room(roomCollection);
 		booking.setRoom(room);
+
 		bookingReturned =bookingservice.insert(booking);
-		System.out.println("****************"+bookingReturned);
+
 			if(bookingReturned == null){
 				httpStatus = HttpStatus.ALREADY_REPORTED;
 			}else{
 				httpStatus = HttpStatus.CREATED;					//If Bookings is created
 			}
 		}
-//		
-//		
+
 		HttpHeaders httpHeaders = new HttpHeaders();
 		System.out.println("**************"+httpStatus);
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
