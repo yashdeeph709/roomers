@@ -5,7 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Room;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.repository.RoomRepository;
@@ -18,7 +21,7 @@ public class RoomServiceImpl implements RoomService {
 	
 	@Autowired
 	private MongoOperations mongoOperations;
-	private RoomCollection roomUpdated;
+	private Room roomUpdated;
 
 	public Room insert(Room room) {
 		
@@ -52,7 +55,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 	
 	
-	public RoomCollection updateRoom(Room room) {
+	public Room updateRoom(Room room) {
 		
 		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+room.getId()+"\" }");
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
@@ -67,7 +70,7 @@ public class RoomServiceImpl implements RoomService {
 			roomCollection.setRoomProjector(room.getRoomProjector());
 			roomCollection.setRoomInternet(room.getRoomInternet());
 			System.out.println(roomCollection);
-			roomUpdated=(RoomCollection) roomRepository.save(roomCollection);
+			roomUpdated=new Room(roomRepository.save(roomCollection));
 			return roomUpdated;
 		}
 		return null;
@@ -93,4 +96,26 @@ public class RoomServiceImpl implements RoomService {
 		
 		return roomList; 
 	}
+	
+	//************getStatus*****************
+	public HttpStatus getStatus(Room roomReturned)
+	{
+		if(roomReturned == null){
+			return HttpStatus.NOT_FOUND;
+		}else{
+			return HttpStatus.FOUND;					//If room is created
+		
+	}
+	}
+	public HttpStatus getStatus(List<Room> roomList)
+	{
+		if(roomList==null){
+			return HttpStatus.NO_CONTENT; 				//If no rooms are there in the db 
+		}
+		else{
+			return HttpStatus.ACCEPTED;					//If room are there
+		}
+		
+	}
+	
 }

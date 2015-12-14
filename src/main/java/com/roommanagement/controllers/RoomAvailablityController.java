@@ -35,20 +35,11 @@ public class RoomAvailablityController {
 	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,String> dateStr) throws ParseException {
 		
 		
-		HttpStatus httpStatus = null;
+		
 		
 		List<Bookings> bookingsList = availabilityService.getBookingsOfDate(dateStr.get("date"));
-		
-		
-		if(bookingsList==null){
-			httpStatus = HttpStatus.NO_CONTENT; 				//If no rooms are there in the db 
-		}
-		else{
-			httpStatus = HttpStatus.ACCEPTED;					//If room are there
-		}
-		
 		HttpHeaders httpHeaders = new HttpHeaders();
-		
+		HttpStatus httpStatus = availabilityService.getStatus(bookingsList);
 		return new ResponseEntity<List<Bookings>>(bookingsList, httpHeaders, httpStatus);
 	}	
 

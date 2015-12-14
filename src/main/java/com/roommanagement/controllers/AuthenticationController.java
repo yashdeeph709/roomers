@@ -27,14 +27,10 @@ public class AuthenticationController {
 	 */
 	@RequestMapping(value="/login", method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<User> login(@RequestBody User userbean) {
-		HttpStatus httpstatus=null;
+		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		User user=service.validate(userbean.getEmail(),userbean.getPassword());
-		if(user!=null){
-			httpstatus=HttpStatus.ACCEPTED;
-		}else{
-			httpstatus=HttpStatus.UNAUTHORIZED;
-		}
+		HttpStatus httpstatus=service.getStatus(user);
 		return new ResponseEntity<User>(user, responseHeaders, httpstatus);
 	}
 }

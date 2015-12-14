@@ -3,6 +3,7 @@ package com.roommanagement.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.User;
@@ -38,5 +39,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 			return true;
 		}
 		return false;
+	}
+	
+	public HttpStatus getStatus(User user)
+	{
+		if(user!=null){
+			return HttpStatus.ACCEPTED;
+		}else{
+			return HttpStatus.UNAUTHORIZED;
+		}
 	}
 }

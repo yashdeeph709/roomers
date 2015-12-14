@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Bookings;
@@ -48,6 +49,18 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		
 		
 		return null;
+	}
+	
+	public HttpStatus getStatus(List<Bookings> bookingsList)
+	{
+		
+		if(bookingsList==null){
+			return HttpStatus.NO_CONTENT; 				//If no rooms are there in the db 
+		}
+		else{
+			return HttpStatus.ACCEPTED;					//If room are there
+		}
+		
 	}
 		
 }

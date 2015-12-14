@@ -5,8 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.roommanagement.beans.Room;
 import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.UsersRepository;
@@ -29,13 +32,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 
-	public UserCollection insert(UserCollection user) {
+	public User insert(UserCollection user) {
 	BasicQuery basicQuery= new BasicQuery("{ email : \""+user.getEmail()+"\" }");
-		UserCollection userTest=mongoOperations.findOne(basicQuery,UserCollection.class);
+		User userTest=mongoOperations.findOne(basicQuery,User.class);
 		if(userTest==null)
 		{
 			user.setRights(2);
-			return repository.insert(user);
+			return new User(repository.insert(user));
 		}
 		return null;
 	}
@@ -113,7 +116,7 @@ public class UserServiceImpl implements UserService{
 	public Long getUsersCount() {
 		return repository.count();
 	}
-	//***********************Pagination
+	//***********************Pagination****************
 	public List<User> userRange(int start, int end) {
 
 		BasicQuery basicQuery= new BasicQuery("{}");
@@ -128,4 +131,17 @@ public class UserServiceImpl implements UserService{
 		}
 		return userBeanList; 
 		}
+	//*****************get Status*******************
+	public HttpStatus getStatus(User createUserReturnValue)
+	{
+		if(createUserReturnValue==null)
+		{
+			
+			return HttpStatus.ALREADY_REPORTED;
+		}
+		return HttpStatus.CREATED;
+	
+	}
+
+	
 }
