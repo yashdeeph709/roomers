@@ -59,10 +59,7 @@ public class RoomController{
 	
 	@RequestMapping(value = "/rooms", method = RequestMethod.GET)
 	public ResponseEntity<List<Room>> getRooms(@RequestHeader String authToken) {
-		if(service.checkAdmin(authToken)){
-			
-			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
-		}
+		
 		
 		HttpStatus httpStatus = null;
 		
@@ -107,9 +104,7 @@ public class RoomController{
 		
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
-		if(service.checkAdmin(authToken)){
-			//return new Status<RoomCollection>("NotAuthenticated","User not Authenticated");
-		}
+		
 		if(room.getRoomName()==null||room.getRoomBlock()==null||room.getRoomLocation()==null){
 			
 			return  new ResponseEntity<String>("Required fields could not be empty", httpHeaders, HttpStatus.PRECONDITION_REQUIRED);
