@@ -32,7 +32,7 @@ public class RoomAvailablityController {
 	AvailabilityService availabilityService;
 	
 	@RequestMapping(value = "/availability", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws ParseException {
+	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,String> dateStr) throws ParseException {
 		
 		
 		HttpStatus httpStatus = null;

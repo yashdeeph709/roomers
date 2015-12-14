@@ -6,7 +6,7 @@ import com.roommanagement.beans.Bookings;
 
 public interface AvailabilityService {
 
-	public List<Bookings> getBookingsOfDate(Date date);
+	public List<Bookings> getBookingsOfDate(String date);
 	
 	
 }

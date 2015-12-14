@@ -1,9 +1,9 @@
 package com.roommanagement.services;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -12,11 +12,8 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Bookings;
-import com.roommanagement.beans.Room;
 import com.roommanagement.collections.BookingsCollection;
-import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.repository.BookingsRepository;
-import com.roommanagement.repository.RoomRepository;
 
 @Service
 public class AvailabilityServiceImpl implements AvailabilityService {
@@ -30,26 +27,16 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	Date formattedDate;
 
-	public List<Bookings> getBookingsOfDate(Date date){
-		/*
-		formattedDate = date;
-		System.out.println(formattedDate);*/
+	public List<Bookings> getBookingsOfDate(String date){
 		
-		BasicQuery basicQuery= new BasicQuery("{\"startDate\": lte:{"+date+"},{\"endDate\": gte:{"+date+"}}");
+		/*db.mycollection.find({ "dt" : { "$gte" : { "$date" : "2013-10-01T00:00:00.000Z"}}})*/
+		BasicQuery basicQuery= new BasicQuery("{ \"startDate\" : { \"$gte\" : { \"$date\" : \""+date+"\"}}},{ \"endDate\" : { \"$lte\" : { \"$date\" : \""+date+"\"}}}");
 		List<BookingsCollection> allBookings = mongoOperations.find(basicQuery,BookingsCollection.class);
 		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
 		for(BookingsCollection bookingCollection : allBookings){
+			System.out.println(bookingCollection);
 			requiredBookingList.add(new Bookings(bookingCollection));
 		}
-		/*List<BookingsCollection> allBookings = bookingsRepository.findAll();
-		List<Bookings> selectedBookings = new ArrayList<Bookings>();
-		for(BookingsCollection bc: allBookings){
-			if(bc.getStartDate().compareTo(date)==-1 && bc.getEndDate().compareTo(date)==1)
-			{
-				selectedBookings.add(new Bookings(bc));
-			}
-		}
-		return selectedBookings;*/
 		return requiredBookingList;
 	}
 	
