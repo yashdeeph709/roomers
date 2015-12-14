@@ -83,7 +83,7 @@ public class BookingsController{
 /******** show User Booking**********/
 	
 	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> showUserBooking(@RequestHeader String authToken) {
+	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
 
 		List<Bookings> bookings = bookingservice.getMyBookings(authToken);
 		HttpHeaders httpHeaders = new HttpHeaders();
@@ -91,7 +91,7 @@ public class BookingsController{
 	}
                                    
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> showUserBookingRange(@RequestHeader String authToken,
+	public ResponseEntity<List<Bookings>> getUserBookingRange(@RequestHeader String authToken,
 			@PathVariable("start") int start, @PathVariable("end") int end) {
 
 		List<Bookings> bookings = bookingservice.getMyBookingsRange(authToken, start, end);
