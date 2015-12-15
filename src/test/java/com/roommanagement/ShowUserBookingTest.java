@@ -1,10 +1,10 @@
 package com.roommanagement;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -14,13 +14,13 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class ShowUserBookingTest {
-	Client client;
+	 static Client client;
 	String baseURI = "http://localhost:8080/roommanagement";
 	WebResource webResource;
 	ClientResponse response;
 
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
 
 		client = Client.create();
 
