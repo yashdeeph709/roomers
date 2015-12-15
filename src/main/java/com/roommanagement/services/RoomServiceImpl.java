@@ -104,10 +104,10 @@ public class RoomServiceImpl implements RoomService {
 	public ResponseEntity<Room> getStatus(Room roomReturned)
 	{
 		if(roomReturned == null){
-			return new ResponseEntity<Room>(roomReturned, httpHeaders,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Room>(roomReturned, httpHeaders,HttpStatus.BAD_REQUEST);
 			//return HttpStatus.NOT_FOUND;
 		}else{
-			return new ResponseEntity<Room>(roomReturned, httpHeaders,HttpStatus.FOUND);				//If room is created
+			return new ResponseEntity<Room>(roomReturned, httpHeaders,HttpStatus.ACCEPTED);				//If room is created
 		
 	}
 	}
@@ -115,10 +115,10 @@ public class RoomServiceImpl implements RoomService {
 	public ResponseEntity<String> getStatus(Room roomUpdated,HttpHeaders httpHeaders,HttpStatus httpStatus)
 	{
 			if(roomUpdated == null){
-				return new ResponseEntity<String>("Room Does not Exists", httpHeaders,HttpStatus.NOT_FOUND);
+				return new ResponseEntity<String>("Room Does not Exists", httpHeaders,HttpStatus.BAD_REQUEST);
 			
 			}else{
-				return new ResponseEntity<String>("Room details update", httpHeaders,HttpStatus.FOUND);				//If room is updated
+				return new ResponseEntity<String>("Room details update", httpHeaders,HttpStatus.ACCEPTED);				//If room is updated
 			
 		}
 	}
