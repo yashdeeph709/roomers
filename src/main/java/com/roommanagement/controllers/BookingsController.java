@@ -24,68 +24,59 @@ import com.roommanagement.collections.UserCollection;
 import com.roommanagement.services.AvailabilityServiceImpl;
 import com.roommanagement.services.BookingsService;
 
-
 @CrossOrigin
 @RestController
 @RequestMapping("/roommanagement")
-public class BookingsController{
+public class BookingsController {
 
 	@Autowired
 	BookingsService bookingservice;
-	
+
 	@Autowired
 	private MongoOperations mongoOperations;
-	
+
 	BasicQuery basicQuery;
 	List<Bookings> bookedRooms;
-	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken,@RequestBody Bookings booking,@PathVariable("roomId") String roomId) {
-		
+
+	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken, @RequestBody Bookings booking,
+			@PathVariable("roomId") String roomId) {
+
 		Bookings bookingReturned = null;
-		
+
 		HttpStatus httpStatus = null;
-		
-				
-		basicQuery= new BasicQuery("{ \"id\" : \""+authToken+"\" }");
-		UserCollection userCollection=mongoOperations.findOne(basicQuery, UserCollection.class);
-		if(userCollection==null)
-		{
-				httpStatus=HttpStatus.UNAUTHORIZED;
-		}
-		else
-		{	
-				basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
-				RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
-				if(roomCollection==null)
-				{
-						httpStatus = HttpStatus.BAD_REQUEST;
-				}
-				else
-				{
-						Room room=new Room(roomCollection);
-						booking.setRoom(room);
 
-						bookingReturned =bookingservice.insert(booking,roomId);
+		basicQuery = new BasicQuery("{ \"id\" : \"" + authToken + "\" }");
+		UserCollection userCollection = mongoOperations.findOne(basicQuery, UserCollection.class);
+		if (userCollection == null) {
+			httpStatus = HttpStatus.UNAUTHORIZED;
+		} else {
+			basicQuery = new BasicQuery("{ \"id\" : \"" + roomId + "\" }");
+			RoomCollection roomCollection = mongoOperations.findOne(basicQuery, RoomCollection.class);
+			if (roomCollection == null) {
+				httpStatus = HttpStatus.BAD_REQUEST;
+			} else {
+				Room room = new Room(roomCollection);
+				booking.setRoom(room);
 
-						if(bookingReturned == null){
-							httpStatus = HttpStatus.BAD_REQUEST;
-						}
-						else{
-						httpStatus = HttpStatus.CREATED;					//If Bookings is created
-						}
+				bookingReturned = bookingservice.insert(booking, roomId);
+
+				if (bookingReturned == null) {
+					httpStatus = HttpStatus.BAD_REQUEST;
+				} else {
+					httpStatus = HttpStatus.CREATED; // If Bookings is created
 				}
+			}
 		}
-	
+
 		HttpHeaders httpHeaders = new HttpHeaders();
-		
+
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
-			
+
 	}
-	
-	
-	
-/******** show User Booking**********/
-	
+
+	/******** show User Booking **********/
+
 	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
 
@@ -93,16 +84,14 @@ public class BookingsController{
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);
 	}
-                                   
+
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBookingRange(@RequestHeader String authToken,
 			@PathVariable("start") int start, @PathVariable("end") int end) {
 
 		List<Bookings> bookings = bookingservice.getMyBookingsRange(authToken, start, end);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);
 	}
-	
-	
 
 }
