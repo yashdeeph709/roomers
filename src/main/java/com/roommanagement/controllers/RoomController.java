@@ -76,7 +76,7 @@ public class RoomController{
 	public ResponseEntity<List<Room>> roomRange(@RequestHeader String authToken,@PathVariable("start") int start,@PathVariable("end") int end) {
 		
 	
-		return new ResponseEntity<List<Room>>(roomservice.roomRange(start,end), httpHeaders, HttpStatus.FOUND);
+		return new ResponseEntity<List<Room>>(roomservice.roomRange(start,end), httpHeaders, HttpStatus.ACCEPTED);
 
 	}
 	

@@ -18,16 +18,11 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.mongodb.DBObject;
-import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 import com.roommanagement.beans.Bookings;
-import com.roommanagement.repository.BookingsRepository;
 
 @Service
 public class AvailabilityServiceImpl implements AvailabilityService {
-
-	@Autowired
-	private BookingsRepository bookingsRepository;
 	
 	@Autowired
 	private MongoOperations mongoOperations;
@@ -49,8 +44,6 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		andQuery.put("startDate", new BasicDBObject("$lte", date));
 		andQuery.put("endDate", new BasicDBObject("$gte", date));
 
-		System.out.println(andQuery.toString());
-
 		DBCursor cursor = collection.find(andQuery);
 		while (cursor.hasNext()) {
 			
@@ -65,10 +58,6 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	
 	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate, Date toDate) throws ParseException, UnknownHostException{
 		
-		MongoClient mongo = new MongoClient("localhost", 27017);
-		DB db = mongo.getDB("test");
-		DBCollection collection = db.getCollection("bookings");
-		
 		Map<Integer,List<Bookings>> range = new HashMap<Integer,List<Bookings>>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
 		
@@ -77,6 +66,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			bookingsList = getBookingsOfDate(fromDate);
 			range.put(i, bookingsList);
 			fromDate.setDate(fromDate.getDate()+1);
+			
 			
 		}
 		
