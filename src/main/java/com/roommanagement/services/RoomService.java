@@ -26,7 +26,6 @@ public interface RoomService {
 	//***************GetStatus***********
 	ResponseEntity<Room> getStatus(Room roomReturned);
 	ResponseEntity<List<Room>> getStatus(List<Room> roomList);
-
 	ResponseEntity<String> getStatus(Room updateRoom, HttpHeaders httpHeaders, HttpStatus httpStatus);
 	
 }
