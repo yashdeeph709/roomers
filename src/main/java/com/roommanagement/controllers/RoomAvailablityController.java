@@ -35,9 +35,6 @@ public class RoomAvailablityController {
 	@RequestMapping(value = "/availability", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws UnknownHostException {
 		
-		
-		
-		
 		List<Bookings> bookingsList = availabilityService.getBookingsOfDate(dateStr.get("date"));
 		HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -46,10 +43,8 @@ public class RoomAvailablityController {
 	
 	@RequestMapping(value = "/availabilities", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsOfRange(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws ParseException, UnknownHostException{
-		
-			availabilityService.bookingsOfRange(dateStr.get("date1"));
-		
-		return null;
+		HttpHeaders httpHeaders = new HttpHeaders();
+		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.bookingsOfRange(dateStr.get("date1")),httpHeaders,HttpStatus.ACCEPTED);
 	} 
 
 }
