@@ -2,7 +2,7 @@ package com.roommanagement;
 
 import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.sun.jersey.api.client.Client;
@@ -10,12 +10,12 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class RoomDeleteTest {
-	Client client;
+	static Client client;
 	WebResource webResource;
 	String baseURI = "http://localhost:8080/roommanagement";
 	ClientResponse response;
 
-	@Before
+	@BeforeClass
 	public void setup() {
 		client = Client.create();
 	}
