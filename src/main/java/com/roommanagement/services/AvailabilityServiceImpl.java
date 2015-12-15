@@ -3,6 +3,7 @@ package com.roommanagement.services;
 import java.net.UnknownHostException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,10 +45,11 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		
 		for(int i=0;i<7;i++){
 			
-			bookingsList = getBookingsOfDate(fromDate);
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(fromDate);
+			calendar.add(Calendar.DATE, i);  
+			bookingsList = getBookingsOfDate(calendar.getTime());
 			range.put(i, bookingsList);
-			fromDate.setDate(fromDate.getDate()+1);
-			
 			
 		}
 		
