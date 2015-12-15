@@ -30,49 +30,36 @@ public class RoomController{
 	@Autowired
 	UserService service;
 	HttpStatus httpStatus;
-	HttpHeaders httpHeaders;
+	HttpHeaders httpHeaders = new HttpHeaders();;
 	
 	@RequestMapping(value = "/room", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Room> addRoom(@RequestHeader String authToken,@RequestBody Room room) {
-		
-		Room roomReturned =roomservice.insert(room);	
-		httpStatus = roomservice.getStatus(roomReturned);
-		httpHeaders = new HttpHeaders();
-		return new ResponseEntity<Room>(roomReturned, httpHeaders, httpStatus);
+	
+		return roomservice.getStatus(roomservice.insert(room));
 			
 	}
 	
 	
 	@RequestMapping(value = "/room", method = RequestMethod.GET)
 	public ResponseEntity<List<Room>> getRooms(@RequestHeader String authToken) {
-				
-		List<Room> roomList = roomservice.getRooms();
-		httpStatus = roomservice.getStatus(roomList);		
-		httpHeaders = new HttpHeaders();		 
-		return new ResponseEntity<List<Room>>(roomList, httpHeaders, httpStatus);
+
+		return roomservice.getStatus(roomservice.getRooms());
 	}	
 	
 	
 	@RequestMapping(value = "/room/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Room> getRoom(@RequestHeader String authToken,@PathVariable("id") String id) 
 	{
-		
-		
-		Room requiredRoom = roomservice.getRoom(id);
-		httpStatus= roomservice.getStatus(requiredRoom);
-		httpHeaders = new HttpHeaders();
-		return new ResponseEntity<Room>(requiredRoom, httpHeaders,httpStatus);
+	
+		return roomservice.getStatus(roomservice.getRoom(id));
 			
 	}
 	
 	@RequestMapping(value = "/room", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateRoom(@RequestHeader String authToken,@RequestBody Room room) {
+	public ResponseEntity<String> updateRoom(@RequestHeader String authToken,@RequestBody Room room) 
+	{
 		
-			
-			Room roomUpdated=roomservice.updateRoom(room);
-			httpStatus= roomservice.getStatus(roomUpdated);
-			httpHeaders = new HttpHeaders();
-			return  new ResponseEntity<String>("Room details updated", httpHeaders, httpStatus);
+			return  roomservice.getStatus(roomservice.updateRoom(room), httpHeaders, httpStatus);
 		
 	}
 					
@@ -81,7 +68,6 @@ public class RoomController{
 	public ResponseEntity<String> deleteRoom(@RequestHeader String authToken,@PathVariable("id") String id) {
 
 		roomservice.delete(id);
-		HttpHeaders httpHeaders = new HttpHeaders();
 		return  new ResponseEntity<String>("Room details delete successfully",httpHeaders, HttpStatus.ACCEPTED);
 	}
 
@@ -89,7 +75,7 @@ public class RoomController{
 	@RequestMapping(value="/room/{start}/{end}", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Room>> roomRange(@RequestHeader String authToken,@PathVariable("start") int start,@PathVariable("end") int end) {
 		
-		httpHeaders = new HttpHeaders();
+	
 		return new ResponseEntity<List<Room>>(roomservice.roomRange(start,end), httpHeaders, HttpStatus.FOUND);
 
 	}

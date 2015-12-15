@@ -2,7 +2,9 @@ package com.roommanagement.services;
 
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.roommanagement.beans.Room;
 import com.roommanagement.collections.RoomCollection;
@@ -23,7 +25,9 @@ public interface RoomService {
 	List<Room> roomRange(int start,int end);
 	
 	//***************GetStatus***********
-	HttpStatus getStatus(Room roomReturned);
-	HttpStatus getStatus(List<Room> roomList);
+	ResponseEntity<Room> getStatus(Room roomReturned);
+	ResponseEntity<List<Room>> getStatus(List<Room> roomList);
+
+	ResponseEntity<String> getStatus(Room updateRoom, HttpHeaders httpHeaders, HttpStatus httpStatus);
 	
 }

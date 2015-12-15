@@ -24,12 +24,12 @@ import com.roommanagement.services.UserService;
 @RequestMapping("/roommanagement")
 public class UsersController {
 
-	HttpStatus httpstatus=null;
-	HttpHeaders responseHeaders = new HttpHeaders();
+
 	@Autowired
 	private UserService service;
 	
-
+	HttpStatus httpstatus=null;
+	HttpHeaders responseHeaders = new HttpHeaders();
 	@RequestMapping(value="/user", method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<UserCollection>> getUsers(@RequestHeader String authToken) {
 			httpstatus=HttpStatus.ACCEPTED;
@@ -48,8 +48,6 @@ public class UsersController {
 	
 	@RequestMapping(value="/user", method=RequestMethod.POST, produces=MediaType.APPLICATION_JSON_VALUE, consumes=MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<User> createUser(@RequestHeader String authToken,@RequestBody User user) {
-			User createUserReturnValue= service.insert(new UserCollection(user));
-			httpstatus=service.getStatus(createUserReturnValue);
-			return new ResponseEntity<User>(createUserReturnValue,responseHeaders,httpstatus);
+				return service.getStatus(service.insert(new UserCollection(user)));
 	}
 }

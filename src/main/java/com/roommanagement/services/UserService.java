@@ -2,7 +2,9 @@ package com.roommanagement.services;
 
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
@@ -33,5 +35,5 @@ public interface UserService {
 	boolean validate(String username, String password);
 	
 	Long getUsersCount();
-	HttpStatus getStatus(User createUserReturnValue);
+	ResponseEntity<User> getStatus(User createUserReturnValue);
 }

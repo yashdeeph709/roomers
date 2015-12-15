@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,8 @@ public class UserServiceImpl implements UserService{
 	private UsersRepository repository;
 	@Autowired
 	private MongoOperations mongoOperations;
-
+//	HttpStatus httpstatus=null;
+	HttpHeaders responseHeaders = new HttpHeaders();
 	public void delete(String id) {
 		repository.delete(id);
 	}
@@ -132,14 +134,15 @@ public class UserServiceImpl implements UserService{
 		return userBeanList; 
 		}
 	//*****************get Status*******************
-	public HttpStatus getStatus(User createUserReturnValue)
+	public ResponseEntity<User> getStatus(User createUserReturnValue)
 	{
 		if(createUserReturnValue==null)
-		{
+		{ 
+			return new ResponseEntity<User>(createUserReturnValue,responseHeaders,HttpStatus.ALREADY_REPORTED);
 			
-			return HttpStatus.ALREADY_REPORTED;
+			
 		}
-		return HttpStatus.CREATED;
+		 return new ResponseEntity<User>(createUserReturnValue,responseHeaders,HttpStatus.CREATED);
 	
 	}
 
