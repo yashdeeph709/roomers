@@ -22,12 +22,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Bookings;
+import com.roommanagement.repository.RoomRepository;
 import com.roommanagement.services.AvailabilityService;
 
 @CrossOrigin
 @RestController
 @RequestMapping("/roommanagement")
 public class RoomAvailablityController {
+	
+	
 	
 	@Autowired
 	AvailabilityService availabilityService;
@@ -44,7 +47,7 @@ public class RoomAvailablityController {
 	@RequestMapping(value = "/availabilities", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsOfRange(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws ParseException, UnknownHostException{
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.bookingsOfRange(dateStr.get("date1")),httpHeaders,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.bookingsOfRange(dateStr.get("date")),httpHeaders,HttpStatus.ACCEPTED);
 	} 
 
 }
