@@ -30,4 +30,13 @@ public class RoomDeleteTest {
 		String actual = response.getEntity(String.class);
 		assertEquals(expected, actual);
 	}
+	/*public void testdeleteRoom2() {
+		client = Client.create();
+		webResource = client.resource("http://localhost:8080/roommanagement/room/566a580e63c");//invalid id
+		ClientResponse response = webResource.accept("application/json").header("authToken", "Bahar")
+				.delete(ClientResponse.class);
+		String expected = "";
+		String actual = response.getEntity(String.class);
+		assertEquals(expected, actual);
+	}*/
 }
