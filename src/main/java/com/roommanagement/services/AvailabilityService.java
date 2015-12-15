@@ -11,5 +11,5 @@ public interface AvailabilityService {
 
 	public List<Bookings> getBookingsOfDate(Date date)throws UnknownHostException;
 	
-	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate, Date toDate)throws ParseException, UnknownHostException;
+	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate)throws ParseException, UnknownHostException;
 }

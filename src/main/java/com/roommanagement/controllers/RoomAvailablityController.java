@@ -46,8 +46,8 @@ public class RoomAvailablityController {
 	
 	@RequestMapping(value = "/availabilities", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsOfRange(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws ParseException, UnknownHostException{
-		System.out.println(dateStr.get("date1")+" "+dateStr.get("date2"));
-			availabilityService.bookingsOfRange(dateStr.get("date1"),dateStr.get("date2"));
+		
+			availabilityService.bookingsOfRange(dateStr.get("date1"));
 		
 		return null;
 	} 

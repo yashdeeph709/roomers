@@ -35,5 +35,8 @@ public interface UserService {
 	boolean validate(String username, String password);
 	
 	Long getUsersCount();
+	
 	ResponseEntity<User> getStatus(User createUserReturnValue);
+	
+	List<User> userRange(int start, int end);
 }

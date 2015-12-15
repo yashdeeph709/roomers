@@ -56,7 +56,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	}
 	
 	
-	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate, Date toDate) throws ParseException, UnknownHostException{
+	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate) throws ParseException, UnknownHostException{
 		
 		Map<Integer,List<Bookings>> range = new HashMap<Integer,List<Bookings>>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
