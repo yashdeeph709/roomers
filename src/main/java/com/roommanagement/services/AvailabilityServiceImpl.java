@@ -1,19 +1,26 @@
 package com.roommanagement.services;
 
+import java.net.UnknownHostException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.Mongo;
+import com.mongodb.MongoClient;
 import com.roommanagement.beans.Bookings;
-import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.repository.BookingsRepository;
 
 @Service
@@ -27,28 +34,53 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	Date formattedDate;
+	
+	
 
-	public List<Bookings> getBookingsOfDate(String date){
+	public List<Bookings> getBookingsOfDate(Date date) throws UnknownHostException{
 		
-		/*db.mycollection.find({ "dt" : { "$gte" : { "$date" : "2013-10-01T00:00:00.000Z"}}})*/
-		/*db.bookings.find({"startDate":{"$gte":ISODate("2015-10-15T00:00:00.00Z")}});*/
-		System.out.println("***************"+date);
-		BasicQuery basicQuery= new BasicQuery("{ \"startDate\" : { \"$gte\" : ISODate(\""+date+"\")}}");
-		List<BookingsCollection> allBookings = mongoOperations.find(basicQuery,BookingsCollection.class);
+		Bookings bookings = null;
 		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
-		for(BookingsCollection bookingCollection : allBookings){
-			System.out.println(bookingCollection);
-			requiredBookingList.add(new Bookings(bookingCollection));
+		MongoClient mongo = new MongoClient("localhost", 27017);
+		DB db = mongo.getDB("test");
+		DBCollection collection = db.getCollection("bookings");
+		
+		BasicDBObject andQuery = new BasicDBObject();
+		andQuery.put("startDate", new BasicDBObject("$lte", date));
+		andQuery.put("endDate", new BasicDBObject("$gte", date));
+
+		System.out.println(andQuery.toString());
+
+		DBCursor cursor = collection.find(andQuery);
+		while (cursor.hasNext()) {
+			
+			DBObject dbObj = cursor.next();
+			bookings = mongoOperations.getConverter().read(Bookings.class, dbObj);
+			requiredBookingList.add(bookings);
 		}
+		
 		return requiredBookingList;
 	}
 	
 	
-	public List<Bookings> bookingsOfRange(Date fromDate,Date toDate){
+	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate, Date toDate) throws ParseException, UnknownHostException{
 		
+		MongoClient mongo = new MongoClient("localhost", 27017);
+		DB db = mongo.getDB("test");
+		DBCollection collection = db.getCollection("bookings");
 		
+		Map<Integer,List<Bookings>> range = new HashMap<Integer,List<Bookings>>();
+		List<Bookings> bookingsList = new ArrayList<Bookings>();
 		
-		return null;
+		for(int i=0;i<7;i++){
+			
+			bookingsList = getBookingsOfDate(fromDate);
+			range.put(i, bookingsList);
+			fromDate.setDate(fromDate.getDate()+1);
+			
+		}
+		
+		return range;
 	}
 	
 	public HttpStatus getStatus(List<Bookings> bookingsList)

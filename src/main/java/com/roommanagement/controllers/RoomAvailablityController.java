@@ -1,5 +1,6 @@
 package com.roommanagement.controllers;
 
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,15 +33,23 @@ public class RoomAvailablityController {
 	AvailabilityService availabilityService;
 	
 	@RequestMapping(value = "/availability", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,String> dateStr) throws ParseException {
+	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws UnknownHostException {
 		
 		
 		
 		
 		List<Bookings> bookingsList = availabilityService.getBookingsOfDate(dateStr.get("date"));
 		HttpHeaders httpHeaders = new HttpHeaders();
-		HttpStatus httpStatus = availabilityService.getStatus(bookingsList);
-		return new ResponseEntity<List<Bookings>>(bookingsList, httpHeaders, httpStatus);
-	}	
+
+		return new ResponseEntity<List<Bookings>>(bookingsList, httpHeaders,HttpStatus.ACCEPTED);
+	}
+	
+	@RequestMapping(value = "/availabilities", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsOfRange(@RequestHeader String authToken,@RequestBody Map<String,Date> dateStr) throws ParseException, UnknownHostException{
+		System.out.println(dateStr.get("date1")+" "+dateStr.get("date2"));
+			availabilityService.bookingsOfRange(dateStr.get("date1"),dateStr.get("date2"));
+		
+		return null;
+	} 
 
 }

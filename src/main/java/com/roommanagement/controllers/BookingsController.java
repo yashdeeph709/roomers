@@ -50,7 +50,6 @@ public class BookingsController{
 		}
 		else{
 
-				bookedRooms=new AvailabilityServiceImpl().getBookingsOfDate(booking.getStartDate().toString());
 				basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
 				RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
 				Room room=new Room(roomCollection);
