@@ -61,11 +61,12 @@ public class BookingsController {
 				booking.setRoom(room);
 
 				bookingReturned = bookingservice.insert(booking, roomId);
-
+				
 				if (bookingReturned == null) {
 					httpStatus = HttpStatus.BAD_REQUEST;
 				} else {
 					httpStatus = HttpStatus.CREATED; // If Bookings is created
+					
 				}
 			}
 		}
