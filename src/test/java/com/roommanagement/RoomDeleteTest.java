@@ -1,9 +1,10 @@
-/*package com.roommanagement;
+package com.roommanagement;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -18,18 +19,16 @@ public class RoomDeleteTest {
 	@Before
 	public void setup() {
 		client = Client.create();
-		
 	}
 
 	@Test
 	public void testdeleteRoom() {
 		client = Client.create();
-		webResource = client.resource("http://localhost:8080/RoomManagement/deleteRoom/Bahar");
-		ClientResponse response = webResource.accept("application/json").header("authToken","adfasd")
-				.get(ClientResponse.class);
-		String expected = "{\"status\":\"true\",\"message\":\"Room Deleted Successfully!\",\"data\":null,\"dataOne\":null}";
+		webResource = client.resource("http://localhost:8080/roommanagement/room/566a580e63c7c445a5d2863c");
+		ClientResponse response = webResource.accept("application/json").header("authToken","Bahar")
+				.delete(ClientResponse.class);
+		String expected = "";
 		String actual = response.getEntity(String.class);
 		assertEquals(expected,actual);
 	}
-
-}*/
+}
