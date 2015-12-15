@@ -91,7 +91,7 @@ public class BookingsController{
 
 		List<Bookings> bookings = bookingservice.getMyBookings(authToken);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);
 	}
                                    
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
