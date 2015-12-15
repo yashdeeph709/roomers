@@ -2,7 +2,11 @@ package com.roommanagement.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.roommanagement.EmailAPI;
+import com.roommanagement.beans.Email;
 import com.roommanagement.beans.Room;
 import com.roommanagement.beans.User;
 import com.roommanagement.collections.UserCollection;
@@ -23,8 +29,20 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private MongoOperations mongoOperations;
 //	HttpStatus httpstatus=null;
-	HttpHeaders responseHeaders = new HttpHeaders();
+	HttpHeaders responseHeaders;
+//	ConfigurableApplicationContext context;//=new ClassPathXmlApplicationContext("Mail-bean.xml");
+//	Email sendMail = (Email) context.getBean("mailMail");
 	public void delete(String id) {
+		BasicQuery basicQuery= new BasicQuery("{ id : \""+id+"\" }");
+		User user=mongoOperations.findOne(basicQuery,User.class);
+	
+		ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
+		Email sendMail = (Email) context.getBean("mailMail");
+		sendMail.sendMail("shrutiu.7@gmail.com",
+						  user.getEmail(),
+						  "User Removal Acknowledgement", 
+						  "Dear "+user.getName()+",\n\nYour Room Management account has been deleted by the Admin");
+	
 		repository.delete(id);
 	}
 
@@ -37,9 +55,20 @@ public class UserServiceImpl implements UserService{
 	public User insert(UserCollection user) {
 	BasicQuery basicQuery= new BasicQuery("{ email : \""+user.getEmail()+"\" }");
 		User userTest=mongoOperations.findOne(basicQuery,User.class);
+		
+		ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
+		Email sendMail = (Email) context.getBean("mailMail");
+		
 		if(userTest==null)
 		{
 			user.setRights(2);
+			
+			sendMail.sendMail("shrutiu.7@gmail.com",
+							  user.getEmail(),
+							  "Welcome Mail", 
+							  "Dear "+user.getName()+",\n\nThis is the Welcome mail from Room Management.You can now login with the following username and password \n\nUsername: "
+							  +user.getEmail()+"\nPassword: "+user.getPassword());
+	        
 			return new User(repository.insert(user));
 		}
 		return null;
