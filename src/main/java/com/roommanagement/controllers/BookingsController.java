@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Room;
 import com.roommanagement.collections.RoomCollection;
+import com.roommanagement.collections.UserCollection;
 import com.roommanagement.services.AvailabilityServiceImpl;
 import com.roommanagement.services.BookingsService;
 
@@ -44,28 +45,37 @@ public class BookingsController{
 		
 		HttpStatus httpStatus = null;
 		
-		if(roomId==null){
-			
-			httpStatus = HttpStatus.BAD_REQUEST; 				//If Bookings is not inserted
+				
+		basicQuery= new BasicQuery("{ \"id\" : \""+authToken+"\" }");
+		UserCollection userCollection=mongoOperations.findOne(basicQuery, UserCollection.class);
+		if(userCollection==null)
+		{
+				httpStatus=HttpStatus.UNAUTHORIZED;
 		}
-		else{
-
+		else
+		{	
 				basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
 				RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
-				Room room=new Room(roomCollection);
-				booking.setRoom(room);
-
-				bookingReturned =bookingservice.insert(booking,roomId);
-
-				if(bookingReturned == null){
-					httpStatus = HttpStatus.BAD_REQUEST;
+				if(roomCollection==null)
+				{
+						httpStatus = HttpStatus.BAD_REQUEST;
 				}
-				else{
-					httpStatus = HttpStatus.CREATED;					//If Bookings is created
-				}
+				else
+				{
+						Room room=new Room(roomCollection);
+						booking.setRoom(room);
 
+						bookingReturned =bookingservice.insert(booking,roomId);
+
+						if(bookingReturned == null){
+							httpStatus = HttpStatus.BAD_REQUEST;
+						}
+						else{
+						httpStatus = HttpStatus.CREATED;					//If Bookings is created
+						}
+				}
 		}
-
+	
 		HttpHeaders httpHeaders = new HttpHeaders();
 		
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);

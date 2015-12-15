@@ -30,12 +30,31 @@ public class BookingTest {
 	}
 	
 	@Test
-	public void testRoomCreation() throws JsonParseException, JsonMappingException, IOException {		
+	public void testBookingRequest() throws JsonParseException, JsonMappingException, IOException {		
 
 		webResource=client.resource(baseURI+"/booking/566c18890f9dadffad29c068");
 		String data ="{\"startDate\": \"2016-12-11T10:18:06.782Z\",\"endDate\": \"2016-12-11T18:18:16.782Z\",\"status\": \"REQUESTED\",\"requestee\": \"nihit@gmail.com\",\"subject\": \".Net\",\"category\": \"OPEN_PROGRAM\"}";
 		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class,data);
 		assertEquals(201,response.getStatus());
+	}
+	
+	/************testBookingRequestWithoutRoomId**********************/
+	@Test
+	public void testBookingRequestWithInvalidRoomId() throws JsonParseException, JsonMappingException, IOException {		
+
+		webResource=client.resource(baseURI+"/booking/abc");
+		String data ="{\"startDate\": \"2016-12-11T10:18:06.782Z\",\"endDate\": \"2016-12-11T18:18:16.782Z\",\"status\": \"REQUESTED\",\"requestee\": \"nihit@gmail.com\",\"subject\": \".Net\",\"category\": \"OPEN_PROGRAM\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken","56685db316697f79e253431d").post(ClientResponse.class,data);
+		assertEquals(400,response.getStatus());
+	}
+	
+	@Test
+	public void testBookingRequestWithInvalidUserId() throws JsonParseException, JsonMappingException, IOException {		
+
+		webResource=client.resource(baseURI+"/booking/abc");
+		String data ="{\"startDate\": \"2016-12-11T10:18:06.782Z\",\"endDate\": \"2016-12-11T18:18:16.782Z\",\"status\": \"REQUESTED\",\"requestee\": \"nihit@gmail.com\",\"subject\": \".Net\",\"category\": \"OPEN_PROGRAM\"}";
+		ClientResponse response = webResource.type("application/json").header("authToken","566").post(ClientResponse.class,data);
+		assertEquals(401,response.getStatus());
 	}
 	
 	
