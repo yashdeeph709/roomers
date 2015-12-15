@@ -79,11 +79,10 @@ public class RoomServiceImpl implements RoomService {
 		}
 		return null;
 	}
+	public void delete(String name) {
 	
-	public void delete(String id) {
-		roomRepository.delete(id);
+		roomRepository.delete(name);
 	}
-
 
 	public List<Room> roomRange(int start, int end) {
 
@@ -133,5 +132,8 @@ public class RoomServiceImpl implements RoomService {
 		}
 		
 	}
+
+
+
 	
 }

@@ -34,16 +34,43 @@ public class BookingsController{
 	
 	@Autowired
 	private MongoOperations mongoOperations;
-	HttpStatus httpStatus;
-	HttpHeaders httpHeaders;
 	
-
+	BasicQuery basicQuery;
+	List<Bookings> bookedRooms;
 	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken,@RequestBody Bookings booking,@PathVariable("roomId") String roomId) {
-		httpHeaders = new HttpHeaders();	
-		Bookings bookingReturned=bookingservice.insert(booking,roomId);
-		httpStatus=bookingservice.getStatus(bookingReturned);
+		
+		Bookings bookingReturned = null;
+		
+		HttpStatus httpStatus = null;
+		
+		if(roomId==null){
+			
+			httpStatus = HttpStatus.BAD_REQUEST; 				//If Bookings is not inserted
+		}
+		else{
+
+				bookedRooms=new AvailabilityServiceImpl().getBookingsOfDate(booking.getStartDate().toString());
+				basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\" }");
+				RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
+				Room room=new Room(roomCollection);
+				booking.setRoom(room);
+
+				bookingReturned =bookingservice.insert(booking,roomId);
+
+				if(bookingReturned == null){
+					httpStatus = HttpStatus.BAD_REQUEST;
+				}
+				else{
+					httpStatus = HttpStatus.CREATED;					//If Bookings is created
+				}
+
+		}
+
+		HttpHeaders httpHeaders = new HttpHeaders();
+		
 		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
+			
 	}
 	
 	
@@ -54,9 +81,8 @@ public class BookingsController{
 	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
 
 		List<Bookings> bookings = bookingservice.getMyBookings(authToken);
-		httpHeaders = new HttpHeaders();
-		httpStatus=bookingservice.getStatus(bookings);
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, httpStatus);
+		HttpHeaders httpHeaders = new HttpHeaders();
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
 	}
                                    
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -65,8 +91,7 @@ public class BookingsController{
 
 		List<Bookings> bookings = bookingservice.getMyBookingsRange(authToken, start, end);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		httpStatus=bookingservice.getStatus(bookings);
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, httpStatus);
+		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.FOUND);
 	}
 	
 	
