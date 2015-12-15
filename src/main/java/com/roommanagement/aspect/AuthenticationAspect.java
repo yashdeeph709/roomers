@@ -31,7 +31,7 @@ class UserAspect{
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	
-	@Around("execution(* com.roommanagement.controllers.RoomController.*(..))")
+	@Around("execution(* com.roommanagement.controllers.RoomController.*(..) )")
 	public Object authenticateRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object[] args=pjp.getArgs();
