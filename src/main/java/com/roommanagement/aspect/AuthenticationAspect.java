@@ -23,13 +23,11 @@ class UserAspect{
 	public Object authenticateUserAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object[] args=pjp.getArgs();
-		String id=pjp.getArgs()[0].toString();
+		String id=args[0].toString();
 		if(registerService.checkUser(id, 0)){
 			Object obj=pjp.proceed();
-			System.out.println("**********auth called");
 			return obj;
 		}else{
-			System.out.println("*******************auth called but unauthorised");
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	
@@ -37,7 +35,7 @@ class UserAspect{
 	public Object authenticateRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object[] args=pjp.getArgs();
-		String id=pjp.getArgs()[0].toString();
+		String id=args[0].toString();
 		if(registerService.checkUser(id, 0)){
 			Object obj=pjp.proceed();
 			return obj;
@@ -47,8 +45,9 @@ class UserAspect{
 	}	
 	
 	@Around("execution(* com.roommanagement.controllers.RoomController.*(..))")
-	public Object logAdvice(ProceedingJoinPoint pjp) throws Throwable
+	public Object logRoomAdvice(ProceedingJoinPoint pjp) throws Throwable
 	{
+		System.out.println("Method Named "+pjp.getSignature().getName()+" called with these arguments:");
 		Object[] args=pjp.getArgs();
 		for(Object obj:args){
 			System.out.println("AspectJ Logger:"+obj);
@@ -56,4 +55,16 @@ class UserAspect{
 		Object obj=pjp.proceed();
 		return obj;
 	}
+	@Around("execution(* com.roommanagement.controllers.UsersController.*(..))")
+	public Object logUserAdvice(ProceedingJoinPoint pjp) throws Throwable
+	{
+		System.out.println("Method Named "+pjp.getSignature().getName()+" called with these arguments:");
+		Object[] args=pjp.getArgs();
+		for(Object obj:args){
+			System.out.println("AspectJ Logger:"+obj);
+		}
+		Object obj=pjp.proceed();
+		return obj;
+	}
+
 }
