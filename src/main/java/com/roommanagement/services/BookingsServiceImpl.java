@@ -6,7 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Bookings;
@@ -23,7 +25,8 @@ public class BookingsServiceImpl implements BookingsService {
 	
 	@Autowired
 	private MongoOperations mongoOperations;
-	BasicQuery basicQuery;
+	private BasicQuery basicQuery;
+	private HttpHeaders httpHeaders = new HttpHeaders();
 
 	public Bookings insert(Bookings booking,String roomId) {
 		if(roomId==null){
@@ -65,24 +68,24 @@ public class BookingsServiceImpl implements BookingsService {
 		return requiredBookings;
 	}
 
-	public HttpStatus getStatus(Bookings bookingReturned)
+	public ResponseEntity<Bookings> getStatus(Bookings bookingReturned)
 	{
 		if(bookingReturned == null){
-			return HttpStatus.BAD_REQUEST;
+			return new ResponseEntity<Bookings>(bookingReturned, httpHeaders,HttpStatus.BAD_REQUEST);
 		}
 		else{
-			return HttpStatus.CREATED;					//If Bookings is created
+			return new ResponseEntity<Bookings>(bookingReturned, httpHeaders,HttpStatus.CREATED);					//If Bookings is created
 		}
 		
 	}
 	
-	public HttpStatus getStatus(List<Bookings> bookings)
+	public ResponseEntity<List<Bookings>> getStatus(List<Bookings> bookings)
 	{
 		if(bookings==null){
-			return HttpStatus.NO_CONTENT; 				//If no rooms are there in the db 
+			return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.NO_CONTENT); 				//If no rooms are there in the db 
 		}
 		else{
-			return HttpStatus.ACCEPTED;					//If room are there
+			return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);				//If room are there
 		}
 		
 	}

@@ -35,8 +35,9 @@ public class BookingsController {
 	@Autowired
 	private MongoOperations mongoOperations;
 
-	BasicQuery basicQuery;
-	List<Bookings> bookedRooms;
+	private BasicQuery basicQuery;
+	private List<Bookings> bookedRooms;
+	private HttpHeaders httpHeaders = new HttpHeaders();
 
 	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken, @RequestBody Bookings booking,
@@ -71,7 +72,7 @@ public class BookingsController {
 
 		HttpHeaders httpHeaders = new HttpHeaders();
 
-		return new ResponseEntity<Bookings>(bookingReturned, httpHeaders, httpStatus);
+		return  bookingservice.getStatus(bookingReturned);
 
 	}
 
@@ -79,19 +80,15 @@ public class BookingsController {
 
 	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
-
-		List<Bookings> bookings = bookingservice.getMyBookings(authToken);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);
+		
+		return bookingservice.getStatus(bookingservice.getMyBookings(authToken));
 	}
 
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBookingRange(@RequestHeader String authToken,
 			@PathVariable("start") int start, @PathVariable("end") int end) {
 
-		List<Bookings> bookings = bookingservice.getMyBookingsRange(authToken, start, end);
-		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<List<Bookings>>(bookings, httpHeaders, HttpStatus.ACCEPTED);
+		return bookingservice.getStatus(bookingservice.getMyBookingsRange(authToken, start, end));
 	}
 
 }
