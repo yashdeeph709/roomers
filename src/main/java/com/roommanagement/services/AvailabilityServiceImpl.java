@@ -48,7 +48,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fromDate);
 			calendar.add(Calendar.DATE, i);  
-			bookingsList = getBookingsOfDate(calendar.getTime());
+			bookingsList = getBookingsForDate(calendar.getTime());
 			range.put(i, bookingsList);
 			
 		}
