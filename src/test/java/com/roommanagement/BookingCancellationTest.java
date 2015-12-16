@@ -30,9 +30,9 @@ public class BookingCancellationTest {
 		
 	}
 	
-	/************testBookingAllocation**********************/
+	/************testBookingCancellationByAdmin**********************/
 	@Test
-	public void testBookingAllocation() throws JsonParseException, JsonMappingException, IOException {		
+	public void testBookingCancellationByAdmin() throws JsonParseException, JsonMappingException, IOException {		
 
 		webResource=client.resource(baseURI);
 		String data ="{\"id\":\"566e841fb3998d1214061389\"}";
@@ -40,9 +40,9 @@ public class BookingCancellationTest {
 		assertEquals(202,response.getStatus());
 	}
 	
-	/************testBookingAllocationWithInvalidId**********************/
+	/************testBookingCancellationByAdminWithInvalidId**********************/
 	@Test
-	public void testBookingAllocationWithInvalidId() throws JsonParseException, JsonMappingException, IOException {		
+	public void testBookingCancellationByAdminWithInvalidId() throws JsonParseException, JsonMappingException, IOException {		
 
 		webResource=client.resource(baseURI);
 		String data ="{\"id\":\"10000\"}";
@@ -50,7 +50,21 @@ public class BookingCancellationTest {
 		assertEquals(204,response.getStatus());
 	}
 	
+	/************testBookingCancellationByUser**********************/
+	public void testRoomCancellationByUser() {
+		client = Client.create();
+		webResource = client.resource(baseURI+"566c18890f9dadffad29c068");
+		ClientResponse response = webResource.accept("application/json").header("authToken", "Bahar").delete(ClientResponse.class);
+		assertEquals(202,response.getStatus());
+		}
 
+	/************testBookingCancellationByUserWithInvalidId**********************/
+	public void testRoomCancellationByUserWithInvalidId() {
+		client = Client.create();
+		webResource = client.resource(baseURI+"00000");
+		ClientResponse response = webResource.accept("application/json").header("authToken", "Bahar").delete(ClientResponse.class);
+		assertEquals(204,response.getStatus());
+		}
 	
 	
 }
