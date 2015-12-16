@@ -2,6 +2,7 @@ package com.roommanagement;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -9,13 +10,13 @@ import com.sun.jersey.api.client.WebResource;
 
 public class RoomAvailabilityTest {
 
-	Client client;
+	static Client client;
 	String baseURI = "http://localhost:8080/roommanagement";
 	WebResource webResource;
 	ClientResponse response;
 	
-	@Before
-	public void setUp() throws Exception {
+	@BeforeClass
+	public static void setUp() throws Exception {
 		client=Client.create();
 	}
 
