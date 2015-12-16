@@ -85,7 +85,7 @@ public class BookingsServiceImpl implements BookingsService {
 
 	}
 	
-	/*****************Room Cancellation*****************/
+	/*****************Room Cancellation By Admin*****************/
 	public Bookings roomCancellation(Bookings requestedBooking){
 		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+requestedBooking.getId()+"\" }");
 		BookingsCollection booking=mongoOperations.findOne(basicQuery,BookingsCollection.class);
@@ -134,7 +134,10 @@ public class BookingsServiceImpl implements BookingsService {
 
 
 	public ResponseEntity<String> getStatus(Bookings allocateRoom, HttpHeaders httpHeaders) {
-		
+		if(allocateRoom==null)
+		{
+			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+		}
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
 	}
 	
