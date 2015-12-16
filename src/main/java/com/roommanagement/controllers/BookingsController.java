@@ -34,7 +34,6 @@ public class BookingsController {
 
 	@Autowired
 	private MongoOperations mongoOperations;
-
 	private BasicQuery basicQuery;
 	private List<Bookings> bookedRooms;
 	private HttpHeaders httpHeaders = new HttpHeaders();
@@ -46,15 +45,22 @@ public class BookingsController {
 
 		Bookings bookingReturned = bookingservice.insert(booking, roomId);
 
-		return  bookingservice.getStatus(bookingReturned);
+		return bookingservice.getStatus(bookingReturned);
 
 	}
+	@RequestMapping(value="/booking/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> cancelRoomBooking(@RequestHeader String authToken,@PathVariable("id") String id) {
+
+		bookingservice.cancel(id);
+		return  new ResponseEntity<String>(httpHeaders, HttpStatus.ACCEPTED);
+	}
+
 
 	/******** show User Booking **********/
 
 	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
-		
+
 		return bookingservice.getStatus(bookingservice.getMyBookings(authToken));
 	}
 
@@ -64,17 +70,13 @@ public class BookingsController {
 
 		return bookingservice.getStatus(bookingservice.getMyBookingsRange(authToken, start, end));
 	}
-	
-	
-	
-	/**************Room Allocation*******************/
-	@RequestMapping(value = "/booking", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> allocateRoom(@RequestHeader String authToken,@RequestBody Bookings bookings) 
-	{
-		
-			return  bookingservice.getStatus(bookingservice.allocateRoom(bookings),httpHeaders);
-		
+
+	/************** Room Allocation *******************/
+	@RequestMapping(value = "/booking", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> allocateRoom(@RequestHeader String authToken, @RequestBody Bookings bookings) {
+
+		return bookingservice.getStatus(bookingservice.allocateRoom(bookings), httpHeaders);
+
 	}
-	
 
 }
