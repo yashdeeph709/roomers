@@ -38,40 +38,13 @@ public class BookingsController {
 	private BasicQuery basicQuery;
 	private List<Bookings> bookedRooms;
 	private HttpHeaders httpHeaders = new HttpHeaders();
+	HttpStatus httpStatus = null;
 
 	@RequestMapping(value = "/booking/{roomId}", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Bookings> requestBooking(@RequestHeader String authToken, @RequestBody Bookings booking,
 			@PathVariable("roomId") String roomId) {
 
-		Bookings bookingReturned = null;
-
-		HttpStatus httpStatus = null;
-
-		basicQuery = new BasicQuery("{ \"id\" : \"" + authToken + "\" }");
-		UserCollection userCollection = mongoOperations.findOne(basicQuery, UserCollection.class);
-		if (userCollection == null) {
-			httpStatus = HttpStatus.UNAUTHORIZED;
-		} else {
-			basicQuery = new BasicQuery("{ \"id\" : \"" + roomId + "\" }");
-			RoomCollection roomCollection = mongoOperations.findOne(basicQuery, RoomCollection.class);
-			if (roomCollection == null) {
-				httpStatus = HttpStatus.BAD_REQUEST;
-			} else {
-				Room room = new Room(roomCollection);
-				booking.setRoom(room);
-
-				bookingReturned = bookingservice.insert(booking, roomId);
-				
-				if (bookingReturned == null) {
-					httpStatus = HttpStatus.BAD_REQUEST;
-				} else {
-					httpStatus = HttpStatus.CREATED; // If Bookings is created
-					
-				}
-			}
-		}
-
-		HttpHeaders httpHeaders = new HttpHeaders();
+		Bookings bookingReturned = bookingservice.insert(booking, roomId);
 
 		return  bookingservice.getStatus(bookingReturned);
 
