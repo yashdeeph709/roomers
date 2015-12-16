@@ -52,6 +52,10 @@ public class BookingsServiceImpl implements BookingsService {
 		BasicQuery basicQuery = new BasicQuery("{ requestee : \"" + authToken + "\"}");
 		List<BookingsCollection> bookingsCollectionList = mongoOperations.find(basicQuery, BookingsCollection.class);
 		List<Bookings> requiredBookings = new ArrayList<Bookings>();
+		if(bookingsCollectionList.size()==0)
+		{
+			return null;
+		}
 		for (BookingsCollection bookingCollection : bookingsCollectionList) {
 			requiredBookings.add(new Bookings(bookingCollection));
 		}

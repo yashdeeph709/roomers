@@ -42,7 +42,7 @@ public class ShowUserBookingTest {
 	 webResource = client.resource(baseURI + "/booking");
 	 
 	 ClientResponse response =
-	 webResource.accept("application/json").header("authToken", "harshal").get(ClientResponse.class);//test fail id wrong .get(ClientResponse.class);
-	 	assertEquals(202, response.getStatus()); }
+	 webResource.accept("application/json").header("authToken", "h").get(ClientResponse.class);//test fail id wrong .get(ClientResponse.class);
+	 	assertEquals(204, response.getStatus()); }
 	 
 }

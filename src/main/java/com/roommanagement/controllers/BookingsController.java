@@ -52,7 +52,7 @@ public class BookingsController {
 
 	@RequestMapping(value = "/booking", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBooking(@RequestHeader String authToken) {
-
+		
 		return bookingservice.getStatus(bookingservice.getMyBookings(authToken));
 	}
 
