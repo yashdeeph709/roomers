@@ -29,7 +29,7 @@ public class RoomAvailablityController {
 	AvailabilityService availabilityService;
 	
 	@RequestMapping(value = "/availability/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> getBookingOfDate(@RequestHeader String authToken,@PathVariable("date") String strDate) throws UnknownHostException, ParseException {
+	public ResponseEntity<List<Bookings>> bookingsOfDate(@RequestHeader String authToken,@PathVariable("date") String strDate) throws UnknownHostException, ParseException {
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date date = format.parse(strDate);
