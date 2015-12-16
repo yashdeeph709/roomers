@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.http.HttpHeaders;
 
@@ -20,13 +21,13 @@ import com.sun.jersey.api.client.WebResource;
 
 public class CreateUserTest {
 
-	Client client ;
+	static Client client ;
 	WebResource webResource;
 	String baseURI = "http://localhost:8080/roommanagement";
 	ClientResponse response;
 	HttpHeaders httpHeader;
-	@Before
-	public void setup(){
+	@BeforeClass
+	public static   void setup(){
 		client = Client.create();
 	}
 	

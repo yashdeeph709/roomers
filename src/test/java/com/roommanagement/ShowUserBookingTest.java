@@ -14,7 +14,7 @@ import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
 public class ShowUserBookingTest {
-	 static Client client;
+	static Client client;
 	String baseURI = "http://localhost:8080/roommanagement";
 	WebResource webResource;
 	ClientResponse response;
@@ -35,13 +35,14 @@ public class ShowUserBookingTest {
 				.get(ClientResponse.class);
 		assertEquals(202, response.getStatus());
 	}
-	/*@Test
-	public void userBookingTest2() throws JsonParseException, JsonMappingException, IOException {
-
-		webResource = client.resource(baseURI + "/booking");
-
-		ClientResponse response = webResource.accept("application/json").header("authToken", "harshal@gmail.in")//test fail id wrong
-				.get(ClientResponse.class);
-		assertEquals(202, response.getStatus());
-	}*/
+	
+	 @Test public void userBookingTestWithWrongEmialId() throws JsonParseException,
+	 JsonMappingException, IOException {
+	 
+	 webResource = client.resource(baseURI + "/booking");
+	 
+	 ClientResponse response =
+	 webResource.accept("application/json").header("authToken", "harshal").get(ClientResponse.class);//test fail id wrong .get(ClientResponse.class);
+	 	assertEquals(202, response.getStatus()); }
+	 
 }

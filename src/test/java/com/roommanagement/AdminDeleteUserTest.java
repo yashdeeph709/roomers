@@ -3,6 +3,7 @@ package com.roommanagement;
 import static org.junit.Assert.assertEquals;
 import org.json.JSONObject;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import com.roommanagement.beans.User;
 import com.roommanagement.services.UserService;
@@ -15,12 +16,12 @@ public class AdminDeleteUserTest {
 	User userBean;
 	UserService userService;
 	JSONObject obj = new JSONObject();
-	Client client ;
+	static Client client ;
 	WebResource webResource; 
 	String baseURI = "http://localhost:8080/roommanagement"; 
 	ClientResponse response;
-	@Before
-	public void setup()
+	@BeforeClass
+	public static void setup()
 	{
 		client = Client.create();
 	
