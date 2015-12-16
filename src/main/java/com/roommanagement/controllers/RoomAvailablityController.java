@@ -33,7 +33,7 @@ public class RoomAvailablityController {
 		
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date date = format.parse(strDate);
-		List<Bookings> bookingsList = availabilityService.getBookingsOfDate(date);
+		List<Bookings> bookingsList = availabilityService.getBookingsForDate(date);
 		HttpHeaders httpHeaders = new HttpHeaders();
 
 		return new ResponseEntity<List<Bookings>>(bookingsList, httpHeaders,HttpStatus.ACCEPTED);
@@ -44,7 +44,7 @@ public class RoomAvailablityController {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 		Date date = format.parse(strDate);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.bookingsOfRange(date),httpHeaders,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.getBookingsForDates(date),httpHeaders,HttpStatus.ACCEPTED);
 	} 
 
 }
