@@ -44,7 +44,7 @@ class UserAspect{
 		}
 	}	
 	
-	@Around("execution(* com.roommanagement.controllers.RoomController.*(..))")
+	@Around("execution(* com.roommanagement.controllers.*.*(..))")
 	public Object logRoomAdvice(ProceedingJoinPoint pjp) throws Throwable
 	{
 		System.out.println("Method Named "+pjp.getSignature().getName()+" called with these arguments:");
@@ -55,16 +55,4 @@ class UserAspect{
 		Object obj=pjp.proceed();
 		return obj;
 	}
-	@Around("execution(* com.roommanagement.controllers.UsersController.*(..))")
-	public Object logUserAdvice(ProceedingJoinPoint pjp) throws Throwable
-	{
-		System.out.println("Method Named "+pjp.getSignature().getName()+" called with these arguments:");
-		Object[] args=pjp.getArgs();
-		for(Object obj:args){
-			System.out.println("AspectJ Logger:"+obj);
-		}
-		Object obj=pjp.proceed();
-		return obj;
-	}
-
 }

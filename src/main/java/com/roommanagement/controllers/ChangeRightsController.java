@@ -29,5 +29,11 @@ public class ChangeRightsController {
 		
 		return changeRightsService.updateRightsToSubAdmin(id);
 	}
+	
+	@RequestMapping(value = "/rights/{id}", method = RequestMethod.DELETE,produces = MediaType.APPLICATION_JSON_VALUE)
+	ResponseEntity<User> changeSubRightsToUser(@RequestHeader String authToken,@PathVariable("id") String id) {
+		System.out.println(id);
+		return changeRightsService.updateRightsToUser(id);
+	}
 
 }

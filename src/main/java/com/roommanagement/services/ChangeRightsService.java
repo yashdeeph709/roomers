@@ -8,5 +8,5 @@ public interface ChangeRightsService {
 
 	ResponseEntity<User> updateRightsToSubAdmin(String id);
 
-	
+	ResponseEntity<User> updateRightsToUser(String id);
 }
