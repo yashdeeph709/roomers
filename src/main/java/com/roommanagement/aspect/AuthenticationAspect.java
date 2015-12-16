@@ -31,7 +31,55 @@ class UserAspect{
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	
-	@Around("execution(* com.roommanagement.controllers.RoomController.*(..) )")
+	@Around("execution(* com.roommanagement.controllers.RoomController.addRoom(..) )")
+	public Object authenticateRoomAddAdmin(ProceedingJoinPoint pjp) throws Throwable
+	{
+		Object[] args=pjp.getArgs();
+		String id=args[0].toString();
+		if(registerService.checkUser(id, 0)){
+			Object obj=pjp.proceed();
+			return obj;
+		}else{
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+	}	
+	@Around("execution(* com.roommanagement.controllers.RoomController.getRoom(..) )")
+	public Object authenticateRoomUpdateAdmin(ProceedingJoinPoint pjp) throws Throwable
+	{
+		Object[] args=pjp.getArgs();
+		String id=args[0].toString();
+		if(registerService.checkUser(id, 0)){
+			Object obj=pjp.proceed();
+			return obj;
+		}else{
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+	}	
+	@Around("execution(* com.roommanagement.controllers.RoomController.updateRoom(..) )")
+	public Object authenticateGetRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
+	{
+		Object[] args=pjp.getArgs();
+		String id=args[0].toString();
+		if(registerService.checkUser(id, 0)){
+			Object obj=pjp.proceed();
+			return obj;
+		}else{
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+	}	
+	@Around("execution(* com.roommanagement.controllers.RoomController.deleteRoom(..) )")
+	public Object authenticateDeleteRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
+	{
+		Object[] args=pjp.getArgs();
+		String id=args[0].toString();
+		if(registerService.checkUser(id, 0)){
+			Object obj=pjp.proceed();
+			return obj;
+		}else{
+			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+		}
+	}	
+	@Around("execution(* com.roommanagement.controllers.RoomController.roomRange(..) )")
 	public Object authenticateRoomAdmin(ProceedingJoinPoint pjp) throws Throwable
 	{
 		Object[] args=pjp.getArgs();
@@ -43,7 +91,7 @@ class UserAspect{
 			return new ResponseEntity(HttpStatus.UNAUTHORIZED);
 		}
 	}	
-	
+
 	@Around("execution(* com.roommanagement.controllers.*.*(..))")
 	public Object logRoomAdvice(ProceedingJoinPoint pjp) throws Throwable
 	{
