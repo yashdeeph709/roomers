@@ -35,7 +35,6 @@ public class BookingsController {
 			@PathVariable("roomId") String roomId) {
 
 		Bookings bookingReturned = bookingservice.bookRoom(booking, roomId);
-
 		return bookingservice.getStatus(bookingReturned);
 
 	}
