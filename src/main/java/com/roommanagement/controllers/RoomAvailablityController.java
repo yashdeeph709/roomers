@@ -31,8 +31,9 @@ public class RoomAvailablityController {
 	@RequestMapping(value = "/availability/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> bookingsForDate(@RequestHeader String authToken,@PathVariable("date") String strDate) throws UnknownHostException, ParseException {
 		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmX");
 		Date date = format.parse(strDate);
+		System.out.println("PD"+date);
 		List<Bookings> bookingsList = availabilityService.getBookingsForDate(date);
 		HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -41,7 +42,7 @@ public class RoomAvailablityController {
 	
 	@RequestMapping(value = "/availabilities/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsForDates(@RequestHeader String authToken,@PathVariable("date") String strDate) throws ParseException, UnknownHostException{
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmX");
 		Date date = format.parse(strDate);
 		HttpHeaders httpHeaders = new HttpHeaders();
 		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.getBookingsForDates(date),httpHeaders,HttpStatus.ACCEPTED);

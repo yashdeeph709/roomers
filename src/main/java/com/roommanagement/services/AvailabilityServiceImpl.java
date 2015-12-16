@@ -9,11 +9,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import com.roommanagement.beans.Bookings;
+import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.repository.BookingsRepository;
 
 @Service
@@ -23,6 +27,9 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	@Autowired
 	private BookingsRepository bookingsRepository;
 	
+	@Autowired
+	private MongoOperations mongoOperations;
+	
 	@DateTimeFormat(iso = ISO.DATE_TIME)
 	Date formattedDate;
 	
@@ -30,11 +37,19 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 
 	public List<Bookings> getBookingsForDate(Date date) throws UnknownHostException{
 		
-		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
+		System.out.println("upar"+date);
+		List<BookingsCollection> requiredBookingList = new ArrayList<BookingsCollection>();
+		List<Bookings> bookingsList = new ArrayList<Bookings>();
+		//requiredBookingList = bookingsRepository.findByStartDateGreaterThanAndEndDateLessThan(date,date);
+		Query query = new Query(Criteria.where("startDate").lte(date).and("endDate").gte(date));
+		requiredBookingList = mongoOperations.find(query, BookingsCollection.class);
+		System.out.println(query);
+		for(BookingsCollection bookingsCollection:requiredBookingList){
+			bookingsList.add(new Bookings(bookingsCollection));
+		}
 		
-		requiredBookingList = bookingsRepository.findByStartDateLessThanAndEndDateGreaterThan(date,date);
-		
-		return requiredBookingList;
+		System.out.println(requiredBookingList);
+		return bookingsList;
 	}
 	
 	
@@ -48,6 +63,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fromDate);
 			calendar.add(Calendar.DATE, i);  
+			System.out.println(calendar.getTime());
 			bookingsList = getBookingsForDate(calendar.getTime());
 			range.put(i, bookingsList);
 			
