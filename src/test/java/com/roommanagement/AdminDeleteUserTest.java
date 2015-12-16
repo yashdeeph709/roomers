@@ -1,12 +1,9 @@
 package com.roommanagement;
 
 import static org.junit.Assert.assertEquals;
-
 import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roommanagement.beans.User;
 import com.roommanagement.services.UserService;
 import com.sun.jersey.api.client.Client;

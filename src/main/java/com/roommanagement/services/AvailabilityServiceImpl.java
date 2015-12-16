@@ -28,7 +28,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	
 	
 
-	public List<Bookings> getBookingsOfDate(Date date) throws UnknownHostException{
+	public List<Bookings> getBookingsForDate(Date date) throws UnknownHostException{
 		
 		List<Bookings> requiredBookingList = new ArrayList<Bookings>();
 		
@@ -38,7 +38,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	}
 	
 	
-	public Map<Integer,List<Bookings>> bookingsOfRange(Date fromDate) throws ParseException, UnknownHostException{
+	public Map<Integer,List<Bookings>> getBookingsForDates(Date fromDate) throws ParseException, UnknownHostException{
 		
 		Map<Integer,List<Bookings>> range = new HashMap<Integer,List<Bookings>>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
@@ -48,7 +48,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fromDate);
 			calendar.add(Calendar.DATE, i);  
-			bookingsList = getBookingsOfDate(calendar.getTime());
+			bookingsList = getBookingsForDate(calendar.getTime());
 			range.put(i, bookingsList);
 			
 		}

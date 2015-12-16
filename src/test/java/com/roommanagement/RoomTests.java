@@ -6,10 +6,7 @@ import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
 import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.roommanagement.collections.RoomCollection;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -27,7 +24,7 @@ public class RoomTests {
 		client=Client.create();
 		
 	}
-	/*
+	
 	@Test
 	public void testRoomCreation() throws JsonParseException, JsonMappingException, IOException {		
 
@@ -39,7 +36,7 @@ public class RoomTests {
 	
 	
 	@Test
-	public void testRoomDaoWithNullValues() throws JsonParseException, JsonMappingException, IOException {
+	public void testRoomCreationWithNullValues() throws JsonParseException, JsonMappingException, IOException {
 		
 		webResource=client.resource(baseURI+"/rooms");
 		String roomCollection = "{\"roomName\":null,\"roomCity\":null,\"roomLocation\":null,\"roomBlock\":null,\"roomAddress\":null,\"roomCapacity\":null,\"roomTables\":null,\"roomMachines\":null,\"roomScreen\":null,\"roomBoard\":null,\"roomChart\":null,\"roomProjector\":null,\"roomInternet\":null}";
@@ -47,7 +44,7 @@ public class RoomTests {
 		assertEquals(400,response.getStatus());
 	}
 	
-	/*
+	
 	@Test
 	public void testdeleteRoom() {
 		
@@ -57,6 +54,6 @@ public class RoomTests {
 		
 	}
 	
-	*/
+	
 	
 }
