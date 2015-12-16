@@ -26,7 +26,6 @@ public class ChangeRightsController {
 	@RequestMapping(value = "/rights/{id}", method = RequestMethod.PUT,produces = MediaType.APPLICATION_JSON_VALUE)
 	ResponseEntity<User> changeUserRightsToSubAdmin(@RequestHeader String authToken,@PathVariable("id") String id) {
 		System.out.println(id);
-		//changeRightsService.updateRightsToSubAdmin(id);
 		
 		return changeRightsService.updateRightsToSubAdmin(id);
 	}

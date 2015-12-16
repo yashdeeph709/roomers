@@ -31,5 +31,13 @@ public class ChangeRightsServiceImpl implements ChangeRightsService {
 			return new ResponseEntity<User>(new User(userCollectionOfSubAdminRight),new HttpHeaders(),HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	public ResponseEntity<User> updateRightsToUser(String id) {
+		
+			UserCollection userCollection = usersRepository.findOne(id);
+			userCollection.setRights(2);
+			return new ResponseEntity<User>(new User(usersRepository.save(userCollection)),new HttpHeaders(),HttpStatus.ACCEPTED);
+		
+	}
 
 }
