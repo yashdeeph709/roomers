@@ -33,8 +33,9 @@ public class UserServiceImpl implements UserService{
 //	ConfigurableApplicationContext context;//=new ClassPathXmlApplicationContext("Mail-bean.xml");
 //	Email sendMail = (Email) context.getBean("mailMail");
 	public void delete(String id) {
-		BasicQuery basicQuery= new BasicQuery("{ id : \""+id+"\" }");
-		User user=mongoOperations.findOne(basicQuery,User.class);
+		
+		
+		UserCollection user=repository.findOne(id);
 	
 		ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
 		Email sendMail = (Email) context.getBean("mailMail");

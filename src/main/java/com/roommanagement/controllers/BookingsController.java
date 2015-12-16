@@ -91,5 +91,15 @@ public class BookingsController {
 
 		return bookingservice.getStatus(bookingservice.getMyBookingsRange(authToken, start, end));
 	}
+	
+	/**************Room Allocation*******************/
+	@RequestMapping(value = "/booking", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> allocateRoom(@RequestHeader String authToken,@RequestBody Room room) 
+	{
+		
+			return  bookingservice.getStatus(bookingservice.allocateRoom(room),httpHeaders);
+		
+	}
+	
 
 }

@@ -112,7 +112,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 	}
 		
-	public ResponseEntity<String> getStatus(Room roomUpdated,HttpHeaders httpHeaders,HttpStatus httpStatus)
+	public ResponseEntity<String> getStatus(Room roomUpdated,HttpHeaders httpHeaders)
 	{
 			if(roomUpdated == null){
 				return new ResponseEntity<String>("Room Does not Exists", httpHeaders,HttpStatus.BAD_REQUEST);

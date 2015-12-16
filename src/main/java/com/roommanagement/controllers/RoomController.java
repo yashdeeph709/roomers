@@ -59,7 +59,7 @@ public class RoomController{
 	public ResponseEntity<String> updateRoom(@RequestHeader String authToken,@RequestBody Room room) 
 	{
 		
-			return  roomservice.getStatus(roomservice.updateRoom(room), httpHeaders, httpStatus);
+			return  roomservice.getStatus(roomservice.updateRoom(room), httpHeaders);
 		
 	}
 					
