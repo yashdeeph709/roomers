@@ -19,7 +19,7 @@ public interface BookingsService {
 	ResponseEntity<List<Bookings>> getStatus(List<Bookings> bookings);
 	Bookings allocateRoom(Bookings requestedBooking);
 	ResponseEntity<String> getStatus(Bookings allocateRoom, HttpHeaders httpHeaders);
-
+	void cancel(String name);
 
 
 
