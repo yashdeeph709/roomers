@@ -1,7 +1,10 @@
 package com.roommanagement.services;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
@@ -112,15 +115,17 @@ public class RoomServiceImpl implements RoomService {
 	}
 	}
 		
-	public ResponseEntity<String> getStatus(Room roomUpdated,HttpHeaders httpHeaders)
-	{
+	public ResponseEntity<Map<String,String>> getStatus(Room roomUpdated,HttpHeaders httpHeaders)
+	{		HashMap<String,String> response=new HashMap<String, String>();
+			HttpStatus status=null;
 			if(roomUpdated == null){
-				return new ResponseEntity<String>("Room Does not Exists", httpHeaders,HttpStatus.BAD_REQUEST);
-			
+				response.put("message","Room Does not Exists");
+				status=HttpStatus.BAD_REQUEST;
 			}else{
-				return new ResponseEntity<String>("Room details update", httpHeaders,HttpStatus.ACCEPTED);				//If room is updated
-			
-		}
+				response.put("message","Room Updated Successfully");
+				status=HttpStatus.ACCEPTED;
+			}
+			return new ResponseEntity<Map<String,String>>(response, httpHeaders,status);			
 	}
 	public ResponseEntity<List<Room>> getStatus(List<Room> roomList)
 	{

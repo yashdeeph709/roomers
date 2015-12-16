@@ -2,5 +2,5 @@ package com.roommanagement.beans;
 
 public enum Status {
 
-		REQUESTED,BOOKED
+		REQUESTED,BOOKED,CANCELLED;
 }

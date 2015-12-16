@@ -1,6 +1,7 @@
 package com.roommanagement.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,7 +57,7 @@ public class RoomController{
 	}
 	
 	@RequestMapping(value = "/room", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> updateRoom(@RequestHeader String authToken,@RequestBody Room room) 
+	public ResponseEntity<Map<String, String>> updateRoom(@RequestHeader String authToken,@RequestBody Room room) 
 	{
 		
 			return  roomservice.getStatus(roomservice.updateRoom(room), httpHeaders);
