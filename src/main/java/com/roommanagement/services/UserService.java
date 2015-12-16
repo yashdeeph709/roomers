@@ -2,6 +2,7 @@ package com.roommanagement.services;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,4 +40,6 @@ public interface UserService {
 	ResponseEntity<User> getStatus(User createUserReturnValue);
 	
 	List<User> userRange(int start, int end);
+	
+	
 }

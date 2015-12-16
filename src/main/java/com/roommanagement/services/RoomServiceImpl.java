@@ -12,8 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Room;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.repository.RoomRepository;

@@ -49,12 +49,9 @@ public class UserServiceImpl implements UserService{
 
 
 	public List<UserCollection> getUsers() {
-		BasicQuery basicQuery= new BasicQuery("{ rights : {$ne:0 }}");
-		System.out.println("#############################"+basicQuery);
-		List<UserCollection> c=mongoOperations.find(basicQuery,UserCollection.class);
-		System.out.println("***********************"+c);
-		return c;
-		//return repository.findAll();
+		
+		return repository.findByRightsIsNotAdminQuery();
+		
 	}
 
 
@@ -181,5 +178,6 @@ public class UserServiceImpl implements UserService{
 	
 	}
 
-	
+
+
 }
