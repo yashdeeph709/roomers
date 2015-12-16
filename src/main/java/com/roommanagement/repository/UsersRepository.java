@@ -9,4 +9,9 @@ import com.roommanagement.collections.UserCollection;
 public interface UsersRepository extends MongoRepository<UserCollection, String> {
 	@Query("{'rights' : {$ne : 0}}")
     public List<UserCollection> findByRightsIsNotAdminQuery();
+	
+	
+	public	UserCollection findByRights(int rights);
+	
+
 }
