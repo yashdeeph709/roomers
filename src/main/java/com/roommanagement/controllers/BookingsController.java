@@ -68,5 +68,13 @@ public class BookingsController {
 		return bookingservice.getStatus(bookingservice.allocateRoom(bookings), httpHeaders);
 
 	}
+	
+	/************** Room Cancellation *******************/
+	@RequestMapping(value = "/booking/cancel", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> roomCancellation(@RequestHeader String authToken, @RequestBody Bookings bookings) {
+
+		return bookingservice.getStatus(bookingservice.roomCancellation(bookings), httpHeaders);
+
+	}
 
 }

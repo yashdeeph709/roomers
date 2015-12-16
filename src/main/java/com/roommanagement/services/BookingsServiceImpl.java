@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Room;
+import com.roommanagement.beans.Status;
 import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.collections.RoomCollection;
 import com.roommanagement.repository.BookingsRepository;
@@ -76,7 +77,22 @@ public class BookingsServiceImpl implements BookingsService {
 		if(booking!=null)
 		{	
 			booking.setId(requestedBooking.getId()); 	
-			booking.setStatus(requestedBooking.getStatus());
+			booking.setStatus(Status.BOOKED);
+			allocatedRoom=new Bookings(bookingsRepository.save(booking));
+			return allocatedRoom;
+		}
+		return null;
+
+	}
+	
+	/*****************Room Cancellation*****************/
+	public Bookings roomCancellation(Bookings requestedBooking){
+		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+requestedBooking.getId()+"\" }");
+		BookingsCollection booking=mongoOperations.findOne(basicQuery,BookingsCollection.class);
+		if(booking!=null)
+		{	
+			booking.setId(requestedBooking.getId()); 	
+			booking.setStatus(Status.CANCELLED);
 			allocatedRoom=new Bookings(bookingsRepository.save(booking));
 			return allocatedRoom;
 		}

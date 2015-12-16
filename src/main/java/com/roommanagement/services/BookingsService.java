@@ -17,6 +17,7 @@ public interface BookingsService {
 	Bookings allocateRoom(Bookings requestedBooking);
 	ResponseEntity<String> getStatus(Bookings allocateRoom, HttpHeaders httpHeaders);
 	void cancel(String name);
+	Bookings roomCancellation(Bookings bookings);
 
 
 
