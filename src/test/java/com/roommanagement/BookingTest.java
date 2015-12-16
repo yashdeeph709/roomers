@@ -49,6 +49,8 @@ public class BookingTest {
 		assertEquals(400,response.getStatus());
 	}
 	
+	
+	/************testBookingRequestWithInvalidUserId**********************/
 	@Test
 	public void testBookingRequestWithInvalidUserId() throws JsonParseException, JsonMappingException, IOException {		
 

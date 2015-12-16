@@ -26,6 +26,7 @@ public class BookingsServiceImpl implements BookingsService {
 	@Autowired
 	private MongoOperations mongoOperations;
 	private BasicQuery basicQuery;
+	private Bookings allocatedRoom;
 	private HttpHeaders httpHeaders = new HttpHeaders();
 
 	public Bookings insert(Bookings booking,String roomId) {
@@ -89,6 +90,29 @@ public class BookingsServiceImpl implements BookingsService {
 		}
 		
 	}
+
+
+	public Bookings allocateRoom(Bookings requestedBooking){
+		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+requestedBooking.getId()+"\" }");
+		BookingsCollection booking=mongoOperations.findOne(basicQuery,BookingsCollection.class);
+		if(booking!=null)
+		{	
+			booking.setId(requestedBooking.getId()); 	
+			booking.setStatus(requestedBooking.getStatus());
+			allocatedRoom=new Bookings(bookingsRepository.save(booking));
+			return allocatedRoom;
+		}
+		return null;
+
+	}
+
+
+	public ResponseEntity<String> getStatus(Bookings allocateRoom, HttpHeaders httpHeaders) {
+		
+		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+	}
+
+
 
 
 }
