@@ -137,7 +137,7 @@ public class BookingsServiceImpl implements BookingsService {
 
 	}
 	
-	/************Room Cancellation**************/
+	/************Room Cancellation by user**************/
 	public void cancel(String name) {
 		bookingsRepository.delete(name);
 	}
