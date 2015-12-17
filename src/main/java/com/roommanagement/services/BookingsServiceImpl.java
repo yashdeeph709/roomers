@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,8 +46,10 @@ public class BookingsServiceImpl implements BookingsService {
 		Room room=new Room(roomCollection);
 		booking.setRoom(room);
 		
-		basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\",\"requestee\" : \""+booking.getRequestee()+"\", \"startDate\" : \""+booking.getStartDate()+"\"}");
-		Bookings alreadyRequested=mongoOperations.findOne(basicQuery,Bookings.class);
+		Query query = new Query(Criteria.where("startDate").in(booking.getStartDate()).and("requestee").in(booking.getRequestee()));
+	
+		BookingsCollection alreadyRequested=mongoOperations.findOne(query,BookingsCollection.class);
+		
 		if(alreadyRequested!=null)
 		{
 			return null;
