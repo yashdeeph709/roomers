@@ -55,6 +55,16 @@ public class BookingsController {
 		
 		return bookingservice.getStatus(bookingservice.getMyBookings(authToken));
 	}
+	
+	
+	/******** show  Booking Requests **********/
+
+	@RequestMapping(value = "/booking/request", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Bookings>> getBookingRequests(@RequestHeader String authToken) {
+		
+		return bookingservice.getStatus(bookingservice.getBookingRequests());
+	}
+
 
 	@RequestMapping(value = "/booking/{start}/{end}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Bookings>> getUserBookingRange(@RequestHeader String authToken,

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import com.roommanagement.beans.Bookings;
+import com.roommanagement.collections.BookingsCollection;
 
 
 public interface BookingsService {
@@ -18,6 +19,7 @@ public interface BookingsService {
 	ResponseEntity<String> getStatus(Bookings allocateRoom, HttpHeaders httpHeaders);
 	void cancel(String name);
 	Bookings roomCancellation(Bookings bookings);
+	List<Bookings> getBookingRequests();
 
 
 

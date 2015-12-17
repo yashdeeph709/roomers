@@ -1,5 +1,6 @@
 package com.roommanagement.services;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,8 @@ public class BookingsServiceImpl implements BookingsService {
 
 	@Autowired
 	private BookingsRepository bookingsRepository;
-	
+	@Autowired
+	AvailabilityService availabilityService;
 	@Autowired
 	private MongoOperations mongoOperations;
 	private BasicQuery basicQuery;
@@ -42,6 +44,12 @@ public class BookingsServiceImpl implements BookingsService {
 		Room room=new Room(roomCollection);
 		booking.setRoom(room);
 		
+		basicQuery= new BasicQuery("{ \"id\" : \""+roomId+"\",\"requestee\" : \""+booking.getRequestee()+"\", \"startDate\" : \""+booking.getStartDate()+"\"}");
+		Bookings alreadyRequested=mongoOperations.findOne(basicQuery,Bookings.class);
+		if(alreadyRequested!=null)
+		{
+			return null;
+		}
 		return new Bookings(bookingsRepository.insert(new BookingsCollection(booking)));
 		}
 	}
@@ -143,6 +151,18 @@ public class BookingsServiceImpl implements BookingsService {
 			return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 		}
 		return new ResponseEntity<String>(HttpStatus.ACCEPTED);
+	}
+
+
+
+	public List<Bookings> getBookingRequests() {
+		List<BookingsCollection> bookingsCollectionList =bookingsRepository.findAll();
+		List<Bookings> requiredBookings = new ArrayList<Bookings>();
+		for (BookingsCollection bookingCollection : bookingsCollectionList) {
+			requiredBookings.add(new Bookings(bookingCollection));
+		}
+		return requiredBookings;
+		
 	}
 	
 
