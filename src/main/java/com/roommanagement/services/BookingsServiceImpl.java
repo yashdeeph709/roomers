@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.BasicQuery;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -15,11 +17,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.roommanagement.beans.Bookings;
+import com.roommanagement.beans.Email;
 import com.roommanagement.beans.Room;
 import com.roommanagement.beans.Status;
 import com.roommanagement.collections.BookingsCollection;
 import com.roommanagement.collections.RoomCollection;
+import com.roommanagement.collections.UserCollection;
 import com.roommanagement.repository.BookingsRepository;
+import com.roommanagement.repository.UsersRepository;
 
 @Service
 public class BookingsServiceImpl implements BookingsService {
@@ -28,6 +33,8 @@ public class BookingsServiceImpl implements BookingsService {
 	private BookingsRepository bookingsRepository;
 	@Autowired
 	AvailabilityService availabilityService;
+	@Autowired
+	private UsersRepository userRepository;
 	@Autowired
 	private MongoOperations mongoOperations;
 	private BasicQuery basicQuery;
@@ -95,6 +102,13 @@ public class BookingsServiceImpl implements BookingsService {
 			booking.setId(requestedBooking.getId()); 	
 			booking.setStatus(Status.BOOKED);
 			allocatedRoom=new Bookings(bookingsRepository.save(booking));
+			UserCollection requestee=userRepository.findOne(requestedBooking.getId());
+			ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
+			Email sendMail = (Email) context.getBean("mailMail");
+			sendMail.sendMail("shrutiu.7@gmail.com",
+								requestee.getEmail(),
+							  "Room Booking Cancellation", 
+							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been Accepted  by Admin");
 			return allocatedRoom;
 		}
 		return null;
@@ -110,6 +124,13 @@ public class BookingsServiceImpl implements BookingsService {
 			booking.setId(requestedBooking.getId()); 	
 			booking.setStatus(Status.CANCELLED);
 			allocatedRoom=new Bookings(bookingsRepository.save(booking));
+			UserCollection requestee=userRepository.findOne(requestedBooking.getId());
+			ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
+			Email sendMail = (Email) context.getBean("mailMail");
+			sendMail.sendMail("shrutiu.7@gmail.com",
+								requestee.getEmail(),
+							  "Room Booking Cancellation", 
+							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been co=ancelled by Admin");
 			return allocatedRoom;
 		}
 		return null;
