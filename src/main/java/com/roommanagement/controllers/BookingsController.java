@@ -38,7 +38,7 @@ public class BookingsController {
 		return bookingservice.getStatus(bookingReturned);
 
 	}
-	
+	/************** Room Cancellation by user*******************/
 	
 	@RequestMapping(value="/booking/{id}", method=RequestMethod.DELETE,produces=MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> cancelRoomBooking(@RequestHeader String authToken,@PathVariable("id") String id) {
