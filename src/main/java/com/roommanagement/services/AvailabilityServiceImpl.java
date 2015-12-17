@@ -1,13 +1,17 @@
 package com.roommanagement.services;
 
 import java.net.UnknownHostException;
+import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -35,15 +39,27 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	
 	
 
-	public List<Bookings> getBookingsForDate(Date date) throws UnknownHostException{
+	public List<Bookings> getBookingsForDate(Date date,String roomName) throws UnknownHostException{
 		
-		System.out.println("upar"+date);
+		System.out.println("Date from hit"+date);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.HOUR_OF_DAY, +6);
+		calendar.add(Calendar.MINUTE, -30);
+		
 		List<BookingsCollection> requiredBookingList = new ArrayList<BookingsCollection>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
 		//requiredBookingList = bookingsRepository.findByStartDateGreaterThanAndEndDateLessThan(date,date);
-		Query query = new Query(Criteria.where("startDate").lte(date).and("endDate").gte(date));
-		requiredBookingList = mongoOperations.find(query, BookingsCollection.class);
+		
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S'Z'");
+		//TimeZone tz = TimeZone.getTimeZone("UTC");
+		//df.setTimeZone(tz);
+		
+		String isoDate = df.format(date);
+		
+		Query query = new Query(Criteria.where("startDate").lte(calendar.getTime()).and("endDate").gte(calendar.getTime()).and("room.roomName").is(roomName));
 		System.out.println(query);
+		requiredBookingList = mongoOperations.find(query, BookingsCollection.class);
 		for(BookingsCollection bookingsCollection:requiredBookingList){
 			bookingsList.add(new Bookings(bookingsCollection));
 		}
@@ -53,7 +69,7 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 	}
 	
 	
-	public Map<Integer,List<Bookings>> getBookingsForDates(Date fromDate) throws ParseException, UnknownHostException{
+	public Map<Integer,List<Bookings>> getBookingsForDates(Date fromDate,String roomName) throws ParseException, UnknownHostException{
 		
 		Map<Integer,List<Bookings>> range = new HashMap<Integer,List<Bookings>>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
@@ -63,8 +79,8 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(fromDate);
 			calendar.add(Calendar.DATE, i);  
-			System.out.println(calendar.getTime());
-			bookingsList = getBookingsForDate(calendar.getTime());
+			System.out.println("CAL****"+calendar.getTime());
+			bookingsList = getBookingsForDate(calendar.getTime(),roomName);
 			range.put(i, bookingsList);
 			
 		}

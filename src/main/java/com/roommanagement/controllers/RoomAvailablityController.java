@@ -28,24 +28,26 @@ public class RoomAvailablityController {
 	@Autowired
 	AvailabilityService availabilityService;
 	
-	@RequestMapping(value = "/availability/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Bookings>> bookingsForDate(@RequestHeader String authToken,@PathVariable("date") String strDate) throws UnknownHostException, ParseException {
+	@RequestMapping(value = "/availability/{date}/{roomName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Bookings>> bookingsForDate(@RequestHeader String authToken,@PathVariable("date") String strDate,@PathVariable("roomName") String roomName) throws UnknownHostException, ParseException {
 		
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmX");
+		System.out.println("availablity controller str"+strDate);
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		Date date = format.parse(strDate);
-		System.out.println("PD"+date);
-		List<Bookings> bookingsList = availabilityService.getBookingsForDate(date);
+		System.out.println("formatted date "+date);
+
+		List<Bookings> bookingsList = availabilityService.getBookingsForDate(date,roomName);
 		HttpHeaders httpHeaders = new HttpHeaders();
 
 		return new ResponseEntity<List<Bookings>>(bookingsList, httpHeaders,HttpStatus.ACCEPTED);
 	}
 	
-	@RequestMapping(value = "/availabilities/{date}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsForDates(@RequestHeader String authToken,@PathVariable("date") String strDate) throws ParseException, UnknownHostException{
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mmX");
+	@RequestMapping(value = "/availabilities/{date}/{roomName}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Map<Integer,List<Bookings>>> bookingsForDates(@RequestHeader String authToken,@PathVariable("date") String strDate,@PathVariable("roomName") String roomName) throws ParseException, UnknownHostException{
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
 		Date date = format.parse(strDate);
 		HttpHeaders httpHeaders = new HttpHeaders();
-		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.getBookingsForDates(date),httpHeaders,HttpStatus.ACCEPTED);
+		return new ResponseEntity<Map<Integer,List<Bookings>>>(availabilityService.getBookingsForDates(date,roomName),httpHeaders,HttpStatus.ACCEPTED);
 	} 
 
 }

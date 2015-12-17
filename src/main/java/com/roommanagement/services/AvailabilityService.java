@@ -9,7 +9,7 @@ import com.roommanagement.beans.Bookings;
 
 public interface AvailabilityService {
 
-	public List<Bookings> getBookingsForDate(Date date)throws UnknownHostException;
+	public List<Bookings> getBookingsForDate(Date date,String roomName)throws UnknownHostException;
 	
-	public Map<Integer,List<Bookings>> getBookingsForDates(Date fromDate)throws ParseException, UnknownHostException;
+	public Map<Integer,List<Bookings>> getBookingsForDates(Date fromDate,String roomName)throws ParseException, UnknownHostException;
 }
