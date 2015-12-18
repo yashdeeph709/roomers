@@ -102,13 +102,13 @@ public class BookingsServiceImpl implements BookingsService {
 			booking.setId(requestedBooking.getId()); 	
 			booking.setStatus(Status.BOOKED);
 			allocatedRoom=new Bookings(bookingsRepository.save(booking));
-			UserCollection requestee=userRepository.findOne(requestedBooking.getId());
-			ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
+			UserCollection requestee=userRepository.findOne(requestedBooking.getRequestee());
+						ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
 			Email sendMail = (Email) context.getBean("mailMail");
 			sendMail.sendMail("shrutiu.7@gmail.com",
 								requestee.getEmail(),
-							  "Room Booking Cancellation", 
-							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been Accepted  by Admin");
+							  "Room Booking Acceptance", 
+							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been Accepted  by Admin.");
 			return allocatedRoom;
 		}
 		return null;
@@ -124,13 +124,14 @@ public class BookingsServiceImpl implements BookingsService {
 			booking.setId(requestedBooking.getId()); 	
 			booking.setStatus(Status.CANCELLED);
 			allocatedRoom=new Bookings(bookingsRepository.save(booking));
-			UserCollection requestee=userRepository.findOne(requestedBooking.getId());
+			
+			UserCollection requestee=userRepository.findOne(requestedBooking.getRequestee());
 			ConfigurableApplicationContext context=new ClassPathXmlApplicationContext("Mail-bean.xml");
 			Email sendMail = (Email) context.getBean("mailMail");
 			sendMail.sendMail("shrutiu.7@gmail.com",
 								requestee.getEmail(),
 							  "Room Booking Cancellation", 
-							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been co=ancelled by Admin");
+							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been cancelled by Admin.");
 			return allocatedRoom;
 		}
 		return null;
