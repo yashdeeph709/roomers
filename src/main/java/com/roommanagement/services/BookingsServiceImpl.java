@@ -42,7 +42,7 @@ public class BookingsServiceImpl implements BookingsService {
 
 	public Bookings bookRoom(Bookings booking,String roomId) {
 		
-		if(booking.getStartDate().getHours()<9||booking.getStartDate().getHours()>15){
+		if(booking.getStartDate().getHours()<9||booking.getStartDate().getHours()>17){
 			return null;
 		}
 		
