@@ -1,10 +1,9 @@
 package com.roommanagement.services;
 
-import java.net.UnknownHostException;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Email;
 import com.roommanagement.beans.Room;
@@ -43,6 +41,9 @@ public class BookingsServiceImpl implements BookingsService {
 	private HttpHeaders httpHeaders = new HttpHeaders();
 
 	public Bookings bookRoom(Bookings booking,String roomId) {
+		
+		
+		
 		if(roomId==null){
 			
 			return null;			//If Bookings is not inserted
@@ -62,11 +63,19 @@ public class BookingsServiceImpl implements BookingsService {
 		{
 			return null;
 		}
+		
+		
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(booking.getEndDate());
-		calendar.add(Calendar.HOUR,+1 );  
+		calendar.setTime(booking.getStartDate());
+		calendar.add(Calendar.HOUR,+1 );
 		booking.setEndDate(calendar.getTime());
+		System.out.println(booking.getEndDate());
+		
+		
+		
 		return new Bookings(bookingsRepository.insert(new BookingsCollection(booking)));
+		
+		
 		}
 	}
 	
