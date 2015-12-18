@@ -2,6 +2,7 @@ package com.roommanagement.services;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,10 @@ public class BookingsServiceImpl implements BookingsService {
 		{
 			return null;
 		}
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(booking.getEndDate());
+		calendar.add(Calendar.HOUR,+1 );  
+		booking.setEndDate(calendar.getTime());
 		return new Bookings(bookingsRepository.insert(new BookingsCollection(booking)));
 		}
 	}

@@ -28,10 +28,9 @@ public class UserServiceImpl implements UserService{
 	private UsersRepository repository;
 	@Autowired
 	private MongoOperations mongoOperations;
-//	HttpStatus httpstatus=null;
+
 	HttpHeaders responseHeaders;
-//	ConfigurableApplicationContext context;//=new ClassPathXmlApplicationContext("Mail-bean.xml");
-//	Email sendMail = (Email) context.getBean("mailMail");
+
 	public void delete(String id) {
 		
 		
