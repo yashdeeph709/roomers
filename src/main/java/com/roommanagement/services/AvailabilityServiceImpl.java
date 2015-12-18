@@ -44,8 +44,8 @@ public class AvailabilityServiceImpl implements AvailabilityService {
 		System.out.println("Date from hit"+date);
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-		calendar.add(Calendar.HOUR_OF_DAY, +6);
-		calendar.add(Calendar.MINUTE, -30);
+		/*calendar.add(Calendar.HOUR_OF_DAY, +6);
+		calendar.add(Calendar.MINUTE, -30);*/
 		
 		List<BookingsCollection> requiredBookingList = new ArrayList<BookingsCollection>();
 		List<Bookings> bookingsList = new ArrayList<Bookings>();
