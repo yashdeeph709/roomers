@@ -42,7 +42,9 @@ public class BookingsServiceImpl implements BookingsService {
 
 	public Bookings bookRoom(Bookings booking,String roomId) {
 		
-		
+		if(booking.getStartDate().getHours()<9||booking.getStartDate().getHours()>15){
+			return null;
+		}
 		
 		if(roomId==null){
 			
@@ -123,11 +125,20 @@ public class BookingsServiceImpl implements BookingsService {
 								requestee.getEmail(),
 							  "Room Booking Acceptance", 
 							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been Accepted  by Admin.");
+			Query query = new Query(Criteria.where("startDate").is(allocatedRoom.getStartDate()).and("requestee").ne(allocatedRoom.getRequestee()));
+			System.out.println(query);
+			List<BookingsCollection> requiredBookingList = mongoOperations.find(query, BookingsCollection.class);
+			System.out.println(requiredBookingList);
+			bookingsRepository.delete(requiredBookingList);
+
 			return allocatedRoom;
 		}
 		return null;
 
 	}
+
+
+
 	
 	/*****************Room Cancellation By Admin*****************/
 	public Bookings roomCancellation(Bookings requestedBooking){
@@ -146,6 +157,8 @@ public class BookingsServiceImpl implements BookingsService {
 								requestee.getEmail(),
 							  "Room Booking Cancellation", 
 							  "Dear "+requestee.getName()+",\n\nYour Booking request on "+allocatedRoom.getStartDate()+" for the Room \""+allocatedRoom.getRoom().getRoomName()+"\" has  been cancelled by Admin.");
+			
+			
 			return allocatedRoom;
 		}
 		return null;
