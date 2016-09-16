@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService{
 		{
 			user.setRights(2);
 			
-			sendMail.sendMail("shrutiu.7@gmail.com",
+			sendMail.sendMail("xxx@gmail.com",
 							  user.getEmail(),
 							  "Welcome Mail", 
 							  "Dear "+user.getName()+",\n\nThis is the Welcome mail from Room Management.You can now login with the following username and password \n\nUsername: "

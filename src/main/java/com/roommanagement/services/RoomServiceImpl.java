@@ -62,10 +62,25 @@ public class RoomServiceImpl implements RoomService {
 	
 	public Room updateRoom(Room room) {
 		
-		BasicQuery basicQuery= new BasicQuery("{ \"id\" : \""+room.getId()+"\" }");
+		BasicQuery basicQuery= new BasicQuery("{ \"_id\" : \""+room.getId()+"\" }");
 		RoomCollection roomCollection=mongoOperations.findOne(basicQuery,RoomCollection.class);
 		if(roomCollection!=null)
-		{	roomCollection.setId(room.getId());			
+		{	roomCollection.setId(room.getId());
+			if(room.getRoomName() != null) {
+				roomCollection.setRoomName(room.getRoomName());
+			}
+			if(room.getRoomLocation() != null) {
+				roomCollection.setRoomLocation(room.getRoomLocation());
+			}
+			if(room.getRoomCity() != null) {
+				roomCollection.setRoomCity(room.getRoomCity());
+			}
+			if(room.getRoomAddress() != null) {
+				roomCollection.setRoomAddress(room.getRoomAddress());
+			}
+			if(room.getRoomBlock() != null) {
+				roomCollection.setRoomBlock(room.getRoomBlock());
+			}
 			roomCollection.setRoomCapacity(room.getRoomCapacity());
 			roomCollection.setRoomTables(room.getRoomTables());
 			roomCollection.setRoomMachines(room.getRoomMachines());

@@ -15,6 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
+
 import com.roommanagement.beans.Bookings;
 import com.roommanagement.beans.Email;
 import com.roommanagement.beans.Room;
@@ -71,11 +73,9 @@ public class BookingsServiceImpl implements BookingsService {
 		calendar.setTime(booking.getStartDate());
 		calendar.add(Calendar.HOUR,+1 );
 		booking.setEndDate(calendar.getTime());
-		System.out.println(booking.getEndDate());
 		
-		
-		
-		return new Bookings(bookingsRepository.insert(new BookingsCollection(booking)));
+		BookingsCollection bookingsCollection = bookingsRepository.insert(new BookingsCollection(booking));
+		return new Bookings(bookingsCollection);
 		
 		
 		}
